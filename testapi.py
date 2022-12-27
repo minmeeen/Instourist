@@ -3,7 +3,7 @@
 import requests
 
 # Replace ACCESS_TOKEN with your actual access token
-ACCESS_TOKEN = "EAAKLSeVUZA9EBAClUoZBA1nVMQws6WYZA0HomjQlwfH682i2UdEkdZAlU5AojsuZBT55Rmw9pdXCQJH4B8Xqa21KOUuAAZAZBzN0QHfQSSy0P8MatTxfQnv8r0cYDrMZCWiZBZAx0yFfyPfvUPbvOtHSwiqUZBEwWuuDmXLxzz9BYusqUozIZBSzFD8j8VZCujIqMIIHjlLvncn0ijYZCGGcUNWPsB"
+ACCESS_TOKEN = "Token"
 
 # Replace LOCATION_ID with the ID of the location you want to scrape
 LOCATION_ID = "121474598025096"

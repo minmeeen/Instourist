@@ -7,8 +7,8 @@ import datetime
 bot = instaloader.Instaloader()
 
 
-USER = "instourist2022"
-PASSWORD = "tweetrip2022"
+USER = "username"
+PASSWORD = "password"
 # bot = instaloader.Instaloader(quiet=False, download_geotags=False, download_comments=False, save_metadata=False,compress_json=False)
 bot.login(USER, PASSWORD) 
 
