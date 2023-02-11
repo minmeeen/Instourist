@@ -1,0 +1,18 @@
+LOCATION ID = 352088355491037
+START = 2023,12,2
+END = 2023,1,2
+___________________________
+hanna.sauer     Germany /caption/bio
+shipped_away    Croatia & Slovenia /bio
+lingdum         TH /caption from recent post
+james_landscapesgallery*    UNKNOWN/caption
+erik_hrustic    Italy /caption/bio
+krongtong_s     TH /caption/name
+ivantriathlon*  UNKNOWN /maybe lives in TH cuz location tag is in TH a lot
+shaunandsophietravels*  UNKNOWN /caption   
+tyler_reisetter* UNKNOWN /caption
+tommyk9321      UK /caption/bio flag
+hergottsmax     Germany /bio/caption from recent post
+sam_and_shiva*  UNKNOWN /caption
+basenjanneke    Netherlands or Belgium /caption/caption from recent post
+kaa_siaa_       Poland /caption/bio
