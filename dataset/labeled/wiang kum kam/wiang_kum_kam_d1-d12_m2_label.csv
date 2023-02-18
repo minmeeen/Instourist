@@ -1,6 +1,6 @@
-username,method,country,addition
-noisynoyy           ,"bio,caption from recent post",TH,
-masterthawat13      ,caption from recent post,TH,
-kaemkwarcha         ,caption from old post,TH,
-ammarinsrikaew      ,caption from recent post,TH,
-unya20              ,,UNKNOWN,
+username,caption ,comment ,bio ,name,other posts caption ,other posts comment,location frequency,method,country,addition
+noisynoyy           ,,,1,,1,,,"bio,caption from recent post",Thailand,
+masterthawat13      ,,,,,1,,,caption from recent post,Thailand,
+kaemkwarcha         ,,,,,1,,,caption from old post,Thailand,
+ammarinsrikaew      ,,,,,1,,,caption from recent post,Thailand,
+unya20              ,,,,,,,,,UNKNOWN,
