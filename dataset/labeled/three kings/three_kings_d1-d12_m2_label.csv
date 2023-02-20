@@ -1,11 +1,11 @@
-username,method,country,addition
-tingtxt         ,bio,US,
-bass_soundman   ,bio,TH,
-loopofart       ,bio,TH,Art
-noema.kw        ,recent post,TH,Apparel & clothing
-jeejyg          ,caption from post,TH,personal blog
-_nyx1999        ,caption from recent post,TH,
-punareehome     ,caption from recent post,TH,Art
-algacul         ,caption from post,Spain,
-cho_khunthai    ,,UNKNOWN,caption in eng
-kriengsak05     ,caption from post,TH,
+username,caption ,comment ,bio ,name,other posts caption ,other posts comment,location frequency,method,country,addition
+tingtxt         ,,,1,,,,,bio,US,
+bass_soundman   ,,,1,,,,,bio,Thailand,
+loopofart       ,,,1,,,,,bio,NAT,Art
+noema.kw        ,,,,,1,,,recent post,NAT,Apparel & clothing
+jeejyg          ,,,,,1,,,caption from post,Thailand,personal blog
+_nyx1999        ,,,,,1,,,caption from recent post,Thailand,
+punareehome     ,,,,,1,,,caption from recent post,NAT,Art
+algacul         ,,,,,1,,,caption from post,Spain,
+cho_khunthai    ,,,,,1,,,,UNKNOWN,caption in eng
+kriengsak05     ,,,,,1,,,caption from post,Thailand,
