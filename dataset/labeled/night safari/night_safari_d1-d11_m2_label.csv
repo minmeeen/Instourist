@@ -1,47 +1,42 @@
-username,method,country,addition
-wissnuwat,caption,thailand,
-pakkard11,caption,thailand,
-biw_vorranidtha,"name bio,video post,other post cap",thailand,
-5azdraca,caption,thailand,
-ekchayekh,caption,thailand,
-nagrognok_cafe,,,shop
-nagrognok_cafe,,,shop
-nagrognok_cafe,,,shop
-nagrognok_cafe,,,shop
-noom_sanesi,"name bio,other post cap",thailand,
-noom_sanesi,"name bio,other post cap",thailand,
-ohmrattanin,caption,thailand,
-natcha_toey,caption,thailand,
-maewzaazaa,caption,thailand,
-_tungton_,caption,thailand,
-nagrognok_cafe,,,shop
-nagrognok_cafe,,,shop
-somjin_songsawatwong,NaN,NaN,
-pnitipat,caption,thailand,
-popeyepp,caption,thailand,
-gamegamr38,caption,thailand,
-prxmyonk177,caption,thailand,
-ph0t0.p717,caption,thailand,same as bf
-jureerat_pt,caption,thailand,
-jutamatchintawan,caption,thailand,
-natthawootdeaw,caption,thailand,
-miikbu.ig,other post cap,thailand,
-natthawootdeaw,caption,thailand,
-natthawootdeaw,caption,thailand,
-panuwat.pom,caption,thailand,
-chayanun_996496,caption,thailand,
-panuwat.pom,other post cap,thailand,
-nooyeanchimi,caption,thailand,
-popeye.chiangmai,caption,thailand,
-n.siri1987,caption,thailand,
-nagrognok_cafe,,,shop
-pitchaya8277,caption,thailand,
-bensusie,Nan,NaN,
-chayanun_996496,caption,thailand,
-mheaw_siriporn,bio,thailand,"chayanun's friend, same pic"
-jesus_miracle99,,,"chinese's name,bio"
-montirt,caption,thailand,
-my_nis_,caption,thailand,
-nokkamolluck2544,other post cap,thailand,
-wazhathk,caption,thailand,
-5azdraca,caption,thailand,
+username,caption ,comment ,bio ,name,other posts caption ,other posts comment,location frequency,method,country,addition
+wissnuwat,1,1,,,1,,,caption,thailand,
+pakkard11,1,1,1,,1,1,,caption,thailand,
+biw_vorranidtha,,,,1,1,,,"name bio,video post,other post cap",thailand,
+5azdraca,1,,,,1,,,caption,thailand,
+ekchayekh,1,,,1,1,,,caption,thailand,
+nagrognok_cafe,,,,,,,,,NAT,shop
+noom_sanesi,,,,,1,,,"name bio,other post cap",thailand,
+ohmrattanin,1,,,,1,1,,caption,thailand,
+natcha_toey,1,,,,,,,caption,thailand,
+maewzaazaa,1,,,,,,,caption,thailand,
+_tungton_,1,,,,,,,caption,thailand,
+nagrognok_cafe,,,,,,,,,NAT,shop
+nagrognok_cafe,,,,,,,,,NAT,shop
+somjin_songsawatwong,,,,,,,,NaN,Unknown,
+pnitipat,1,,,,,,,caption,thailand,
+popeyepp,1,,,,,,,caption,thailand,
+gamegamr38,1,,,,,,,caption,thailand,
+prxmyonk177,1,,,,,,,caption,thailand,
+ph0t0.p717,1,,,,,,,caption,thailand,same as bf
+jureerat_pt,1,,,,,,,caption,thailand,
+jutamatchintawan,1,,,,,,,caption,thailand,
+natthawootdeaw,1,,,,,,,caption,thailand,
+miikbu.ig,,,,,1,,,other post cap,thailand,
+natthawootdeaw,1,,,,,,,caption,thailand,
+natthawootdeaw,1,,,,,,,caption,thailand,
+panuwat.pom,1,,,,,,,caption,thailand,
+chayanun_996496,1,,,,,,,caption,thailand,
+panuwat.pom,,,,,1,,,other post cap,thailand,
+nooyeanchimi,1,,,,,,,caption,thailand,
+popeye.chiangmai,1,,,,,,,caption,thailand,
+n.siri1987,1,,,,,,,caption,thailand,
+nagrognok_cafe,,,,,,,,,NAT,shop
+pitchaya8277,1,,,,,,,caption,thailand,
+bensusie,,,,,,,,Nan,Unknown,
+chayanun_996496,1,,,,,,,caption,thailand,
+mheaw_siriporn,,,1,,,,,bio,thailand,"chayanun's friend, same pic"
+jesus_miracle99,,,,,,,,,Unknown,"chinese's name,bio"
+montirt,1,,,,,,,caption,thailand,
+my_nis_,1,,,,,,,caption,thailand,
+nokkamolluck2544,,,,,1,,,other post cap,thailand,
+wazhathk,1,,,,,,,caption,thailand,

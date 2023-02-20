@@ -1,12 +1,12 @@
-﻿username,method,country,addition
-mh_qiao,place tag,america,"chinese name, travel around the word, speak english"
-etongwava,checkin airport with caption go,hong kong,
-foodf.ta,caption,thailand,
-crazy_vintage_cm,,thailand,shop
-tanstudio,caption,thailand,
-folk_phatnarin,caption,thailand,
-pommieza,"caption,bio",thailand,
-bemywishchiangmai,bio,thailand,shop
-phimmy.croffle,caption,thailand,shop
-phimmeei965,caption,thailand,shop owner(same vid like bf)
-flamalino,"caption, comment",thailand,
+﻿username,caption ,comment ,bio ,name,other posts caption ,other posts comment,location frequency,method,country,addition
+mh_qiao,,,,,,,1,place tag,america,"chinese name, travel around the word, speak english"
+etongwava,,,,,,,1,checkin airport with caption go,hong kong,
+foodf.ta,1,,,,1,,,caption,thailand,
+crazy_vintage_cm,,,,,,,,,NAT,shop
+tanstudio,1,,,,1,,,caption,thailand,
+folk_phatnarin,1,,,1,1,,,caption,thailand,
+pommieza,1,,1,,,,,"caption,bio",thailand,
+bemywishchiangmai,,,,,,,,bio,NAT,shop
+phimmy.croffle,,,,,,,,caption,NAT,shop
+phimmeei965,1,,,,1,,,caption,thailand,shop owner(same vid like bf)
+flamalino,1,1,,,1,,,"caption, comment",thailand,
