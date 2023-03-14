@@ -1,0 +1,11 @@
+dataset2\labeled\doi_inn_d1_m2_d1_m3_label.csv
+dataset2\labeled\grand_canyon_d1_m2_d1_m3_2023_label.csv
+dataset2\labeled\maetaeng_elephant_d1_m2_d1_m3_2023.csv
+dataset2\labeled\maya_d1_m2_d28_m2_labeled.csv
+dataset2\labeled\night_safari_d1_m2_d28_m2_labeled.csv
+dataset2\labeled\nightbazaar_d1_m2_d28_2_labeled.csv
+dataset2\labeled\three_kings_monuments_d1_m2_d1_m3_2023_label.csv
+dataset2\labeled\wat_chiang_mun_d1_m2_d1_m3_2023_label.csv
+dataset2\labeled\wat_ket_d1_m2_d1_m3_2023_label.csv
+dataset2\labeled\wat_phrasingh_d1_m2_d1_m3_label.csv
+dataset2\labeled\wat_umong_d1_m2_d1_m3_2023_label.csv
