@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { ROUTE } from './constant/ROUTE';
 import Homepage from './pages/Homepage';
-import Homepage2 from './pages/Homepage2';
+import Homepage2 from './pages/Homepage';
 import { ThemeProvider } from '@mui/material';
 import { theme } from './constant/theme';
 
@@ -15,14 +15,6 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
   },
-  {
-    path: ROUTE.HOMEPAGE_1,
-    element: <Homepage/>
-  },
-  {
-    path: ROUTE.HOMEPAGE_2,
-    element: <Homepage2/>
-  }
 ])
 
 const root = ReactDOM.createRoot(
