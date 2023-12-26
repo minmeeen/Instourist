@@ -5,6 +5,15 @@ import React, { useContext, useState } from 'react'
 import { DarkModeContext } from '../App'
 import CustomButton from './CustomButton'
 import { touristDestinationType } from '../type/touristDestinationType'
+import LocationCard from './LocationCard'
+import {
+  Art_CultureLocation,
+  HistoricLocation,
+  InstouristLocation,
+  ModernLocation,
+  NatureLocation,
+} from '../constant/locations'
+import { useNavigate } from 'react-router-dom'
 
 interface SelectTouristAttractionProps {
   darkMode?: boolean
@@ -23,12 +32,22 @@ export default function SelectTouristAttraction(
 
   const darkMode = useContext(DarkModeContext)
   const isDark = darkMode.darkMode
+  const navigate = useNavigate()
 
   const [selectDestination, setSelectDestination] =
     useState<touristDestinationType>()
+  const [showLocation, setShowLocation] = useState<InstouristLocation[]>([])
 
   function checkSelectedDestination(type: touristDestinationType) {
     return type === selectDestination
+  }
+
+  const handleClickSelect = (destination: touristDestinationType) => {
+    setSelectDestination(destination)
+    if (destination === 'NATURE') setShowLocation(NatureLocation)
+    else if (destination === 'ART&CULTURE') setShowLocation(Art_CultureLocation)
+    else if (destination === 'HISTORIC') setShowLocation(HistoricLocation)
+    else setShowLocation(ModernLocation)
   }
   return (
     // <Box textAlign={'center'}>
@@ -59,28 +78,42 @@ export default function SelectTouristAttraction(
       >
         <CustomButton
           startIcon={natureIcon}
-          onClick={() => setSelectDestination('NATURE')}
+          onClick={() => handleClickSelect('NATURE')}
           isClicked={checkSelectedDestination('NATURE')}
           text='Nature'
         />
         <CustomButton
           startIcon={natureIcon}
-          onClick={() => setSelectDestination('ART&CULTURE')}
+          onClick={() => handleClickSelect('ART&CULTURE')}
           isClicked={checkSelectedDestination('ART&CULTURE')}
           text='Art & Culture'
         />
         <CustomButton
           startIcon={natureIcon}
-          onClick={() => setSelectDestination('HISTORIC')}
+          onClick={() => handleClickSelect('HISTORIC')}
           isClicked={checkSelectedDestination('HISTORIC')}
           text='Historic'
         />
         <CustomButton
           startIcon={natureIcon}
-          onClick={() => setSelectDestination('MODERN')}
+          onClick={() => handleClickSelect('MODERN')}
           isClicked={checkSelectedDestination('MODERN')}
           text='Modern'
         />
+      </Box>
+      <Box
+        display={'flex'}
+        alignItems={'flex-end'}
+        gap={'24px'}
+        alignSelf={'stretch'}
+        paddingTop={'12px'}
+      >
+        {showLocation.map((location) => (
+          <LocationCard
+            location={location}
+            onClickSeeDetail={() => navigate(`location/${location.locationID}`)}
+          />
+        ))}
       </Box>
     </Box>
   )

@@ -9,11 +9,16 @@ import Homepage from './pages/Homepage'
 import Homepage2 from './pages/Homepage'
 import { ThemeProvider } from '@mui/material'
 import { theme } from './constant/theme'
+import LocationDetail from './pages/LocationDetail'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+  },
+  {
+    path: '/location/:locationID',
+    element: <LocationDetail />,
   },
 ])
 

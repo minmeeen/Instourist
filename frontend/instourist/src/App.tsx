@@ -6,10 +6,10 @@ import Homepage from './pages/Homepage'
 import { createContext, useState } from 'react'
 import { DarkMode, LightMode } from '@mui/icons-material'
 
-export const DarkModeContext = createContext({ darkMode: true })
+export const DarkModeContext = createContext({ darkMode: false })
 
 function App() {
-  const [darkMode, setDarkMode] = useState<boolean>(true)
+  const [darkMode, setDarkMode] = useState<boolean>(false)
   return (
     <>
       <DarkModeContext.Provider value={{ darkMode: darkMode }}>
