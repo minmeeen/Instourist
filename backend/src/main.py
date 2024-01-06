@@ -4,7 +4,7 @@ from .portal import *
 
 class PlaceReq(BaseModel):
     placeName: str
-    period: int | None = None
+    period: int
 
 app = FastAPI()
 
