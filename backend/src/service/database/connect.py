@@ -10,7 +10,7 @@ connection_params = {
     "database": "postgres",
     "user": "postgres",
     "password": "postgres",
-    "port": "5432"
+    "port": "543"
 }
 
 db = Database(connection_params)
