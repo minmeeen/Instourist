@@ -7,6 +7,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
   Typography,
 } from '@mui/material'
 import NATURE from '../img/nature.svg'
@@ -22,6 +23,10 @@ interface LocationSideBarProps {
 export default function LocationSideBar(props: LocationSideBarProps) {
   const { location } = props
   const [timeline, setTimeline] = React.useState('')
+
+  const hanldeClickSelectTimeline = (event: SelectChangeEvent) => {
+    setTimeline(event.target.value as string)
+  }
   if (location) {
     return (
       <Box
@@ -61,8 +66,12 @@ export default function LocationSideBar(props: LocationSideBarProps) {
             justifyContent={'flex-end'}
             alignItems={'flex-start'}
           >
-            <Typography variant='h1'>{location.locationEN}</Typography>
-            <Typography variant='h4'>{location.locationTH}</Typography>
+            <Typography variant='h1' sx={{ lineHeight: '110%' }}>
+              {location.locationEN}
+            </Typography>
+            <Typography variant='h4' sx={{ lineHeight: '120%' }}>
+              {location.locationTH}
+            </Typography>
           </Box>
           <Box width={'100%'}>
             <Divider variant='fullWidth' orientation='horizontal' />
@@ -72,8 +81,9 @@ export default function LocationSideBar(props: LocationSideBarProps) {
             flexDirection={'column'}
             width={'100%'}
             alignItems={'center'}
+            gap={'8px'}
           >
-            <Typography>Language used by tourists in the place</Typography>
+            <Typography>Languages used by tourists at this place</Typography>
             <Box
               display={'flex'}
               flexDirection={'row'}
@@ -90,12 +100,12 @@ export default function LocationSideBar(props: LocationSideBarProps) {
                   id='demo-simple-select'
                   value={timeline}
                   label='Timeline'
-                  onChange={() => {}}
+                  onChange={hanldeClickSelectTimeline}
                 >
-                  <MenuItem value={1}>24 Hours</MenuItem>
-                  <MenuItem value={2}>48 Hours</MenuItem>
-                  <MenuItem value={3}>7 Days</MenuItem>
-                  <MenuItem value={4}>14 Days</MenuItem>
+                  <MenuItem value={24}>24 Hours</MenuItem>
+                  <MenuItem value={48}>48 Hours</MenuItem>
+                  <MenuItem value={7}>7 Days</MenuItem>
+                  <MenuItem value={14}>14 Days</MenuItem>
                 </Select>
               </FormControl>
             </Box>

@@ -1,5 +1,5 @@
 export type touristDestinationType =
   | 'NATURE'
-  | 'ART&CULTURE'
+  | 'ART_CULTURE'
   | 'HISTORIC'
   | 'MODERN'

@@ -45,7 +45,7 @@ export default function SelectTouristAttraction(
   const handleClickSelect = (destination: touristDestinationType) => {
     setSelectDestination(destination)
     if (destination === 'NATURE') setShowLocation(NatureLocation)
-    else if (destination === 'ART&CULTURE') setShowLocation(Art_CultureLocation)
+    else if (destination === 'ART_CULTURE') setShowLocation(Art_CultureLocation)
     else if (destination === 'HISTORIC') setShowLocation(HistoricLocation)
     else setShowLocation(ModernLocation)
   }
@@ -84,8 +84,8 @@ export default function SelectTouristAttraction(
         />
         <CustomButton
           startIcon={natureIcon}
-          onClick={() => handleClickSelect('ART&CULTURE')}
-          isClicked={checkSelectedDestination('ART&CULTURE')}
+          onClick={() => handleClickSelect('ART_CULTURE')}
+          isClicked={checkSelectedDestination('ART_CULTURE')}
           text='Art & Culture'
         />
         <CustomButton

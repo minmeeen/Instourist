@@ -33,19 +33,19 @@ export const Art_CultureLocation: InstouristLocation[] = [
     locationID: '004',
     locationEN: 'Wat Phra Singh',
     locationTH: 'วัดพระสิงห์',
-    locationType: 'ART&CULTURE',
+    locationType: 'ART_CULTURE',
   },
   {
     locationID: '005',
     locationEN: 'Wat Umong',
     locationTH: 'วัดอุโมงค์ (สวนพุทธธรรม)',
-    locationType: 'ART&CULTURE',
+    locationType: 'ART_CULTURE',
   },
   {
     locationID: '006',
     locationEN: 'Wat Gate Garam',
     locationTH: 'วัดเกตการาม',
-    locationType: 'ART&CULTURE',
+    locationType: 'ART_CULTURE',
   },
 ]
 

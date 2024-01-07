@@ -22,7 +22,7 @@ export default function ExploreOtherLocation() {
   const handleClickSelect = (destination: touristDestinationType) => {
     setSelectDestination(destination)
     if (destination === 'NATURE') setShowLocation(NatureLocation)
-    else if (destination === 'ART&CULTURE') setShowLocation(Art_CultureLocation)
+    else if (destination === 'ART_CULTURE') setShowLocation(Art_CultureLocation)
     else if (destination === 'HISTORIC') setShowLocation(HistoricLocation)
     else setShowLocation(ModernLocation)
   }
@@ -36,7 +36,7 @@ export default function ExploreOtherLocation() {
         gap={'16px'}
       >
         <Button variant='outlined'>Nature</Button>
-        <Button variant='outlined'> Art & Culture</Button>
+        <Button variant='outlined'>Art & Culture</Button>
         <Button variant='outlined'>Historic</Button>
         <Button variant='outlined'>Modern</Button>
       </Box>
