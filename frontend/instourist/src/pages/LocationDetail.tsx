@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Navbar from '../components/Navbar'
-import { Box } from '@mui/material'
+import { Box, createTheme, useTheme } from '@mui/material'
 import {
   Art_CultureLocation,
   HistoricLocation,
@@ -10,10 +10,17 @@ import {
 } from '../constant/locations'
 import LocationSideBar from '../components/LocationSideBar'
 import ExploreOtherLocation from '../components/ExploreOtherLocation'
+import { ColorModeContext, ToggleModeComponent } from '../App'
 
-export default function LocationDetail() {
+interface LocationDetailProps {
+  mode?: any
+}
+export default function LocationDetail(props: LocationDetailProps) {
+  const { mode } = props
   const params = useParams()
   const locationID = params.locationID
+  const theme = useTheme()
+  const colorMode = useContext(ColorModeContext)
 
   function findLocation() {
     let currLocation = NatureLocation.filter(
@@ -36,9 +43,11 @@ export default function LocationDetail() {
     }
     return currLocation ? currLocation : ''
   }
+
   return (
     <>
-      <Navbar />
+      <Navbar variant='other' />
+
       <Box display={'flex'} width={'100vw'}>
         <LocationSideBar location={findLocation()} />
       </Box>

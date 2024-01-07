@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from '@mui/material'
+import { Box, Button, Container, Typography, useTheme } from '@mui/material'
 import background from '../img/background.png'
 import background_dark from '../img/background_dark.png'
 import logoLg from '../img/logo-lg.svg'
@@ -7,11 +7,12 @@ import { useContext, useState } from 'react'
 import { common } from '@mui/material/colors'
 import { useNavigate } from 'react-router-dom'
 import SelectTouristAttraction from '../components/SelectTouristAttraction'
-import { DarkModeContext } from '../App'
+import { ToggleModeComponent } from '../App'
+import Navbar from '../components/Navbar'
 
 export default function Homepage() {
-  const darkMode = useContext(DarkModeContext)
-  const isDark = darkMode.darkMode
+  const theme = useTheme()
+  const isDark = theme.palette.mode === 'dark'
   const navigate = useNavigate()
   return (
     <div
@@ -22,6 +23,7 @@ export default function Homepage() {
         backgroundSize: 'cover',
       }}
     >
+      <Navbar variant='homepage' />
       <Container>
         <Box
           display={'flex'}
@@ -34,7 +36,7 @@ export default function Homepage() {
             src={isDark ? logoLgDark : logoLg}
             style={{ height: '80px', width: '433px' }}
           />
-          <Typography variant='h4' color={isDark ? common.white : 'primary'}>
+          <Typography variant='h4' color={'text.primary'}>
             Analyze languages used by visitors at tourist destinations.
           </Typography>
         </Box>

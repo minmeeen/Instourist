@@ -1,33 +1,38 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import App from './App'
+import App, { ColorModeContext } from './App'
 import reportWebVitals from './reportWebVitals'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import {
+  BrowserRouter,
+  createBrowserRouter,
+  Route,
+  RouterProvider,
+  Routes,
+} from 'react-router-dom'
 import { ROUTE } from './constant/ROUTE'
 import Homepage from './pages/Homepage'
 import Homepage2 from './pages/Homepage'
-import { ThemeProvider } from '@mui/material'
-import { theme } from './constant/theme'
+import { ThemeProvider, useTheme } from '@mui/material'
 import LocationDetail from './pages/LocationDetail'
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-  },
-  {
-    path: '/location/:locationID',
-    element: <LocationDetail />,
-  },
-])
+// const router = createBrowserRouter([
+//   {
+//     path: '/',
+//     element: <App />,
+//   },
+//   {
+//     path: '/location/:locationID',
+//     element: <LocationDetail />,
+//   },
+// ])
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 )
 

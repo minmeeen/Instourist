@@ -1,7 +1,7 @@
 import { Button, Typography } from '@mui/material'
 import React, { useContext } from 'react'
-import { DarkModeContext } from '../App'
 import { common } from '@mui/material/colors'
+import { theme } from '../constant/theme'
 
 interface customButtonProps {
   startIcon?: React.ReactNode
@@ -13,19 +13,16 @@ interface customButtonProps {
 export default function CustomButton(props: customButtonProps) {
   const { startIcon, text, isClicked, onClick } = props
 
-  const darkMode = useContext(DarkModeContext)
-  const isDark = darkMode.darkMode
-
   return (
     <Button
       variant={isClicked ? 'contained' : 'outlined'}
       sx={{
-        borderColor: `${isDark ? common.white : '#38405F'}`,
+        borderColor: 'text.primary',
       }}
       onClick={onClick}
     >
       {/* {startIcon} */}
-      <Typography color={isDark || isClicked ? common.white : '#38405F'}>
+      <Typography color={isClicked ? 'white' : 'text.primary'}>
         {text}
       </Typography>
     </Button>

@@ -1,8 +1,7 @@
-import { Box, Button, Icon, Typography } from '@mui/material'
+import { Box, Button, Icon, Typography, useTheme } from '@mui/material'
 import { common } from '@mui/material/colors'
 import nature from '../img/nature.svg'
 import React, { useContext, useState } from 'react'
-import { DarkModeContext } from '../App'
 import CustomButton from './CustomButton'
 import { touristDestinationType } from '../type/touristDestinationType'
 import LocationCard from './LocationCard'
@@ -15,13 +14,7 @@ import {
 } from '../constant/locations'
 import { useNavigate } from 'react-router-dom'
 
-interface SelectTouristAttractionProps {
-  darkMode?: boolean
-}
-
-export default function SelectTouristAttraction(
-  props: SelectTouristAttractionProps
-) {
+export default function SelectTouristAttraction() {
   //   const { darkMode } = props
 
   const natureIcon = (
@@ -30,9 +23,9 @@ export default function SelectTouristAttraction(
     </Icon>
   )
 
-  const darkMode = useContext(DarkModeContext)
-  const isDark = darkMode.darkMode
   const navigate = useNavigate()
+
+  const theme = useTheme()
 
   const [selectDestination, setSelectDestination] =
     useState<touristDestinationType>()
@@ -49,6 +42,7 @@ export default function SelectTouristAttraction(
     else if (destination === 'HISTORIC') setShowLocation(HistoricLocation)
     else setShowLocation(ModernLocation)
   }
+
   return (
     // <Box textAlign={'center'}>
 
@@ -56,7 +50,9 @@ export default function SelectTouristAttraction(
       sx={{
         borderRadius: '8px',
         bgcolor: `${
-          isDark ? 'rgba(0, 0, 0, 0.65)' : 'rgba(255, 255, 255, 0.65)'
+          theme.palette.mode
+            ? 'rgba(0, 0, 0, 0.65)'
+            : 'rgba(255, 255, 255, 0.65)'
         } `,
         boxShadow: '0px 4px 4px 0px rgba(56, 64, 95, 0.25)',
       }}
@@ -67,7 +63,7 @@ export default function SelectTouristAttraction(
       padding={'14px 40px'}
       gap={'8px'}
     >
-      <Typography variant='h4' color={isDark ? common.white : '#38405F'}>
+      <Typography color={'text.primary'} variant='h4'>
         Select a tourist destination
       </Typography>
       <Box

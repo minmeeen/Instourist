@@ -28,17 +28,21 @@ export default function ExploreOtherLocation() {
   }
   return (
     <Box>
-      <Typography>Explore other locations</Typography>
+      <Typography color={'text.primary'}>Explore other locations</Typography>
       <Box
         display={'flex'}
         alignItems={'center'}
         justifyContent={'space-between'}
         gap={'16px'}
       >
-        <Button variant='outlined'>Nature</Button>
-        <Button variant='outlined'>Art & Culture</Button>
-        <Button variant='outlined'>Historic</Button>
-        <Button variant='outlined'>Modern</Button>
+        <CustomButton text={'Nature'} isClicked={false} onClick={() => {}} />
+        <CustomButton
+          text={'Art&Culture'}
+          isClicked={false}
+          onClick={() => {}}
+        />
+        <CustomButton text={'Historic'} isClicked={false} onClick={() => {}} />
+        <CustomButton text={'Modern'} isClicked={false} onClick={() => {}} />
       </Box>
     </Box>
   )

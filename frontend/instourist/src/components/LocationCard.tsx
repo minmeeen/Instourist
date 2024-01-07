@@ -1,8 +1,8 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, Typography, useTheme } from '@mui/material'
 import { common } from '@mui/material/colors'
 import React, { useContext } from 'react'
-import { DarkModeContext } from '../App'
 import { InstouristLocation } from '../constant/locations'
+import { theme } from '../constant/theme'
 
 interface LocationCardProps {
   location: InstouristLocation
@@ -10,8 +10,8 @@ interface LocationCardProps {
 }
 
 export default function LocationCard(props: LocationCardProps) {
-  const darkMode = useContext(DarkModeContext)
-  const isDark = darkMode.darkMode
+  const theme = useTheme()
+  const isDark = theme.palette.mode === 'dark'
 
   const { location, onClickSeeDetail } = props
   return (
@@ -44,10 +44,10 @@ export default function LocationCard(props: LocationCardProps) {
           alignItems={'flex-start'}
           alignSelf={'stretch'}
         >
-          <Typography variant='h3' color={isDark ? common.white : 'primary'}>
+          <Typography variant='h3' color='text.primary'>
             {location.locationEN}
           </Typography>
-          <Typography variant='body2' color={isDark ? common.white : 'primary'}>
+          <Typography variant='body2' color='text.primary'>
             {location.locationTH}
           </Typography>
         </Box>
@@ -55,13 +55,11 @@ export default function LocationCard(props: LocationCardProps) {
           variant='outlined'
           sx={{
             textTransform: 'none',
-            borderColor: isDark ? common.white : 'primary',
+            borderColor: 'text.primary',
           }}
           onClick={onClickSeeDetail}
         >
-          <Typography color={isDark ? common.white : 'primary'}>
-            See details
-          </Typography>
+          <Typography color='text.primary'>See details</Typography>
         </Button>
       </Box>
     </Box>

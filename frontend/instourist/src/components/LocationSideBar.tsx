@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { InstouristLocation } from '../constant/locations'
 import {
   Box,
@@ -9,12 +9,15 @@ import {
   Select,
   SelectChangeEvent,
   Typography,
+  useTheme,
 } from '@mui/material'
 import NATURE from '../img/nature.svg'
+import NATURE_WHITE from '../img/nature-white.svg'
 import ART_CULTURE from '../img/art.svg'
 import MODERN from '../img/modern.svg'
 import HISTORIC from '../img/historic.svg'
 import ExploreOtherLocation from './ExploreOtherLocation'
+import { ColorModeContext } from '../App'
 
 interface LocationSideBarProps {
   location: InstouristLocation | ''
@@ -23,6 +26,8 @@ interface LocationSideBarProps {
 export default function LocationSideBar(props: LocationSideBarProps) {
   const { location } = props
   const [timeline, setTimeline] = React.useState('')
+  const theme = useTheme()
+  const colorMode = useContext(ColorModeContext)
 
   const hanldeClickSelectTimeline = (event: SelectChangeEvent) => {
     setTimeline(event.target.value as string)
@@ -39,6 +44,7 @@ export default function LocationSideBar(props: LocationSideBarProps) {
         gap={'16px'}
         flexShrink={0}
         borderRight={'1px solid rgba(0,0,0,0.12)'}
+        bgcolor={'background.default'}
       >
         <Box
           id='location-headline'
@@ -56,8 +62,14 @@ export default function LocationSideBar(props: LocationSideBarProps) {
             alignItems={'center'}
             gap={'8px'}
           >
-            <img src={NATURE} width={'14px'} height={'14px'}></img>
-            <Typography>{location.locationType}</Typography>
+            <img
+              src={theme.palette.mode === 'dark' ? NATURE_WHITE : NATURE}
+              width={'14px'}
+              height={'14px'}
+            ></img>
+            <Typography color={'text.primary'}>
+              {location.locationType}
+            </Typography>
           </Box>
           <Box
             id='location-name'
@@ -66,10 +78,18 @@ export default function LocationSideBar(props: LocationSideBarProps) {
             justifyContent={'flex-end'}
             alignItems={'flex-start'}
           >
-            <Typography variant='h1' sx={{ lineHeight: '110%' }}>
+            <Typography
+              variant='h1'
+              sx={{ lineHeight: '110%' }}
+              color={'text.primary'}
+            >
               {location.locationEN}
             </Typography>
-            <Typography variant='h4' sx={{ lineHeight: '120%' }}>
+            <Typography
+              color={'text.primary'}
+              variant='h4'
+              sx={{ lineHeight: '120%' }}
+            >
               {location.locationTH}
             </Typography>
           </Box>
@@ -83,7 +103,9 @@ export default function LocationSideBar(props: LocationSideBarProps) {
             alignItems={'center'}
             gap={'8px'}
           >
-            <Typography>Languages used by tourists at this place</Typography>
+            <Typography color={'text.primary'}>
+              Languages used by tourists at this place
+            </Typography>
             <Box
               display={'flex'}
               flexDirection={'row'}
@@ -92,7 +114,7 @@ export default function LocationSideBar(props: LocationSideBarProps) {
               alignItems={'center'}
               justifyContent={'center'}
             >
-              <Typography>in the past</Typography>
+              <Typography color={'text.primary'}>in the past</Typography>
               <FormControl sx={{ width: '200px' }} size='small'>
                 <InputLabel id='demo-simple-select-label'>Timeline</InputLabel>
                 <Select
