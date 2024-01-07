@@ -7,7 +7,7 @@ from datetime import datetime
 # Connection parameters
 connection_params = {
     "host": "localhost",
-    "database": "postgres",
+    "database": "instourist",
     "user": "postgres",
     "password": "postgres",
     "port": "5432"
