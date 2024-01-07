@@ -5,88 +5,109 @@ export interface InstouristLocation {
   locationEN: string
   locationTH: string
   locationType: touristDestinationType
+  locationImgName: string
+}
+
+export enum locationENUM {
+  nature = 'NATURE',
+  art = 'ART_CULTURE',
+  artModified = 'ART&CULTURE',
+  historic = 'HISTORIC',
+  modern = 'MODERN',
 }
 
 export const NatureLocation: InstouristLocation[] = [
   {
-    locationID: '001',
+    locationID: '1',
     locationEN: 'Chiang Mai Grand Canyon',
     locationTH: 'แกรนด์แคนยอน',
-    locationType: 'NATURE',
+    locationType: locationENUM.nature,
+    locationImgName: 'grandcanyon',
   },
   {
-    locationID: '002',
+    locationID: '2',
     locationEN: 'Doi Inthanon',
     locationTH: 'ดอยอินทนนท์',
-    locationType: 'NATURE',
+    locationType: locationENUM.nature,
+    locationImgName: 'doiinthanon',
   },
   {
-    locationID: '003',
+    locationID: '3',
     locationEN: 'Mae Taeng Elephant Park',
     locationTH: 'ปางช้างแม่แตง',
-    locationType: 'NATURE',
+    locationType: locationENUM.nature,
+    locationImgName: 'maetaengelephant',
   },
 ]
 
 export const Art_CultureLocation: InstouristLocation[] = [
   {
-    locationID: '004',
+    locationID: '4',
     locationEN: 'Wat Phra Singh',
     locationTH: 'วัดพระสิงห์',
-    locationType: 'ART_CULTURE',
+    locationType: locationENUM.art,
+    locationImgName: 'watphrasignh',
   },
   {
-    locationID: '005',
-    locationEN: 'Wat Umong',
-    locationTH: 'วัดอุโมงค์ (สวนพุทธธรรม)',
-    locationType: 'ART_CULTURE',
-  },
-  {
-    locationID: '006',
+    locationID: '5',
     locationEN: 'Wat Gate Garam',
     locationTH: 'วัดเกตการาม',
-    locationType: 'ART_CULTURE',
+    locationType: locationENUM.art,
+    locationImgName: 'watgate',
+  },
+  {
+    locationID: '6',
+    locationEN: 'Wat Umong',
+    locationTH: 'วัดอุโมงค์ (สวนพุทธธรรม)',
+    locationType: locationENUM.art,
+    locationImgName: 'watumong',
   },
 ]
 
 export const HistoricLocation: InstouristLocation[] = [
   {
-    locationID: '007',
+    locationID: '7',
     locationEN: 'Three Kings Monument',
     locationTH: 'พระบรมราชานุสาวรีย์สามกษัตริย์',
-    locationType: 'HISTORIC',
+    locationType: locationENUM.historic,
+    locationImgName: 'threekings',
   },
   {
-    locationID: '008',
+    locationID: '8',
     locationEN: 'Wat Chiang Man',
     locationTH: 'วัดเชียงมั่น',
-    locationType: 'HISTORIC',
+    locationType: locationENUM.historic,
+    locationImgName: 'watchiangman',
   },
   {
-    locationID: '009',
+    locationID: '9',
     locationEN: 'Tha Phae Gate',
     locationTH: 'ประตูท่าแพ',
-    locationType: 'HISTORIC',
+    locationType: locationENUM.historic,
+    locationImgName: 'thaphaegate',
   },
 ]
 
 export const ModernLocation: InstouristLocation[] = [
   {
-    locationID: '010',
+    locationID: '10',
     locationEN: 'MAYA Lifestyle Shopping Center',
     locationTH: 'ห้างสรรพสินค้าเมญ่า',
-    locationType: 'MODERN',
+    locationType: locationENUM.modern,
+    locationImgName: 'maya',
   },
   {
-    locationID: '011',
+    locationID: '11',
     locationEN: 'Chiang Mai Night Bazaar',
     locationTH: 'ไนท์บาซาร์เชียงใหม่',
-    locationType: 'MODERN',
+    locationType: locationENUM.modern,
+    locationImgName: 'nightbazaar',
   },
   {
-    locationID: '012',
+    locationID: '12',
     locationEN: 'Chiang Mai Night Safari',
     locationTH: 'เชียงใหม่ไนท์ซาฟารี',
-    locationType: 'MODERN',
+    locationType: locationENUM.modern,
+    locationImgName: 'nightsafari',
   },
 ]

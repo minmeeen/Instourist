@@ -11,6 +11,7 @@ import {
   InstouristLocation,
   ModernLocation,
   NatureLocation,
+  locationENUM,
 } from '../constant/locations'
 import { useNavigate } from 'react-router-dom'
 
@@ -37,9 +38,11 @@ export default function SelectTouristAttraction() {
 
   const handleClickSelect = (destination: touristDestinationType) => {
     setSelectDestination(destination)
-    if (destination === 'NATURE') setShowLocation(NatureLocation)
-    else if (destination === 'ART_CULTURE') setShowLocation(Art_CultureLocation)
-    else if (destination === 'HISTORIC') setShowLocation(HistoricLocation)
+    if (destination === locationENUM.nature) setShowLocation(NatureLocation)
+    else if (destination === locationENUM.art)
+      setShowLocation(Art_CultureLocation)
+    else if (destination === locationENUM.historic)
+      setShowLocation(HistoricLocation)
     else setShowLocation(ModernLocation)
   }
 
@@ -50,7 +53,7 @@ export default function SelectTouristAttraction() {
       sx={{
         borderRadius: '8px',
         bgcolor: `${
-          theme.palette.mode
+          theme.palette.mode === 'dark'
             ? 'rgba(0, 0, 0, 0.65)'
             : 'rgba(255, 255, 255, 0.65)'
         } `,
@@ -74,27 +77,27 @@ export default function SelectTouristAttraction() {
       >
         <CustomButton
           startIcon={natureIcon}
-          onClick={() => handleClickSelect('NATURE')}
-          isClicked={checkSelectedDestination('NATURE')}
-          text='Nature'
+          onClick={() => handleClickSelect(locationENUM.nature)}
+          isClicked={checkSelectedDestination(locationENUM.nature)}
+          text={locationENUM.nature}
         />
         <CustomButton
           startIcon={natureIcon}
-          onClick={() => handleClickSelect('ART_CULTURE')}
-          isClicked={checkSelectedDestination('ART_CULTURE')}
-          text='Art & Culture'
+          onClick={() => handleClickSelect(locationENUM.art)}
+          isClicked={checkSelectedDestination(locationENUM.art)}
+          text={locationENUM.artModified}
         />
         <CustomButton
           startIcon={natureIcon}
-          onClick={() => handleClickSelect('HISTORIC')}
-          isClicked={checkSelectedDestination('HISTORIC')}
-          text='Historic'
+          onClick={() => handleClickSelect(locationENUM.historic)}
+          isClicked={checkSelectedDestination(locationENUM.historic)}
+          text={locationENUM.historic}
         />
         <CustomButton
           startIcon={natureIcon}
-          onClick={() => handleClickSelect('MODERN')}
-          isClicked={checkSelectedDestination('MODERN')}
-          text='Modern'
+          onClick={() => handleClickSelect(locationENUM.modern)}
+          isClicked={checkSelectedDestination(locationENUM.modern)}
+          text={locationENUM.modern}
         />
       </Box>
       <Box

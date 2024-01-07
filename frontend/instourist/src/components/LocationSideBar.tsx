@@ -8,16 +8,15 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  Stack,
   Typography,
   useTheme,
 } from '@mui/material'
-import NATURE from '../img/nature.svg'
-import NATURE_WHITE from '../img/nature-white.svg'
-import ART_CULTURE from '../img/art.svg'
-import MODERN from '../img/modern.svg'
-import HISTORIC from '../img/historic.svg'
 import ExploreOtherLocation from './ExploreOtherLocation'
 import { ColorModeContext } from '../App'
+import findLocationTypeIcon from '../functions/findLocationTypeIcon'
+import { Error } from '@mui/icons-material'
+import LocationNotFound from './LocationNotFound'
 
 interface LocationSideBarProps {
   location: InstouristLocation | ''
@@ -62,13 +61,11 @@ export default function LocationSideBar(props: LocationSideBarProps) {
             alignItems={'center'}
             gap={'8px'}
           >
-            <img
-              src={theme.palette.mode === 'dark' ? NATURE_WHITE : NATURE}
-              width={'14px'}
-              height={'14px'}
-            ></img>
+            {findLocationTypeIcon(location.locationType, theme.palette.mode)}
             <Typography color={'text.primary'}>
-              {location.locationType}
+              {location.locationType === 'ART_CULTURE'
+                ? 'ART & CULTURE'
+                : location.locationType}
             </Typography>
           </Box>
           <Box
@@ -137,6 +134,6 @@ export default function LocationSideBar(props: LocationSideBarProps) {
       </Box>
     )
   } else {
-    return <div>'No location'</div>
+    return <LocationNotFound />
   }
 }
