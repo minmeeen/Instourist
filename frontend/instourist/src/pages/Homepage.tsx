@@ -1,59 +1,48 @@
-import { Box, Button, Container, Typography } from '@mui/material'
+import { Box, Button, Container, Typography, useTheme } from '@mui/material'
 import background from '../img/background.png'
 import background_dark from '../img/background_dark.png'
 import logoLg from '../img/logo-lg.svg'
 import logoLgDark from '../img/logo-lg-dark.svg'
-import React, { useState } from 'react'
+import { useContext, useState } from 'react'
 import { common } from '@mui/material/colors'
 import { useNavigate } from 'react-router-dom'
-import { ROUTE } from '../constant/ROUTE'
 import SelectTouristAttraction from '../components/SelectTouristAttraction'
+import { ToggleModeComponent } from '../App'
+import Navbar from '../components/Navbar'
 
 export default function Homepage() {
-  const [darkmode, setDarkMode] = useState<boolean>(false)
+  const theme = useTheme()
+  const isDark = theme.palette.mode === 'dark'
   const navigate = useNavigate()
   return (
-    <div style={{ backgroundImage: `url(${darkmode? background_dark: background})` ,
-      height: "100vh",
-      // marginTop: "-70px",
-      fontSize: "50px",
-      backgroundSize: "cover",
-      // backgroundRepeat: "no-repeat",
-    }}
+    <div
+      style={{
+        backgroundImage: `url(${isDark ? background_dark : background})`,
+        height: '100vh',
+        fontSize: '50px',
+        backgroundSize: 'cover',
+      }}
     >
-      
-
-      <Box display={'flex'} flexDirection={'row'} alignItems={'center'} justifyContent={'space-between'}>
-      <div style={{padding: '16px'}}>
-        <img src={darkmode? logoLgDark : logoLg} style={{height: '34px', width: '148px'}}/>
-      </div>
-      <Box>
-      <Button variant='contained' onClick={() => setDarkMode(!darkmode)}>
-          { darkmode? 'light mode':'dark mode'}
-        </Button>
-        <Button variant='contained' onClick={() => navigate(ROUTE.HOMEPAGE_2)}>
-          Switch version
-        </Button>
-      </Box>
-        
-      </Box>
+      <Navbar variant='homepage' />
       <Container>
-      
-      <Box textAlign={'left'} paddingTop={'120px'}>
-        <Typography variant='h2' style={{fontFamily: 'Nunito',fontWeight: 800,fontSize: '54px',lineHeight: '120%',}} color={darkmode? common.white : '#38405F'}>
-      Discover languages used by    
-      </Typography>
-      <Typography variant='h2' style={{fontFamily: 'Nunito',fontWeight: 800,fontSize: '54px',lineHeight: '120%',}} color={darkmode? common.white : '#38405F'}>
-      tourist in tourist attractions. 
-      </Typography>
-      
-      </Box>
-      <Box height={'40px'}/>
-      <SelectTouristAttraction darkMode={darkmode}/>
+        <Box
+          display={'flex'}
+          flexDirection={'column'}
+          paddingTop={'120px'}
+          justifyContent={'center'}
+          alignItems={'center'}
+        >
+          <img
+            src={isDark ? logoLgDark : logoLg}
+            style={{ height: '80px', width: '433px' }}
+          />
+          <Typography variant='h4' color={'text.primary'}>
+            Analyze languages used by visitors at tourist destinations.
+          </Typography>
+        </Box>
+        <Box height={'40px'} />
+        <SelectTouristAttraction />
       </Container>
-      
-      
     </div>
-    // <Container/>
   )
 }
