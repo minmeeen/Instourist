@@ -27,15 +27,26 @@ class Database:
         except Exception as e:
             self.connection.rollback()
             raise e
-        
-    def getLocation(self):
-        query = "SELECT * FROM location;"
-        data = self.execute_query(query)
-        return data
     
-    def insertPostToTable(self,taken_at, user_id, username, full_name, caption, created_at, location_name):
+    def insertPostToInitialData(self, user_id, username, full_name, caption, create_at, taken_at, location_id):
         query = """
-            INSERT INTO raw_data (taken_at, user_id, username, full_name, caption, created_at, location_name)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)"""
-        params = (taken_at, user_id, username, full_name, caption, created_at, location_name)
+            INSERT INTO initial_data (user_id, username, full_name, caption, create_at, taken_at, location_id)
+            VALUES (%s, %s, %s, %s, To_TIMESTAMP(%s), TO_TIMESTAMP(%s), %s)"""
+        params = (user_id, username, full_name, caption, create_at, taken_at, location_id)
         self.execute_query(query, params)
+
+    def findLocationId(self, igLocation):
+        query = """
+            SELECT location_id
+            FROM location
+            where %s = ANY(ig_location)"""
+        param = (igLocation,)
+        
+        try :
+            # self.connect()
+            self.execute_query(query, param)
+            result = self.cursor.fetchone()
+            return result[0] if result else None
+        except Exception as e:
+            print(f"Error : {e}")
+            return None
