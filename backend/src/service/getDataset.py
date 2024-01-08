@@ -1,7 +1,7 @@
 import psycopg2
 import requests
 from apify_client import ApifyClient
-from backend.src.service.db_connect import Database
+from db_connect import Database
 from datetime import datetime
 
 # Connection parameters
@@ -36,25 +36,26 @@ if response.status_code == 200:
             print(item["defaultDatasetId"])
             for data in client.dataset(item["defaultDatasetId"]).iterate_items():
                 print(data.get("name"))
-                location_name = data["name"]
+                location_id = db.findLocationId(data.get("location_id"))
+                print(location_id)
                 for post in data.get("latestPosts"):
-                    print(post.get("user").get("username"))
-                    taken_at = datetime.utcfromtimestamp(post["taken_at"])
+                    taken_at = post["taken_at"]
                     user_id = post["user"]["id"]
                     username = post["user"]["username"]
                     full_name = post["user"]["full_name"]
 
                     if post["caption"] != None :
                         caption = post["caption"]["text"]
-                        created_at = datetime.utcfromtimestamp(post["caption"]["created_at"])
+                        create_at = post["caption"]["created_at"]
 
-                    db.insertPostToTable(taken_at, user_id, username, full_name, caption, created_at, location_name)
+                    db.insertPostToInitialData(user_id, username, full_name, caption, create_at, taken_at, location_id)
 
             # delete dataset when the process is done
             # client.dataset(item["defualtDatasetId"]).delete()
             print("\n")
-                
     else:
         print("No datasets found for the last run.")
+    
+    db.close()
 else:
     print(f"Failed to get datasets. Status code: {response.status_code}")
