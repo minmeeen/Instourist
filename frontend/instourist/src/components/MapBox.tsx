@@ -6,8 +6,7 @@ import { createRoot } from 'react-dom/client'
 import { InstouristLocation } from '../constant/locations'
 import { useParams } from 'react-router-dom'
 
-mapboxgl.accessToken =
-  'pk.eyJ1IjoicGFpbnQ1NDBtYXBib3giLCJhIjoiY2xyNGhqaGx4MW85YjJrcW13NHZoeHZ0ZyJ9.rj429V71oEAb1O1ZAQdk3Q'
+mapboxgl.accessToken = process.env.MAPBOX_API_KEY ?? ''
 
 interface MapBoxProps {
   locationID: InstouristLocation | ''
