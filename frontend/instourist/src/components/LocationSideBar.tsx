@@ -36,7 +36,7 @@ export default function LocationSideBar(props: LocationSideBarProps) {
       <Box
         display={'flex'}
         width={'490px'}
-        height={'100vh'}
+        // height={'100vh'}
         padding={'24px'}
         flexDirection={'column'}
         alignItems={'flex-start'}
