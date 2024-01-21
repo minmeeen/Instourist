@@ -4,7 +4,9 @@ CREATE TABLE initial_data (
     username text,
     full_name text,
     caption text,
-    create_at timestamp,
-    taken_at timestamp,
-    location_id serial REFERENCES location(location_id)
+    post_created_at timestamp,
+    post_taken_at timestamp,
+    location_id serial REFERENCES location(location_id),
+    created_at timestamp,
+    created_by varchar
 );
