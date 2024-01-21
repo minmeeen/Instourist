@@ -1,29 +1,39 @@
 import pandas as pd
-import json
 from googletrans import Translator
 import re
-import psycopg2
+import sql 
+from db_connect import Database
+from datetime import date
 
-DB_PATH = 'jdbc:postgresql://localhost:5432/postgres'
-DB_NAME = "instourist"
-DB_USERNAME = "postgres"
-DB_PASSWORD = "postgres"
+today = date.today()
+
+connection_params = {
+    "host": "localhost",
+    "database": "instourist",
+    "user": "postgres",
+    "password": "postgres",
+    "port": "5432"
+}
+
+engine = f"postgresql://{connection_params['user']}:{connection_params['password']}@{connection_params['host']}:{connection_params['port']}/{connection_params['database']}"
+
 def getDataFromDB():
-    conn = None
     try:
-        print('Connecting…')
-        conn = psycopg2.connect(
-                host=os.environ[DB_PATH],
-                database=os.environDB_NAME[DB_NAME],
-                user=os.environ[DB_USERNAME],
-                password=os.environ[DB_PASSWORD])
-    
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
+        table_name = "initial_data"
+        query = f"SELECT * FROM {table_name}"
+        post_df = pd.read_sql(query, engine)
+    except Exception as e:
+        print("Connection error:", e)
 
-    print('All good, Connection successful!')
-    return conn
-        
+    try:
+        table_name = "language"
+        query = f"SELECT * FROM {table_name}"
+        language_df = pd.read_sql(query, engine)
+    except Exception as e:
+        print("Connection error:", e)
+
+    return post_df, language_df
+
 
 def cleansingContext(caption: str):
     emoji_pattern = re.compile(r'(http[s]?:\/\/)?[^\s(["<,>]*\.[^\s[",><]*|['
@@ -76,19 +86,28 @@ def langDetector(caption: str):
 
 
 def AnalyticData():
-    original_df = pd.read_csv(csv_path)
+    original_df, language_df = getDataFromDB()
     original_df = original_df.fillna('')
-    print(original_df)
+    original_df['cleaned_caption'] = original_df['caption'].apply(cleansingContext)
 
-    cleaned_data = original_df.apply(lambda row: cleansingContext(row['Name'], row['Bio'], row['Caption']), axis=1, result_type='expand')
-    
-    cleaned_data.columns = ['cleaned_name', 'cleaned_bio', 'cleaned_caption']
+    cleaned_data = original_df[['location_id', 'cleaned_caption', 'post_created_at', 'post_taken_at']]
     cleaned_data = cleaned_data.fillna('')
-    print(cleaned_data)
+    cleaned_data['used_language'] = cleaned_data['cleaned_caption'].apply(langDetector)
 
-    modified_df = cleaned_data.apply(lambda row: langDetector(row['cleaned_name'], row['cleaned_bio'], row['cleaned_caption']), axis=1, result_type='expand')
-    modified_df.columns = ['langName', 'langBio', 'langCap']
-
+    modified_df = cleaned_data[['location_id', 'used_language', 'cleaned_caption', 'post_created_at', 'post_taken_at']]
     modified_df = modified_df.fillna('')
-    print(modified_df)
 
+    merged_data = pd.merge(modified_df, language_df, how='left', left_on='used_language', right_on='iso_code')
+    merged_data = merged_data.drop('used_language', axis=1)
+    merged_data = merged_data.drop('language_id', axis=1)
+
+    merged_data = merged_data.dropna(subset=['cleaned_caption'])
+    merged_data['created_at'] = pd.Timestamp.now()
+    merged_data['created_by'] = 'System'
+
+    try:
+        merged_data.to_sql('post_language_detected', con=engine, if_exists='append', index=False)
+    except Exception as e:
+        print("Write data error:", e)
+
+# AnalyticData()
