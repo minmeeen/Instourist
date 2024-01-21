@@ -27,7 +27,6 @@ export default function LocationSideBar(props: LocationSideBarProps) {
   const [timeline, setTimeline] = React.useState('')
   const theme = useTheme()
   const colorMode = useContext(ColorModeContext)
-
   const hanldeClickSelectTimeline = (event: SelectChangeEvent) => {
     setTimeline(event.target.value as string)
   }
@@ -37,13 +36,11 @@ export default function LocationSideBar(props: LocationSideBarProps) {
         display={'flex'}
         width={'490px'}
         // height={'100vh'}
-        padding={'24px'}
+
         flexDirection={'column'}
         alignItems={'flex-start'}
         gap={'16px'}
         flexShrink={0}
-        borderRight={'1px solid rgba(0,0,0,0.12)'}
-        bgcolor={'background.default'}
       >
         <Box
           id='location-headline'
@@ -130,7 +127,6 @@ export default function LocationSideBar(props: LocationSideBarProps) {
             </Box>
           </Box>
         </Box>
-        <ExploreOtherLocation />
       </Box>
     )
   } else {

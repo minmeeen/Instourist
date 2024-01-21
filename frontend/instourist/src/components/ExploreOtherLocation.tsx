@@ -1,5 +1,5 @@
-import { Box, Button, Icon, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { Box, Button, Divider, Icon, Typography } from '@mui/material'
+import React, { SetStateAction, useContext, useState } from 'react'
 import CustomButton from './CustomButton'
 import { touristDestinationType } from '../type/touristDestinationType'
 import {
@@ -13,8 +13,18 @@ import {
 import LocationCard from './LocationCard'
 import { useNavigate } from 'react-router-dom'
 import nature from '../img/nature.svg'
+import { theme } from '../constant/theme'
+import BACK_LIGHT from '../img/customback-light.svg'
+import BACK_DARK from '../img/customback-dark.svg'
 
-export default function ExploreOtherLocation() {
+interface ExploreOtherLocationProps {
+  fullSize: boolean
+  setFullSize?: React.Dispatch<SetStateAction<boolean>>
+  location?: InstouristLocation | ''
+}
+
+export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
+  const { fullSize, setFullSize, location } = props
   const [selectDestination, setSelectDestination] =
     useState<touristDestinationType>()
   const [showLocation, setShowLocation] = useState<InstouristLocation[]>([])
@@ -25,6 +35,9 @@ export default function ExploreOtherLocation() {
   }
 
   const handleClickSelect = (destination: touristDestinationType) => {
+    if (setFullSize) {
+      setFullSize(true)
+    }
     setSelectDestination(destination)
     if (destination === locationENUM.nature) setShowLocation(NatureLocation)
     else if (destination === locationENUM.art)
@@ -41,12 +54,40 @@ export default function ExploreOtherLocation() {
   )
   return (
     <Box>
-      <Typography color={'text.primary'}>Explore other locations</Typography>
+      {fullSize && (
+        <Box paddingBottom={'24px'}>
+          <Box
+            display={'flex'}
+            width={'100%'}
+            justifyContent={'flex-end'}
+            alignItems={'center'}
+          >
+            <Typography color={'text.primary'}>
+              Back to {location ? location.locationEN : ''}
+            </Typography>
+            <Button onClick={() => setFullSize && setFullSize(false)}>
+              <img
+                src={theme.palette.mode === 'dark' ? BACK_DARK : BACK_LIGHT}
+                width={'20px'}
+                height={'20px'}
+              ></img>
+            </Button>
+          </Box>
+
+          <Box width={'100%'}>
+            <Divider variant='fullWidth' orientation='horizontal' />
+          </Box>
+        </Box>
+      )}
+      <Typography color={'text.primary'} variant='h4'>
+        Explore other locations
+      </Typography>
       <Box
         display={'flex'}
         alignItems={'center'}
         justifyContent={'space-between'}
         gap={'16px'}
+        paddingTop={'16px'}
       >
         <CustomButton
           startIcon={natureIcon}
@@ -73,23 +114,25 @@ export default function ExploreOtherLocation() {
           text={locationENUM.modern}
         />
       </Box>
-      <Box
-        display={'flex'}
-        flexDirection={'column'}
-        alignItems={'flex-start'}
-        gap={'24px'}
-        alignSelf={'stretch'}
-        paddingTop={'12px'}
-      >
-        {showLocation.map((location) => (
-          <LocationCard
-            location={location}
-            onClickSeeDetail={() =>
-              navigate(`/location/${location.locationID}`)
-            }
-          />
-        ))}
-      </Box>
+      {fullSize && (
+        <Box
+          display={'flex'}
+          flexDirection={'column'}
+          alignItems={'flex-start'}
+          gap={'24px'}
+          alignSelf={'stretch'}
+          paddingTop={'12px'}
+        >
+          {showLocation.map((location) => (
+            <LocationCard
+              location={location}
+              onClickSeeDetail={() =>
+                navigate(`/location/${location.locationID}`)
+              }
+            />
+          ))}
+        </Box>
+      )}
     </Box>
   )
 }

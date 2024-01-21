@@ -1,4 +1,4 @@
-import { createContext, useRef, useState } from 'react'
+import { createContext, useRef, useState, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import { Box } from '@mui/material'
@@ -6,6 +6,7 @@ import LocationSideBar from '../components/LocationSideBar'
 import { findLocationID } from '../functions/findLocationID'
 import MapBoxStore from '../components/MapBoxStore'
 import MapBox from '../components/MapBox'
+import ExploreOtherLocation from '../components/ExploreOtherLocation'
 
 export const ExploreOtherLocationContext = createContext({
   toggleExploreMode: () => {},
@@ -22,23 +23,31 @@ let initial = {
 export default function LocationDetail() {
   const params = useParams()
   const locationID = params.locationID
-  const mapRef = useRef()
-  const [viewport, setViewport] = useState(initial)
+
+  const [fullSize, setFullSize] = useState<boolean>(false)
 
   return (
     <>
       <Navbar variant='other' />
 
       <Box display={'flex'}>
-        <LocationSideBar location={findLocationID(locationID!)} />
-        <MapBox locationID={findLocationID(locationID!)} />
-        {/* <Box width={'100%'} height={'100%'}>
-          <MapBoxStore
-            mapRef={mapRef}
-            viewport={viewport}
-            setViewport={setViewport}
+        <Box
+          padding={'24px'}
+          borderRight={'1px solid rgba(0,0,0,0.12)'}
+          bgcolor={'background.default'}
+        >
+          {!fullSize && (
+            <LocationSideBar location={findLocationID(locationID!)} />
+          )}
+
+          <ExploreOtherLocation
+            fullSize={fullSize}
+            setFullSize={setFullSize}
+            location={findLocationID(locationID!)}
           />
-        </Box> */}
+        </Box>
+
+        <MapBox locationID={findLocationID(locationID!)} />
       </Box>
     </>
   )

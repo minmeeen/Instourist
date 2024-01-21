@@ -26,7 +26,7 @@ export default function LocationNotFound() {
         Sorry, the location you're looking for is not avaliable or no longer
         existed.
       </Typography>
-      <ExploreOtherLocation />
+      <ExploreOtherLocation fullSize={true} />
     </Box>
   )
 }

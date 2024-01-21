@@ -55,16 +55,23 @@ export default function MapBox(props: MapBoxProps) {
       setLat(+map.getCenter().lat.toFixed(4))
       setZoom(+map.getZoom().toFixed(2))
       touristLocation.features.map((feature) => {
+        const el = document.createElement('div')
+        el.id = `marker-${feature.properties.id}`
+        /* Assign the `marker` class to each marker for styling. */
+        el.className = 'marker'
         new mapboxgl.Marker()
           .setLngLat(feature.geometry.coordinates as LngLatLike)
           .addTo(map)
-          .on('click', (e) => {
-            console.log(
-              'first',
-              feature.geometry.coordinates[0],
-              feature.geometry.coordinates[1]
-            )
-          })
+
+        el.addEventListener('drag', (e) => {
+          /* Fly to the point */
+          // map.flyTo({
+          //   center: feature.geometry.coordinates as LngLatLike,
+          //   zoom: zoom,
+          // })
+          // console.log('first', feature.geometry.coordinates as LngLatLike)
+          console.log(e)
+        })
       })
     })
 
