@@ -7,6 +7,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.2",
     "@mui/material": "^5.15.2",
+    "@mui/x-charts": "^6.19.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -14,9 +15,10 @@
     "@types/node": "^16.18.68",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
-    "mapbox-gl": "^3.0.1",
+    "mapbox-gl": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-map-gl": "^7.1.7",
     "react-router-dom": "^6.21.0",
     "react-scripts": "5.0.1",
     "svg-icon": "^0.8.2",
@@ -49,6 +51,9 @@
   },
   "devDependencies": {
     "@types/mapbox-gl": "^2.7.19",
-    "prettier": "3.1.1"
+    "json-loader": "^0.5.7",
+    "prettier": "3.1.1",
+    "transform-loader": "^0.2.4",
+    "webworkify-webpack": "^1.0.6"
   }
 }
