@@ -51,9 +51,7 @@ const AppMap = ({ mapRef, viewport, setViewport }) => {
   return (
     <ReactMapGL
       ref={mapRef}
-      mapboxAccessToken={
-        'pk.eyJ1IjoicGFpbnQ1NDBtYXBib3giLCJhIjoiY2xyNGhqaGx4MW85YjJrcW13NHZoeHZ0ZyJ9.rj429V71oEAb1O1ZAQdk3Q'
-      }
+      mapboxAccessToken={''}
       initialViewState={viewport}
       onViewportChange={(viewport) => setViewport(viewport)}
       mapStyle='mapbox://styles/mapbox/streets-v11'

@@ -7,8 +7,7 @@ import { InstouristLocation } from '../constant/locations'
 import { useParams } from 'react-router-dom'
 
 // this is a general token for all mapbox user
-mapboxgl.accessToken =
-  'pk.eyJ1IjoicGFpbnQ1NDBtYXBib3giLCJhIjoiY2xyNGhqaGx4MW85YjJrcW13NHZoeHZ0ZyJ9.rj429V71oEAb1O1ZAQdk3Q'
+mapboxgl.accessToken = ''
 
 interface MapBoxProps {
   locationID: InstouristLocation | ''
