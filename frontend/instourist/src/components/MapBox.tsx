@@ -50,29 +50,34 @@ export default function MapBox(props: MapBoxProps) {
     // Add navigation control (the +/- zoom buttons)
     map.addControl(new mapboxgl.NavigationControl(), 'top-right')
 
+    touristLocation.features.map((feature) => {
+      const el = document.createElement('div')
+      el.id = `marker-${feature.properties.id}`
+      /* Assign the `marker` class to each marker for styling. */
+      el.className = 'marker'
+      new mapboxgl.Marker()
+        .setLngLat(feature.geometry.coordinates as LngLatLike)
+        .addTo(map)
+
+      el.addEventListener('click', (e) => {
+        /* Fly to the point */
+        // map.flyTo({
+        //   center: feature.geometry.coordinates as LngLatLike,
+        //   zoom: zoom,
+        // })
+        // console.log('first', feature.geometry.coordinates as LngLatLike)
+        console.log(e)
+      })
+    })
+
     map.on('move', () => {
       setLng(+map.getCenter().lng.toFixed(4))
       setLat(+map.getCenter().lat.toFixed(4))
       setZoom(+map.getZoom().toFixed(2))
-      touristLocation.features.map((feature) => {
-        const el = document.createElement('div')
-        el.id = `marker-${feature.properties.id}`
-        /* Assign the `marker` class to each marker for styling. */
-        el.className = 'marker'
-        new mapboxgl.Marker()
-          .setLngLat(feature.geometry.coordinates as LngLatLike)
-          .addTo(map)
+    })
 
-        el.addEventListener('drag', (e) => {
-          /* Fly to the point */
-          // map.flyTo({
-          //   center: feature.geometry.coordinates as LngLatLike,
-          //   zoom: zoom,
-          // })
-          // console.log('first', feature.geometry.coordinates as LngLatLike)
-          console.log(e)
-        })
-      })
+    map.on('click', (e) => {
+      console.log('e', e)
     })
 
     return () => map.remove()

@@ -14,7 +14,6 @@ export default function LocationNotFound() {
       alignItems={'flex-start'}
       gap={'16px'}
       flexShrink={0}
-      borderRight={'1px solid rgba(0,0,0,0.12)'}
       bgcolor={'background.default'}
     >
       <Stack flexDirection={'row'} alignItems={'center'} gap={'8px'}>
@@ -26,7 +25,6 @@ export default function LocationNotFound() {
         Sorry, the location you're looking for is not avaliable or no longer
         existed.
       </Typography>
-      <ExploreOtherLocation fullSize={true} />
     </Box>
   )
 }

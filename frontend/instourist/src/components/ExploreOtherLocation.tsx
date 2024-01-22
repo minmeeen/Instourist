@@ -79,7 +79,7 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
           </Box>
         </Box>
       )}
-      <Typography color={'text.primary'} variant='h4'>
+      <Typography color={'text.primary'} variant='h5'>
         Explore other locations
       </Typography>
       <Box
@@ -87,7 +87,6 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
         alignItems={'center'}
         justifyContent={'space-between'}
         gap={'16px'}
-        paddingTop={'16px'}
       >
         <CustomButton
           startIcon={natureIcon}
@@ -129,6 +128,8 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
               onClickSeeDetail={() =>
                 navigate(`/location/${location.locationID}`)
               }
+              fullSize={fullSize}
+              setFullSize={setFullSize!}
             />
           ))}
         </Box>

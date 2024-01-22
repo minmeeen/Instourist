@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { InstouristLocation } from '../constant/locations'
 import {
   Box,
@@ -8,15 +8,13 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  Stack,
   Typography,
   useTheme,
 } from '@mui/material'
-import ExploreOtherLocation from './ExploreOtherLocation'
-import { ColorModeContext } from '../App'
 import findLocationTypeIcon from '../functions/findLocationTypeIcon'
-import { Error } from '@mui/icons-material'
 import LocationNotFound from './LocationNotFound'
+import LocationLanguageChart from './LocationLanguageChart'
+import LocationLanguageDetail from './LocationLanguageDetail'
 
 interface LocationSideBarProps {
   location: InstouristLocation | ''
@@ -26,7 +24,6 @@ export default function LocationSideBar(props: LocationSideBarProps) {
   const { location } = props
   const [timeline, setTimeline] = React.useState('')
   const theme = useTheme()
-  const colorMode = useContext(ColorModeContext)
   const hanldeClickSelectTimeline = (event: SelectChangeEvent) => {
     setTimeline(event.target.value as string)
   }
@@ -35,12 +32,9 @@ export default function LocationSideBar(props: LocationSideBarProps) {
       <Box
         display={'flex'}
         width={'490px'}
-        // height={'100vh'}
-
         flexDirection={'column'}
         alignItems={'flex-start'}
-        gap={'16px'}
-        flexShrink={0}
+        gap={'4px'}
       >
         <Box
           id='location-headline'
@@ -48,7 +42,7 @@ export default function LocationSideBar(props: LocationSideBarProps) {
           flexDirection={'column'}
           justifyContent={'flex-end'}
           alignItems={'flex-start'}
-          gap={'10px'}
+          gap={'4px'}
           alignSelf={'stretch'}
         >
           <Box
@@ -73,7 +67,7 @@ export default function LocationSideBar(props: LocationSideBarProps) {
             alignItems={'flex-start'}
           >
             <Typography
-              variant='h1'
+              variant='h3'
               sx={{ lineHeight: '110%' }}
               color={'text.primary'}
             >
@@ -81,7 +75,7 @@ export default function LocationSideBar(props: LocationSideBarProps) {
             </Typography>
             <Typography
               color={'text.primary'}
-              variant='h4'
+              variant='h6'
               sx={{ lineHeight: '120%' }}
             >
               {location.locationTH}
@@ -95,9 +89,9 @@ export default function LocationSideBar(props: LocationSideBarProps) {
             flexDirection={'column'}
             width={'100%'}
             alignItems={'center'}
-            gap={'8px'}
+            gap={'4px'}
           >
-            <Typography color={'text.primary'}>
+            <Typography color={'text.primary'} variant='h5'>
               Languages used by tourists at this place
             </Typography>
             <Box
@@ -108,7 +102,9 @@ export default function LocationSideBar(props: LocationSideBarProps) {
               alignItems={'center'}
               justifyContent={'center'}
             >
-              <Typography color={'text.primary'}>in the past</Typography>
+              <Typography color={'text.primary'} variant='h5'>
+                in the past
+              </Typography>
               <FormControl sx={{ width: '200px' }} size='small'>
                 <InputLabel id='demo-simple-select-label'>Timeline</InputLabel>
                 <Select
@@ -117,6 +113,7 @@ export default function LocationSideBar(props: LocationSideBarProps) {
                   value={timeline}
                   label='Timeline'
                   onChange={hanldeClickSelectTimeline}
+                  defaultValue='24 Hours'
                 >
                   <MenuItem value={24}>24 Hours</MenuItem>
                   <MenuItem value={48}>48 Hours</MenuItem>
@@ -125,6 +122,13 @@ export default function LocationSideBar(props: LocationSideBarProps) {
                 </Select>
               </FormControl>
             </Box>
+            <LocationLanguageChart
+              locationID={location.locationID}
+              timeline={timeline}
+            />
+          </Box>
+          <Box width={'100%'}>
+            <Divider variant='fullWidth' orientation='horizontal' />
           </Box>
         </Box>
       </Box>

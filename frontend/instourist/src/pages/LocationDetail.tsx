@@ -32,9 +32,10 @@ export default function LocationDetail() {
 
       <Box display={'flex'}>
         <Box
-          padding={'24px'}
+          padding={'12px 24px'}
           borderRight={'1px solid rgba(0,0,0,0.12)'}
           bgcolor={'background.default'}
+          justifyContent={'space-between'}
         >
           {!fullSize && (
             <LocationSideBar location={findLocationID(locationID!)} />
