@@ -28,7 +28,7 @@ export default function Homepage() {
         <Box
           display={'flex'}
           flexDirection={'column'}
-          paddingTop={'120px'}
+          paddingTop={'60px'}
           justifyContent={'center'}
           alignItems={'center'}
         >
