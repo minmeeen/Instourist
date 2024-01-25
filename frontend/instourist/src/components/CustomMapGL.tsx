@@ -3,15 +3,17 @@ import { MAPBOX_ACCESS_TOKEN } from '../constant/accessToken'
 import { touristLocations } from '../constant/touristLocations'
 import { useEffect, useState } from 'react'
 import MapGL, { Marker, NavigationControl } from '@urbica/react-map-gl'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { common } from '@mui/material/colors'
+import locations from '../constant/locations.json'
 
 interface customMapGLProps {
-  locationID: string
+  locationID?: string
 }
 
 export default function CustomMapGL(props: customMapGLProps) {
   const { locationID } = props
+  const params = useParams()
   const navigate = useNavigate()
   const theme = useTheme()
 
@@ -27,10 +29,11 @@ export default function CustomMapGL(props: customMapGLProps) {
     theme.palette.mode === 'dark'
       ? 'mapbox://styles/mapbox/navigation-night-v1'
       : 'mapbox://styles/mapbox/streets-v11'
+
   const [viewport, setViewport] = useState({
     latitude: defaultlat ?? 18.78,
     longitude: defaultlng ?? 99,
-    zoom: 16,
+    zoom: 13,
   })
 
   const onClickMarker = (lg: number, lat: number, id: string) => {
@@ -60,8 +63,6 @@ export default function CustomMapGL(props: customMapGLProps) {
           <Marker
             longitude={f.geometry.longitude}
             latitude={f.geometry.latitude}
-            // onDragEnd={onDragEnd}
-            // draggable
             onClick={() =>
               onClickMarker(
                 f.geometry.longitude,
@@ -69,8 +70,16 @@ export default function CustomMapGL(props: customMapGLProps) {
                 f.properties.id
               )
             }
+            anchor='center'
           >
-            <Box display={'flex'} flexDirection={'row'} gap={'8px'}>
+            <Box
+              display={'flex'}
+              flexDirection={'column'}
+              // gap={'8px'}
+              alignContent={'center'}
+              position={'absolute'}
+              width={'160px'}
+            >
               <div
                 className={
                   f.properties.id === locationID ? 'marker-current' : 'marker'
@@ -88,11 +97,36 @@ export default function CustomMapGL(props: customMapGLProps) {
                     theme.palette.mode === 'dark'
                       ? '2px 2px 0 #000, -2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000'
                       : '2px 2px 0 #fff, -2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff',
+                  position: 'absolute',
+                  paddingLeft: '32px',
                 }}
               >
                 {f.properties.title}
               </Typography>
             </Box>
+            {/* <div
+              className={
+                f.properties.id === locationID ? 'marker-current' : 'marker'
+              }
+            />
+            
+            <Typography
+              variant='subtitle1'
+              color={
+                theme.palette.mode === 'dark'
+                  ? common.white
+                  : theme.palette.secondary.main
+              }
+              sx={{
+                textShadow:
+                  theme.palette.mode === 'dark'
+                    ? '2px 2px 0 #000, -2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000'
+                    : '2px 2px 0 #fff, -2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff',
+              }}
+              position={'absolute'}
+            >
+              {f.properties.title}
+            </Typography> */}
           </Marker>
         ))}
       </MapGL>
