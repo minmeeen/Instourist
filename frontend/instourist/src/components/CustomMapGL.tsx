@@ -1,10 +1,10 @@
 import { Box, Typography, useTheme } from '@mui/material'
 import { MAPBOX_ACCESS_TOKEN } from '../constant/accessToken'
 import { touristLocations } from '../constant/touristLocations'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import MapGL, { Marker, NavigationControl } from '@urbica/react-map-gl'
-import { theme } from '../constant/theme'
 import { useNavigate } from 'react-router-dom'
+import { common } from '@mui/material/colors'
 
 interface customMapGLProps {
   locationID: string
@@ -12,33 +12,44 @@ interface customMapGLProps {
 
 export default function CustomMapGL(props: customMapGLProps) {
   const { locationID } = props
+  const navigate = useNavigate()
+  const theme = useTheme()
 
-  const defaultlng = touristLocations.features.find(
+  let defaultlng = touristLocations.features.find(
     (x) => x.properties.id === locationID
   )?.geometry.longitude
 
-  const defaultlat = touristLocations.features.find(
+  let defaultlat = touristLocations.features.find(
     (x) => x.properties.id === locationID
   )?.geometry.latitude
 
+  let mapStyle =
+    theme.palette.mode === 'dark'
+      ? 'mapbox://styles/mapbox/navigation-night-v1'
+      : 'mapbox://styles/mapbox/streets-v11'
   const [viewport, setViewport] = useState({
     latitude: defaultlat ?? 18.78,
     longitude: defaultlng ?? 99,
     zoom: 16,
   })
-  const navigate = useNavigate()
 
   const onClickMarker = (lg: number, lat: number, id: string) => {
-    navigate(`/location/${id}`)
     setViewport({ latitude: lat, longitude: lg, zoom: 16 })
+    navigate(`/location/${id}`)
   }
+
+  useEffect(() => {
+    if (theme.palette.mode === 'dark')
+      mapStyle = 'mapbox://styles/mapbox/navigation-night-v1'
+    else mapStyle = 'mapbox://styles/mapbox/streets-v11'
+  }, [theme.palette.mode])
 
   return (
     <>
       <MapGL
         accessToken={MAPBOX_ACCESS_TOKEN}
-        mapStyle={'mapbox://styles/mapbox/streets-v11'}
-        style={{ width: '100%', height: '800px' }}
+        mapStyle={mapStyle}
+        style={{ width: '100%', height: '95vh' }}
         longitude={viewport.longitude}
         latitude={viewport.latitude}
         zoom={16}
@@ -67,10 +78,16 @@ export default function CustomMapGL(props: customMapGLProps) {
               />
               <Typography
                 variant='subtitle1'
-                color={theme.palette.secondary.main}
+                color={
+                  theme.palette.mode === 'dark'
+                    ? common.white
+                    : theme.palette.secondary.main
+                }
                 sx={{
                   textShadow:
-                    '2px 2px 0 #fff, -2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff',
+                    theme.palette.mode === 'dark'
+                      ? '2px 2px 0 #000, -2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000'
+                      : '2px 2px 0 #fff, -2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff',
                 }}
               >
                 {f.properties.title}

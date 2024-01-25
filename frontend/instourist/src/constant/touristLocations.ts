@@ -58,8 +58,8 @@ export const touristLocations = {
         title: 'Wat Gate Garam',
       },
       geometry: {
-        latitude: 18.7924,
-        longitude: 99.0027,
+        latitude: 18.7925,
+        longitude: 99.0026,
 
         type: 'Point',
       },
