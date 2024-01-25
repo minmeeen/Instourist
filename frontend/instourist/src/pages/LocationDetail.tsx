@@ -1,13 +1,16 @@
 import { createContext, useRef, useState, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import Navbar from '../components/Navbar'
-import { Box, useTheme } from '@mui/material'
+import { Box, Typography, useTheme } from '@mui/material'
 import LocationSideBar from '../components/LocationSideBar'
 import { findLocationID } from '../functions/findLocationID'
-import MapBoxStore from '../components/MapBoxStore'
-import MapBox from '../components/MapBox'
 import ExploreOtherLocation from '../components/ExploreOtherLocation'
-import AppMap from '../components/MapBoxStore'
+import MapGL, { Marker } from '@urbica/react-map-gl'
+import { MAPBOX_ACCESS_TOKEN } from '../constant/accessToken'
+import touristLocation from '../constant/locations.json'
+import { LngLatLike } from 'mapbox-gl'
+import { touristLocations } from '../constant/touristLocations'
+import CustomMapGL from '../components/CustomMapGL'
 
 export const ExploreOtherLocationContext = createContext({
   toggleExploreMode: () => {},
@@ -16,7 +19,7 @@ export const ExploreOtherLocationContext = createContext({
 let initial = {
   latitude: 18.78,
   longitude: 99,
-  zoom: 9,
+  zoom: 12,
   pitch: 0,
   antialias: true,
 }
@@ -25,10 +28,15 @@ export default function LocationDetail() {
   const params = useParams()
   const locationID = params.locationID
   const theme = useTheme()
-  const mapRef = useRef()
-  const [viewport, setViewport] = useState(initial)
-  const [polygonCord, setPolygonCord] = useState([])
   const [fullSize, setFullSize] = useState<boolean>(false)
+
+  const style = {
+    padding: '10px',
+    color: '#fff',
+    cursor: 'pointer',
+    background: '#1978c8',
+    borderRadius: '6px',
+  }
 
   return (
     <>
@@ -52,8 +60,10 @@ export default function LocationDetail() {
           />
         </Box>
 
-        {/* <MapBox locationID={findLocationID(locationID!)} /> */}
-        <AppMap mapRef={mapRef} viewport={viewport} setViewport={setViewport} />
+        {/* <MapBox locationID={findLocationID(locationID!)} />
+        <AppMap mapRef={mapRef} viewport={viewport} setViewport={setViewport} /> */}
+
+        <CustomMapGL locationID={locationID!} />
       </Box>
     </>
   )

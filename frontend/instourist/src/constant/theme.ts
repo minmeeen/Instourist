@@ -97,7 +97,7 @@ export const theme = createTheme({
       main: '#FF0038',
     },
     secondary: {
-      main: '#6A6E83',
+      main: '#51A3A3',
     },
     grey: {
       200: '#C7C7C7',
