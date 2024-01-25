@@ -7,7 +7,8 @@ import { InstouristLocation } from '../constant/locations'
 import { useParams } from 'react-router-dom'
 
 // this is a general token for all mapbox user
-mapboxgl.accessToken = ''
+mapboxgl.accessToken =
+  'pk.eyJ1IjoicGFpbnQ1NDBtYXBib3giLCJhIjoiY2xyNGhqaGx4MW85YjJrcW13NHZoeHZ0ZyJ9.rj429V71oEAb1O1ZAQdk3Q'
 
 interface MapBoxProps {
   locationID: InstouristLocation | ''
@@ -83,7 +84,7 @@ export default function MapBox(props: MapBoxProps) {
   }, [theme.palette.mode]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Box width={'100%'}>
+    <Box width={'100%'} height={'100%'}>
       <div className='sidebarStyle'></div>
       <div className='map-container' ref={mapContainerRef} />
     </Box>

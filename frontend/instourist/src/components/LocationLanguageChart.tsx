@@ -105,25 +105,25 @@ export const LanguagesDetailWithoutThai = [
   {
     id: 0,
     language: 'English',
-    percent: `${((10 * 100) / 85).toFixed(2)} %`,
+    percent: `${((10 * 100) / 70).toFixed(2)} %`,
     total: 10,
   },
   {
     id: 1,
     language: 'France',
-    percent: `${((20 * 100) / 85).toFixed(2)} %`,
+    percent: `${((20 * 100) / 70).toFixed(2)} %`,
     total: 20,
   },
   {
     id: 2,
     language: 'Korean',
-    percent: `${((20 * 100) / 85).toFixed(2)} %`,
+    percent: `${((20 * 100) / 70).toFixed(2)} %`,
     total: 20,
   },
   {
     id: 3,
     language: 'Spanish',
-    percent: `${((20 * 100) / 85).toFixed(2)} %`,
+    percent: `${((20 * 100) / 70).toFixed(2)} %`,
     total: 20,
   },
 ]
@@ -156,7 +156,11 @@ export default function LocationLanguageChart(
         />
 
         <FormControlLabel
-          label='Include Thai language'
+          label={
+            <Typography variant='h6' color={'text.primary'}>
+              Include Thai language
+            </Typography>
+          }
           control={
             <Checkbox
               onClick={() => setSelectedThai(!selectedThai)}
@@ -169,20 +173,53 @@ export default function LocationLanguageChart(
             />
           }
         />
+        {selectedThai
+          ? LanguagesDetailWithThai.map((x) => (
+              <Box
+                display={'flex'}
+                width={'90%'}
+                justifyContent={'space-between'}
+              >
+                <Box width={'40%'}>
+                  <Typography variant='h6' color={'text.primary'}>
+                    {' '}
+                    {x.language}
+                  </Typography>
+                </Box>
 
-        {LanguagesDetailWithThai.map((x) => (
-          <Box display={'flex'} width={'90%'} justifyContent={'space-between'}>
-            <Box width={'40%'}>
-              <Typography variant='h6'> {x.language}</Typography>
-            </Box>
+                <Typography variant='h6' color={'text.primary'}>
+                  {' '}
+                  {x.percent}
+                </Typography>
+                <Typography variant='h6' color={'gray'}>
+                  {' '}
+                  {x.total} users
+                </Typography>
+              </Box>
+            ))
+          : LanguagesDetailWithoutThai.map((x) => (
+              <Box
+                display={'flex'}
+                width={'90%'}
+                justifyContent={'space-between'}
+              >
+                <Box width={'40%'}>
+                  <Typography variant='h6' color={'text.primary'}>
+                    {' '}
+                    {x.language}
+                  </Typography>
+                </Box>
 
-            <Typography variant='h6'> {x.percent}</Typography>
-            <Typography variant='h6' color={'gray'}>
-              {' '}
-              {x.total} users
-            </Typography>
-          </Box>
-        ))}
+                <Typography variant='h6' color={'text.primary'}>
+                  {' '}
+                  {x.percent}
+                </Typography>
+                <Typography variant='h6' color={'gray'}>
+                  {' '}
+                  {x.total} users
+                </Typography>
+              </Box>
+            ))}
       </Box>
     </>
   )
