@@ -42,6 +42,14 @@ export default function CustomMapGL(props: customMapGLProps) {
   }
 
   useEffect(() => {
+    setViewport({
+      latitude: defaultlat ?? 18.78,
+      longitude: defaultlng ?? 99,
+      zoom: 13,
+    })
+  }, [locationID])
+
+  useEffect(() => {
     if (theme.palette.mode === 'dark')
       mapStyle = 'mapbox://styles/mapbox/navigation-night-v1'
     else mapStyle = 'mapbox://styles/mapbox/streets-v11'
@@ -104,29 +112,6 @@ export default function CustomMapGL(props: customMapGLProps) {
                 {f.properties.title}
               </Typography>
             </Box>
-            {/* <div
-              className={
-                f.properties.id === locationID ? 'marker-current' : 'marker'
-              }
-            />
-            
-            <Typography
-              variant='subtitle1'
-              color={
-                theme.palette.mode === 'dark'
-                  ? common.white
-                  : theme.palette.secondary.main
-              }
-              sx={{
-                textShadow:
-                  theme.palette.mode === 'dark'
-                    ? '2px 2px 0 #000, -2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000'
-                    : '2px 2px 0 #fff, -2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff',
-              }}
-              position={'absolute'}
-            >
-              {f.properties.title}
-            </Typography> */}
           </Marker>
         ))}
       </MapGL>
