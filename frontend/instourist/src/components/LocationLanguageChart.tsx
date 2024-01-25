@@ -193,7 +193,7 @@ export default function LocationLanguageChart(
                 </Typography>
                 <Typography variant='h6' color={'gray'}>
                   {' '}
-                  {x.total} users
+                  {x.total} posts
                 </Typography>
               </Box>
             ))
@@ -216,7 +216,7 @@ export default function LocationLanguageChart(
                 </Typography>
                 <Typography variant='h6' color={'gray'}>
                   {' '}
-                  {x.total} users
+                  {x.total} posts
                 </Typography>
               </Box>
             ))}
