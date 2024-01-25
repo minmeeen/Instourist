@@ -1,50 +1,41 @@
 import pandas as pd
-import json
 from googletrans import Translator
 import re
+import sql 
+from db_connect import Database
+from datetime import date
 
-def AnalyticData():
-    original_df = pd.read_csv(csv_path)
-    original_df = original_df.fillna('')
-    print(original_df)
+today = date.today()
 
-    cleaned_data = original_df.apply(lambda row: cleansingContext(row['Name'], row['Bio'], row['Caption']), axis=1, result_type='expand')
-    
-    cleaned_data.columns = ['cleaned_name', 'cleaned_bio', 'cleaned_caption']
-    cleaned_data = cleaned_data.fillna('')
-    print(cleaned_data)
+connection_params = {
+    "host": "localhost",
+    "database": "instourist",
+    "user": "postgres",
+    "password": "postgres",
+    "port": "5432"
+}
 
-    modified_df = cleaned_data.apply(lambda row: langDetector(row['cleaned_name'], row['cleaned_bio'], row['cleaned_caption']), axis=1, result_type='expand')
-    modified_df.columns = ['langName', 'langBio', 'langCap']
+engine = f"postgresql://{connection_params['user']}:{connection_params['password']}@{connection_params['host']}:{connection_params['port']}/{connection_params['database']}"
 
-    modified_df = modified_df.fillna('')
-    print(modified_df)
+def getDataFromDB():
+    try:
+        table_name = "initial_data"
+        query = f"SELECT * FROM {table_name}"
+        post_df = pd.read_sql(query, engine)
+    except Exception as e:
+        print("Connection error:", e)
+
+    try:
+        table_name = "language"
+        query = f"SELECT * FROM {table_name}"
+        language_df = pd.read_sql(query, engine)
+    except Exception as e:
+        print("Connection error:", e)
+
+    return post_df, language_df
 
 
-def getDataFromDB(table):
-    f = open('/content/dataset.json', encoding="utf-8")
-
-    data = json.load(f)
-
-    posts = []
-    for i in data[0]['latestPosts']:
-        taken_at = i['taken_at']
-        user_id = i['user']['id']
-        username = i['user']['username']
-        full_name = i['user']['full_name']
-
-        if i['caption'] != None:
-            caption = i['caption'].get("text")
-            created_at = i['caption'].get("created_at")
-        posts.append([taken_at, user_id, username, full_name, caption, created_at])
-
-    df = pd.DataFrame(posts)
-
-    df.to_csv('posts.csv')
-    print(df)
-    f.close()
-
-def cleansingContext(name: str, bio: str, caption: str):
+def cleansingContext(caption: str):
     emoji_pattern = re.compile(r'(http[s]?:\/\/)?[^\s(["<,>]*\.[^\s[",><]*|['
                         u"\U0001F600-\U0001F64F"  # emoticons
                         u"\U0001F300-\U0001F5FF"  # symbols & pictographs
@@ -62,27 +53,27 @@ def cleansingContext(name: str, bio: str, caption: str):
                         u"\ufe0f"                # dingbats
                         u"\u3030"                # Wavy Dash
                            "]+", flags=re.UNICODE)
-    cleaned_name = emoji_pattern.sub(r'', name) if name and name.strip() else None
-    cleaned_bio = emoji_pattern.sub(r'', bio) if bio and bio.strip() else None
+    # cleaned_name = emoji_pattern.sub(r'', name) if name and name.strip() else None
+    # cleaned_bio = emoji_pattern.sub(r'', bio) if bio and bio.strip() else None
     cleaned_caption = emoji_pattern.sub(r'', caption) if caption and caption.strip() else None
-    return cleaned_name, cleaned_bio, cleaned_caption
+    return cleaned_caption
 
 
-def langDetector(name: str, bio: str, caption: str):
+def langDetector(caption: str):
     translator = Translator()
-    try:
-        langName = str(translator.translate(name).src) if name and isinstance(name, str) else None
+    # try:
+    #     langName = str(translator.translate(name).src) if name and isinstance(name, str) else None
 
-    except Exception as e:
-        print(f"Error translating 'name': {e}, {name}")
-        langName = None
+    # except Exception as e:
+    #     print(f"Error translating 'name': {e}, {name}")
+    #     langName = None
 
-    try:
-        langBio = str(translator.translate(bio).src) if bio and isinstance(bio, str) else None
+    # try:
+    #     langBio = str(translator.translate(bio).src) if bio and isinstance(bio, str) else None
 
-    except Exception as e:
-        print(f"Error translating 'bio': {e}, {bio}")
-        langBio = None
+    # except Exception as e:
+    #     print(f"Error translating 'bio': {e}, {bio}")
+    #     langBio = None
 
     try:
         langCap = str(translator.translate(caption).src) if caption and isinstance(caption, str) else None
@@ -91,4 +82,32 @@ def langDetector(name: str, bio: str, caption: str):
         print(f"Error translating 'caption': {e}, {caption}")
         langCap = None
 
-    return langName, langBio, langCap
+    return langCap
+
+
+def AnalyticData():
+    original_df, language_df = getDataFromDB()
+    original_df = original_df.fillna('')
+    original_df['cleaned_caption'] = original_df['caption'].apply(cleansingContext)
+
+    cleaned_data = original_df[['location_id', 'cleaned_caption', 'post_created_at', 'post_taken_at']]
+    cleaned_data = cleaned_data.fillna('')
+    cleaned_data['used_language'] = cleaned_data['cleaned_caption'].apply(langDetector)
+
+    modified_df = cleaned_data[['location_id', 'used_language', 'cleaned_caption', 'post_created_at', 'post_taken_at']]
+    modified_df = modified_df.fillna('')
+
+    merged_data = pd.merge(modified_df, language_df, how='left', left_on='used_language', right_on='iso_code')
+    merged_data = merged_data.drop('used_language', axis=1)
+    merged_data = merged_data.drop('language_id', axis=1)
+
+    merged_data = merged_data.dropna(subset=['cleaned_caption'])
+    merged_data['created_at'] = pd.Timestamp.now()
+    merged_data['created_by'] = 'System'
+
+    try:
+        merged_data.to_sql('post_language_detected', con=engine, if_exists='append', index=False)
+    except Exception as e:
+        print("Write data error:", e)
+
+# AnalyticData()

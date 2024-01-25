@@ -50,3 +50,20 @@ class Database:
         except Exception as e:
             print(f"Error : {e}")
             return None
+        
+    
+    def findLanguageId(self, igLocation):
+        query = """
+            SELECT language_id
+            FROM language
+            where %s = ANY(ig_location)"""
+        param = (igLocation,)
+        
+        try :
+            # self.connect()
+            self.execute_query(query, param)
+            result = self.cursor.fetchone()
+            return result[0] if result else None
+        except Exception as e:
+            print(f"Error : {e}")
+            return None
