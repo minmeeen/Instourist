@@ -1,11 +1,10 @@
 import pandas as pd
 from googletrans import Translator
 import re
-import sql 
 from db_connect import Database
 from datetime import date
 import logging
-import sys
+
 
 today = date.today()
 
@@ -50,7 +49,7 @@ def getLocation():
 
 
 def cleansingContext(caption: str):
-    df = getLocation()
+    # df = getLocation()
     # print(df['location_name'])
     # escaped_words = map(re.escape, df['location_name'])
     # escaped_words = map(re.escape, ['Maya', 'Wat Gate Garam', 'Chiang Mai Grand Canyon', 'Doi Inthanon', 'Mae Taeng Elephant Park', 'Wat Phra Singh', 'Wat Umong', 'Three Kings Monument', 'Wat Chiang Man', 'Tha Phae Gate', 'Chiang Mai Night Bazaar', 'Chiang Mai Night Safari'])
@@ -175,7 +174,7 @@ def testTranslate():
     # print()
 
 
-testTranslate()
+# testTranslate()
 
 
 test_data = [
