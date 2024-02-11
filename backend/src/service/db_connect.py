@@ -51,6 +51,17 @@ class Database:
             print(f"Error : {e}")
             return None
         
+    def getIGLocation(self):
+        query = """
+                SELECT ig_location
+                FROM location"""
+        
+        try : 
+            self.execute_query(query)
+            result = self.cursor.fetchall()
+            return result if result else None
+        except Exception as e :
+            print(f"Error : {e}")
     
     def findLanguageId(self, igLocation):
         query = """
@@ -97,3 +108,4 @@ class Database:
         except Exception as e :
             print(f'Error : {e}')
             return None
+        
