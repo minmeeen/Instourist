@@ -2,11 +2,6 @@ from .db_connect import Database
 from datetime import datetime, timedelta
 # from . import analytic_service as analytic_service
 
-"""
-host : 172-104-62-253.ip.linodeusercontent.com
-เปลี่ยน user เป็น instourist
-pw: e5q6&!E*D0G8v5mAy1
-"""
 connection_params = {
     "host": "localhost",
     "database": "postgres",
@@ -29,11 +24,11 @@ def findLocationId(igLocation):
 def closeDB():
     db.close()
 
-def getAnalyticData():
-    try:
-        analytic_service.AnalyticData()
-    except Exception as e :
-        print(f"error : {e}")
+# def getAnalyticData():
+#     try:
+#         analytic_service.AnalyticData()
+#     except Exception as e :
+#         print(f"error : {e}")
 
 def getLanguageDetected(locationId, timestamp, duration):
     days = duration.split('D')
@@ -42,15 +37,14 @@ def getLanguageDetected(locationId, timestamp, duration):
     languageDetected = db.findPostDetectedByDate(locationId, newTime, currentTime) #list of languages
     print(languageDetected)
 
-    dict = {}
+    languages = {}
+    response = {"Number of posts" : len(languageDetected), "Languages" : languages}
     for language in languageDetected :
-        if language[0] in dict :
-            dict[language[0]] += 1
+        if language[0] in languages :
+            languages[language[0]] += 1
         else :
-            dict[language[0]] = 1
-    
-    for key in dict :
-        dict[key] = (dict[key]/len(languageDetected)*100)
+            languages[language[0]] = 1
 
-    print(dict)
-    return dict
+    print(languages)
+    print(response)
+    return response
