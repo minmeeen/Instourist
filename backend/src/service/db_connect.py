@@ -28,11 +28,11 @@ class Database:
             self.connection.rollback()
             raise e
     
-    def insertPostToInitialData(self, user_id, username, full_name, caption, create_at, taken_at, location_id):
+    def insertPostToInitialData(self, user_id, username, full_name, caption, post_created_at, post_taken_at, location_id, created_at, created_by):
         query = """
-            INSERT INTO initial_data (user_id, username, full_name, caption, create_at, taken_at, location_id)
-            VALUES (%s, %s, %s, %s, To_TIMESTAMP(%s), TO_TIMESTAMP(%s), %s)"""
-        params = (user_id, username, full_name, caption, create_at, taken_at, location_id)
+            INSERT INTO initial_data (user_id, username, full_name, caption, post_created_at, post_taken_at, location_id, created_at, created_by)
+            VALUES (%s, %s, %s, %s, To_TIMESTAMP(%s), TO_TIMESTAMP(%s), %s, %s, %s)"""
+        params = (user_id, username, full_name, caption, post_created_at, post_taken_at, location_id, created_at, created_by)
         self.execute_query(query, params)
 
     def findLocationId(self, igLocation):
@@ -66,4 +66,34 @@ class Database:
             return result[0] if result else None
         except Exception as e:
             print(f"Error : {e}")
+            return None
+
+    def findExistPost(self, user_id, taken_at):
+        query = """
+            SELECT username
+            FROM initial_data
+            WHERE %s = user_id AND TO_TIMESTAMP(%s) = post_taken_at"""
+        param = (user_id, taken_at)
+
+        try :
+            self.execute_query(query, param)
+            result = self.cursor.fetchone()
+            return result if result else None
+        except Exception as e :
+            print(f"Error : {e}")
+            return None
+        
+    def findPostDetectedByDate(self, locationId, newTime, currentTime):
+        query = """
+            SELECT language
+            FROM post_language_detected
+            WHERE location_id = %s AND post_created_at BETWEEN %s AND %s"""
+        param = (locationId, newTime, currentTime)
+
+        try :
+            self.execute_query(query, param)
+            result = self.cursor.fetchall()
+            return result if result else None
+        except Exception as e :
+            print(f'Error : {e}')
             return None
