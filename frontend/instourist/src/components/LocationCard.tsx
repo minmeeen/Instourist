@@ -1,17 +1,20 @@
 import { Box, Button, Typography, useTheme } from '@mui/material'
 import { InstouristLocation } from '../constant/locations'
 import findLocationImgSrc from '../functions/findLocationImgSrc'
+import { SetStateAction } from 'react'
 
 interface LocationCardProps {
   location: InstouristLocation
   onClickSeeDetail: () => void
+  fullSize?: boolean
+  setFullSize?: React.Dispatch<SetStateAction<boolean>>
 }
 
 export default function LocationCard(props: LocationCardProps) {
   const theme = useTheme()
   const isDark = theme.palette.mode === 'dark'
 
-  const { location, onClickSeeDetail } = props
+  const { location, onClickSeeDetail, fullSize, setFullSize } = props
   return (
     <Box
       display={'flex'}
@@ -31,16 +34,16 @@ export default function LocationCard(props: LocationCardProps) {
     >
       {findLocationImgSrc(location.locationImgName)}
       <Box
+        id='card-detail'
         display={'flex'}
         flexDirection={'column'}
         justifyContent={'space-between'}
         alignItems={'flex-start'}
-        // flex={'1 0 0'}
         position={'absolute'}
         width={'90%'}
         height={'90%'}
         alignSelf={'stretch'}
-        padding={'10px 20px'}
+        padding={'4px 10px'}
       >
         <Box
           display={'flex'}
@@ -61,7 +64,12 @@ export default function LocationCard(props: LocationCardProps) {
             textTransform: 'none',
             borderColor: 'white',
           }}
-          onClick={onClickSeeDetail}
+          onClick={() => {
+            onClickSeeDetail()
+            if (fullSize && setFullSize) {
+              setFullSize(!fullSize)
+            }
+          }}
         >
           <Typography color='white'>See details</Typography>
         </Button>

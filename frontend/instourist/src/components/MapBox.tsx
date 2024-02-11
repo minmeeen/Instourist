@@ -6,14 +6,16 @@ import { createRoot } from 'react-dom/client'
 import { InstouristLocation } from '../constant/locations'
 import { useParams } from 'react-router-dom'
 
-mapboxgl.accessToken = process.env.MAPBOX_API_KEY ?? ''
+// this is a general token for all mapbox user
+mapboxgl.accessToken =
+  'pk.eyJ1IjoicGFpbnQ1NDBtYXBib3giLCJhIjoiY2xyNGhqaGx4MW85YjJrcW13NHZoeHZ0ZyJ9.rj429V71oEAb1O1ZAQdk3Q'
 
 interface MapBoxProps {
   locationID: InstouristLocation | ''
 }
 export default function MapBox(props: MapBoxProps) {
-  //   const mapContainer = useRef(null)
-  //   const map = useRef(null)
+  // const mapContainer = useRef(null)
+  // const map = useRef(null)
 
   const params = useParams()
   let locationID = params.locationID
@@ -32,9 +34,10 @@ export default function MapBox(props: MapBoxProps) {
   const mapContainerRef = useRef(null)
   const theme = useTheme()
 
-  // Initialize map when component mounts
+  let map: mapboxgl.Map
+
   useEffect(() => {
-    const map = new mapboxgl.Map({
+    map = new mapboxgl.Map({
       container: mapContainerRef.current!,
       style:
         theme.palette.mode === 'dark'
@@ -44,14 +47,28 @@ export default function MapBox(props: MapBoxProps) {
       zoom: zoom,
     })
 
-    touristLocation.features.map((feature) =>
+    // Add navigation control (the +/- zoom buttons)
+    map.addControl(new mapboxgl.NavigationControl(), 'top-right')
+
+    touristLocation.features.map((feature) => {
+      const el = document.createElement('div')
+      el.id = `marker-${feature.properties.id}`
+      /* Assign the `marker` class to each marker for styling. */
+      el.className = 'marker'
       new mapboxgl.Marker()
         .setLngLat(feature.geometry.coordinates as LngLatLike)
         .addTo(map)
-    )
 
-    // Add navigation control (the +/- zoom buttons)
-    map.addControl(new mapboxgl.NavigationControl(), 'top-right')
+      el.addEventListener('click', (e) => {
+        /* Fly to the point */
+        // map.flyTo({
+        //   center: feature.geometry.coordinates as LngLatLike,
+        //   zoom: zoom,
+        // })
+        // console.log('first', feature.geometry.coordinates as LngLatLike)
+        console.log(e)
+      })
+    })
 
     map.on('move', () => {
       setLng(+map.getCenter().lng.toFixed(4))
@@ -59,12 +76,15 @@ export default function MapBox(props: MapBoxProps) {
       setZoom(+map.getZoom().toFixed(2))
     })
 
-    // Clean up on unmount
+    map.on('click', (e) => {
+      console.log('e', e)
+    })
+
     return () => map.remove()
   }, [theme.palette.mode]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Box width={'100%'}>
+    <Box width={'100%'} height={'100%'}>
       <div className='sidebarStyle'></div>
       <div className='map-container' ref={mapContainerRef} />
     </Box>

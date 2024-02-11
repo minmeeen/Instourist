@@ -19,7 +19,7 @@ export default function Navbar(props: NavbarProps) {
       {variant === 'other' ? (
         <Box
           display={'flex'}
-          padding={'10px 40px'}
+          padding={'4px 24px'}
           borderBottom={'1px solid rgba(0,0,0,0.12)'}
           bgcolor={'background.default'}
           justifyContent={'space-between'}
@@ -27,7 +27,7 @@ export default function Navbar(props: NavbarProps) {
           <Button sx={{ padding: 0 }} onClick={() => navigate('/')}>
             <img
               src={theme.palette.mode === 'dark' ? logoLgDark : logoLg}
-              style={{ height: '40px', width: '140px' }}
+              style={{ height: '30px', width: '140px' }}
             />
           </Button>
           <ToggleModeComponent />
