@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from .portal import *
-
+# import portal
+import service.BEservice as service
+# from .service import analytic_service
 class PlaceReq(BaseModel):
     placeName: str
     period: int
@@ -12,6 +13,20 @@ app = FastAPI()
 async def root():
     return {"message": "Healthy!"}
 
-@app.post("/getAnalyticData")
-async def getAnalyticData(req: PlaceReq):
-    return getAnalyticDataFunc(req.placeName, req.period)
+@app.get("/languageDetected/locationId={locationId}&time={timestamp}&duration={duration}")
+async def getLanguageDetected(locationId: str, timestamp: int, duration: str):
+    data = service.getLanguageDetected(locationId, timestamp, duration)
+    return data
+
+# @app.post("/getAnalyticData")
+# async def getAnalyticData(req: PlaceReq):
+#     return portal.getAnalyticDataFunc(req.placeName, req.period)
+
+# # @app.get("/analytics")
+# # async def getAnalytics():
+# #     return service.getAnalyticData()
+
+
+# @app.get("/testAnalytics")
+# async def getTestAnalytics():
+#     return analytic_service.AnalyticData()
