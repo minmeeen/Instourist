@@ -9,23 +9,19 @@ import logging
 today = date.today()
 
 connection_params = {
-    "host": "localhost",
-    "database": "instourist",
-    "user": "postgres",
-    "password": "postgres",
-    "port": "5432"
+
 }
 
 engine = f"postgresql://{connection_params['user']}:{connection_params['password']}@{connection_params['host']}:{connection_params['port']}/{connection_params['database']}"
 
 def getDataFromDB():
     
-    # try:
-    #     table_name = "initial_data"
-    #     query = f"SELECT * FROM {table_name}"
-    #     post_df = pd.read_sql(query, engine)
-    # except Exception as e:
-    #     print("Connection error:", e)
+    try:
+        table_name = "initial_data"
+        query = f"SELECT * FROM {table_name}"
+        post_df = pd.read_sql(query, engine)
+    except Exception as e:
+        print("Connection error:", e)
 
     try:
         table_name = "language"
@@ -34,8 +30,8 @@ def getDataFromDB():
     except Exception as e:
         logging.error("Connection error:", e)
 
-    # return post_df, language_df
-    return language_df
+    return post_df, language_df
+    # return language_df
 
 def getLocation():
     try:
@@ -80,7 +76,7 @@ def cleansingContext(caption: str):
 
     words = cleaned_caption.split()  # Split the sentence into words
     words = ['' if word in escaped_words else word for word in words]  # Replace words with empty strings
-    return ' '.join(words)
+    return ''.join(words)
     # return cleaned_caption
 
 
@@ -110,13 +106,14 @@ def langDetector(caption: str):
     return langCap
 
 
-def AnalyticData(original_df):
+def AnalyticData():
     logging.info('call getting data from db')
-    # original_df, language_df = getDataFromDB()
-    language_df = getDataFromDB()
+    original_df, language_df = getDataFromDB()
+    # language_df = getDataFromDB()
     logging.info('end getting data from db')
-
-    original_df = original_df.fillna('')
+    nan_value = float("NaN")
+    original_df.replace("", nan_value, inplace=True)
+    original_df.dropna(subset = ["caption"], inplace=True)
 
     logging.info('call cleaning data')
     original_df['cleaned_caption'] = original_df['caption'].apply(cleansingContext)
@@ -150,32 +147,6 @@ def AnalyticData(original_df):
         logging.info('write into db success')
     except Exception as e:
         logging.error("Write data into db error:", e)
-
-
-def testTranslate():
-    # print(langDetector("2024"))
-    # print(langDetector("MAYA"))
-    # print(langDetector("เมญ่า"))
-    # print(langDetector("Wat"))
-    # print(langDetector("Wat Gate Garam"))
-    # print(langDetector("Doi"))
-    # print(langDetector("๑๒ ๒๒๗๑๓"))
-
-    print(cleansingContext("Wat234324Gate25 Garam 1234567890"))
-    print(cleansingContext("I go to Maya in 2024"))
-    print(cleansingContext("I go to the sea 2024"))
-    print(cleansingContext("Wat234324Gate25 Garam 1234567890"))
-    print(cleansingContext("I go to Maya"))
-    print(cleansingContext("I go to the sea"))
-    print(cleansingContext("Wat"))
-    print(cleansingContext("Maya in 2024"))
-    print(cleansingContext("the sea 2024"))
-
-    # print()
-
-
-# testTranslate()
-
 
 test_data = [
   {
@@ -325,6 +296,29 @@ test_data = [
   ]
 
 
-test_df = pd.DataFrame(test_data)
-AnalyticData(test_df)
+# test_df = pd.DataFrame(test_data)
+# AnalyticData(test_df)
+AnalyticData()
+
+def testTranslate():
+    # print(langDetector("2024"))
+    # print(langDetector("MAYA"))
+    # print(langDetector("เมญ่า"))
+    # print(langDetector("Wat"))
+    # print(langDetector("Wat Gate Garam"))
+    # print(langDetector("Doi"))
+    # print(langDetector("๑๒ ๒๒๗๑๓"))
+
+    print(cleansingContext("Wat234324Gate25 Garam 1234567890"))
+    print(cleansingContext("I go to Maya in 2024"))
+    print(cleansingContext("I go to the sea 2024"))
+    print(cleansingContext("Wat234324Gate25 Garam 1234567890"))
+    print(cleansingContext("I go to Maya"))
+    print(cleansingContext("I go to the sea"))
+    print(cleansingContext("Wat"))
+    print(cleansingContext("Maya in 2024"))
+    print(cleansingContext("the sea 2024"))
+
+
+# testTranslate()
 
