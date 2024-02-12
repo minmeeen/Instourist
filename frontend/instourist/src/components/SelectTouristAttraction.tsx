@@ -1,4 +1,11 @@
-import { Box, Button, Icon, Typography, useTheme } from '@mui/material'
+import {
+  Box,
+  Button,
+  Icon,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { common } from '@mui/material/colors'
 import nature from '../img/nature.svg'
 import React, { useContext, useState } from 'react'
@@ -14,10 +21,15 @@ import {
   locationENUM,
 } from '../constant/locations'
 import { useNavigate } from 'react-router-dom'
+import {
+  BookOutlined,
+  LocationCityOutlined,
+  PaletteOutlined,
+  ParkOutlined,
+} from '@mui/icons-material'
 
 export default function SelectTouristAttraction() {
-  //   const { darkMode } = props
-
+  const matches = useMediaQuery('(min-width:960px)')
   const natureIcon = (
     <Icon>
       <img alt='edit' src={nature} style={{ width: '20px', height: '20px' }} />
@@ -65,39 +77,65 @@ export default function SelectTouristAttraction() {
       alignItems={'center'}
       padding={'14px 40px'}
       gap={'8px'}
+      textAlign={'center'}
     >
       <Typography color={'text.primary'} variant='h4'>
         Select a tourist destination
       </Typography>
       <Box
         display={'flex'}
-        alignItems={'center'}
+        alignItems={{ xs: 'left', sm: 'center' }}
         justifyContent={'space-between'}
+        flexDirection={{ xs: 'column', sm: 'row' }}
         gap={'16px'}
       >
         <CustomButton
-          startIcon={natureIcon}
+          defaultIcon={
+            <ParkOutlined
+              color={theme.palette.mode === 'dark' ? 'action' : 'primary'}
+            />
+          }
+          onClickIcon={<ParkOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.nature)}
           isClicked={checkSelectedDestination(locationENUM.nature)}
           text={locationENUM.nature}
+          matches={matches}
         />
         <CustomButton
-          startIcon={natureIcon}
+          defaultIcon={
+            <PaletteOutlined
+              color={theme.palette.mode === 'dark' ? 'action' : 'primary'}
+            />
+          }
+          onClickIcon={<PaletteOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.art)}
           isClicked={checkSelectedDestination(locationENUM.art)}
           text={locationENUM.artModified}
+          matches={matches}
         />
         <CustomButton
-          startIcon={natureIcon}
+          defaultIcon={
+            <BookOutlined
+              color={theme.palette.mode === 'dark' ? 'action' : 'primary'}
+            />
+          }
+          onClickIcon={<BookOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.historic)}
           isClicked={checkSelectedDestination(locationENUM.historic)}
           text={locationENUM.historic}
+          matches={matches}
         />
         <CustomButton
-          startIcon={natureIcon}
+          defaultIcon={
+            <LocationCityOutlined
+              color={theme.palette.mode === 'dark' ? 'action' : 'primary'}
+            />
+          }
+          onClickIcon={<LocationCityOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.modern)}
           isClicked={checkSelectedDestination(locationENUM.modern)}
           text={locationENUM.modern}
+          matches={matches}
         />
       </Box>
       <Box
@@ -105,6 +143,7 @@ export default function SelectTouristAttraction() {
         alignItems={'flex-end'}
         gap={'24px'}
         alignSelf={'stretch'}
+        flexDirection={matches ? 'row' : 'column'}
         paddingTop={'12px'}
       >
         {showLocation.map((location) => (

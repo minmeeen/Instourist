@@ -13,7 +13,6 @@ interface customMapGLProps {
 
 export default function CustomMapGL(props: customMapGLProps) {
   const { locationID } = props
-  const params = useParams()
   const navigate = useNavigate()
   const theme = useTheme()
 
