@@ -1,5 +1,13 @@
-import { Box, Button, Divider, Icon, Typography } from '@mui/material'
-import React, { SetStateAction, useContext, useState } from 'react'
+import {
+  Box,
+  Button,
+  Divider,
+  Icon,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
+import React, { SetStateAction, useContext, useEffect, useState } from 'react'
 import CustomButton from './CustomButton'
 import { touristDestinationType } from '../type/touristDestinationType'
 import {
@@ -13,31 +21,37 @@ import {
 import LocationCard from './LocationCard'
 import { useNavigate } from 'react-router-dom'
 import nature from '../img/nature.svg'
-import { theme } from '../constant/theme'
 import BACK_LIGHT from '../img/customback-light.svg'
 import BACK_DARK from '../img/customback-dark.svg'
+import {
+  BookOutlined,
+  LocationCityOutlined,
+  PaletteOutlined,
+  ParkOutlined,
+} from '@mui/icons-material'
 
 interface ExploreOtherLocationProps {
   fullSize: boolean
-  setFullSize?: React.Dispatch<SetStateAction<boolean>>
+  setFullSize: React.Dispatch<SetStateAction<boolean>>
   location?: InstouristLocation | ''
 }
 
 export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
   const { fullSize, setFullSize, location } = props
+  const matches = useMediaQuery('(min-width:960px)')
+  const theme = useTheme()
   const [selectDestination, setSelectDestination] =
     useState<touristDestinationType>()
   const [showLocation, setShowLocation] = useState<InstouristLocation[]>([])
 
   const navigate = useNavigate()
+
   function checkSelectedDestination(type: touristDestinationType) {
     return type === selectDestination
   }
 
   const handleClickSelect = (destination: touristDestinationType) => {
-    if (setFullSize) {
-      setFullSize(true)
-    }
+    setFullSize(true)
     setSelectDestination(destination)
     if (destination === locationENUM.nature) setShowLocation(NatureLocation)
     else if (destination === locationENUM.art)
@@ -47,13 +61,12 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
     else setShowLocation(ModernLocation)
   }
 
-  const natureIcon = (
-    <Icon>
-      <img alt='edit' src={nature} style={{ width: '20px', height: '20px' }} />
-    </Icon>
-  )
   return (
-    <Box>
+    <Box
+      maxHeight={'85vh'}
+      paddingBottom={'20px'}
+      key={`location-card-${location}`}
+    >
       {fullSize && (
         <Box paddingBottom={'24px'}>
           <Box
@@ -86,35 +99,60 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
         display={'flex'}
         alignItems={'center'}
         justifyContent={'space-between'}
-        gap={'16px'}
+        gap={'12px'}
       >
         <CustomButton
-          startIcon={natureIcon}
+          defaultIcon={
+            <ParkOutlined
+              color={theme.palette.mode === 'dark' ? 'action' : 'primary'}
+            />
+          }
+          onClickIcon={<ParkOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.nature)}
           isClicked={checkSelectedDestination(locationENUM.nature)}
           text={locationENUM.nature}
+          matches={matches}
         />
         <CustomButton
-          startIcon={natureIcon}
+          defaultIcon={
+            <PaletteOutlined
+              color={theme.palette.mode === 'dark' ? 'action' : 'primary'}
+            />
+          }
+          onClickIcon={<PaletteOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.art)}
           isClicked={checkSelectedDestination(locationENUM.art)}
           text={locationENUM.artModified}
+          matches={matches}
         />
         <CustomButton
-          startIcon={natureIcon}
+          defaultIcon={
+            <BookOutlined
+              color={theme.palette.mode === 'dark' ? 'action' : 'primary'}
+            />
+          }
+          onClickIcon={<BookOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.historic)}
           isClicked={checkSelectedDestination(locationENUM.historic)}
           text={locationENUM.historic}
+          matches={matches}
         />
         <CustomButton
-          startIcon={natureIcon}
+          defaultIcon={
+            <LocationCityOutlined
+              color={theme.palette.mode === 'dark' ? 'action' : 'primary'}
+            />
+          }
+          onClickIcon={<LocationCityOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.modern)}
           isClicked={checkSelectedDestination(locationENUM.modern)}
           text={locationENUM.modern}
+          matches={matches}
         />
       </Box>
       {fullSize && (
         <Box
+          key={`location-card-${location}`}
           display={'flex'}
           flexDirection={'column'}
           alignItems={'flex-start'}
