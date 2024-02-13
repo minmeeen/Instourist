@@ -6,7 +6,7 @@ from db_connect import Database
 
 # Connection parameters
 connection_params = {
-    "host": "localhost",
+    "host": "local",
     "database": "instourist",
     "user": "postgres",
     "password": "postgres",
