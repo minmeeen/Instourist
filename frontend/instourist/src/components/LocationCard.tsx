@@ -19,7 +19,7 @@ export default function LocationCard(props: LocationCardProps) {
     <Box
       display={'flex'}
       width={'100%'}
-      height={'160px'}
+      minHeight={'200px'}
       alignItems={'center'}
       // gap={'10px'}
       // flexShrink={0}

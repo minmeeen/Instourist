@@ -31,7 +31,7 @@ export default function LocationSideBar(props: LocationSideBarProps) {
     return (
       <Box
         display={'flex'}
-        width={'490px'}
+        width={'100%'}
         flexDirection={'column'}
         alignItems={'flex-start'}
         gap={'4px'}
