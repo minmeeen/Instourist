@@ -6,10 +6,10 @@ from db_connect import Database
 
 # Connection parameters
 connection_params = {
-    "host": "172-104-62-253.ip.linodeusercontent.com",
+    "host": "",
     "database": "instourist_db",
     "user": "instourist",
-    "password": "e5q6&!E*D0G8v5mAy1",
+    "password": "",
     "port": "5432"
 }
 
