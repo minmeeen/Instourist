@@ -304,7 +304,6 @@ test_data = [
 
 # test_df = pd.DataFrame(test_data)
 # AnalyticData(test_df)
-<<<<<<< HEAD:backend/analytic_service/src/analytic_service.py
 # AnalyticData()
 
 def TestTranslate():
@@ -315,18 +314,6 @@ def TestTranslate():
     print(langDetector("Wat Gate Garam"))
     print(langDetector("Doi"))
     print(langDetector("๑๒ ๒๒๗๑๓"))
-=======
-AnalyticData()
-
-def testTranslate():
-    # print(langDetector("2024"))
-    # print(langDetector("MAYA"))
-    # print(langDetector("เมญ่า"))
-    # print(langDetector("Wat"))
-    # print(langDetector("Wat Gate Garam"))
-    # print(langDetector("Doi"))
-    # print(langDetector("๑๒ ๒๒๗๑๓"))
->>>>>>> cb5f5e50248c100ac2a73209dac5b1dbd4801e62:backend/src/service/analytic_service.py
 
     print(cleansingContext("Wat234324Gate25 Garam 1234567890"))
     print(cleansingContext("I go to Maya in 2024"))
