@@ -1,10 +1,6 @@
 import pandas as pd
 from googletrans import Translator
 import re
-<<<<<<< HEAD:backend/analytic_service/src/analytic_service.py
-=======
-from db_connect import Database
->>>>>>> cb5f5e50248c100ac2a73209dac5b1dbd4801e62:backend/src/service/analytic_service.py
 from datetime import date
 import logging
 
@@ -17,20 +13,12 @@ connection_params = {
 
 engine = f"postgresql://{connection_params['user']}:{connection_params['password']}@{connection_params['host']}:{connection_params['port']}/{connection_params['database']}"
 
-<<<<<<< HEAD:backend/analytic_service/src/analytic_service.py
 def getDataFromDB(date):
     tmr = (pd.Timestamp(date) + pd.DateOffset(days=1)).strftime('%Y-%m-%d')
     print(type(tmr))
     try:
         table_name = "initial_data"
         query = f"SELECT * FROM {table_name} WHERE created_at between '{date}' and '{tmr}'"
-=======
-def getDataFromDB():
-    
-    try:
-        table_name = "initial_data"
-        query = f"SELECT * FROM {table_name}"
->>>>>>> cb5f5e50248c100ac2a73209dac5b1dbd4801e62:backend/src/service/analytic_service.py
         post_df = pd.read_sql(query, engine)
     except Exception as e:
         print("Connection error:", e)
@@ -42,11 +30,8 @@ def getDataFromDB():
     except Exception as e:
         logging.error("Connection error:", e)
 
-<<<<<<< HEAD:backend/analytic_service/src/analytic_service.py
     print(post_df)
 
-=======
->>>>>>> cb5f5e50248c100ac2a73209dac5b1dbd4801e62:backend/src/service/analytic_service.py
     return post_df, language_df
     # return language_df
 
@@ -92,13 +77,8 @@ def cleansingContext(caption: str):
     cleaned_caption = pattern.sub(r'', caption) if caption and caption.strip() else None
 
     words = cleaned_caption.split()  # Split the sentence into words
-<<<<<<< HEAD:backend/analytic_service/src/analytic_service.py
     words = ['' if word in escaped_words else word for word in words]
     return ' '.join(words)
-=======
-    words = ['' if word in escaped_words else word for word in words]  # Replace words with empty strings
-    return ''.join(words)
->>>>>>> cb5f5e50248c100ac2a73209dac5b1dbd4801e62:backend/src/service/analytic_service.py
     # return cleaned_caption
 
 
@@ -129,15 +109,9 @@ def langDetector(caption: str):
     return langCap
 
 
-<<<<<<< HEAD:backend/analytic_service/src/analytic_service.py
 def AnalyticData(date):
     logging.info('call getting data from db')
     original_df, language_df = getDataFromDB(date)
-=======
-def AnalyticData():
-    logging.info('call getting data from db')
-    original_df, language_df = getDataFromDB()
->>>>>>> cb5f5e50248c100ac2a73209dac5b1dbd4801e62:backend/src/service/analytic_service.py
     # language_df = getDataFromDB()
     logging.info('end getting data from db')
     nan_value = float("NaN")
@@ -177,11 +151,8 @@ def AnalyticData():
         return "Success Analytic"
     except Exception as e:
         logging.error("Write data into db error:", e)
-<<<<<<< HEAD:backend/analytic_service/src/analytic_service.py
         return "Fail Analytic"
 
-=======
->>>>>>> cb5f5e50248c100ac2a73209dac5b1dbd4801e62:backend/src/service/analytic_service.py
 
 test_data = [
   {
