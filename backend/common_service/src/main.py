@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 # import portal
-import service.BEservice as service
+import src.service.BEservice as service
 # from .service import analytic_service
 class PlaceReq(BaseModel):
     placeName: str
