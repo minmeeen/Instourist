@@ -12,6 +12,6 @@ async def root():
     return {"message": "Healthy analytic!"}
 
 
-@app.get("/analytics")
+@app.post("/analytics")
 async def getAnalytics(req: DateReq):
     return AnalyticData(req.date)
