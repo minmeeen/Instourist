@@ -17,11 +17,12 @@ connection_params = {
 
 engine = f"postgresql://{connection_params['user']}:{connection_params['password']}@{connection_params['host']}:{connection_params['port']}/{connection_params['database']}"
 
-def getDataFromDB():
-    
+def getDataFromDB(date):
+    tmr = (pd.Timestamp(date) + pd.DateOffset(days=1)).strftime('%Y-%m-%d')
+    print(type(tmr))
     try:
         table_name = "initial_data"
-        query = f"SELECT * FROM {table_name}"
+        query = f"SELECT * FROM {table_name} WHERE created_at between '{date}' and '{tmr}'"
         post_df = pd.read_sql(query, engine)
     except Exception as e:
         print("Connection error:", e)
@@ -33,8 +34,10 @@ def getDataFromDB():
     except Exception as e:
         logging.error("Connection error:", e)
 
-    # return post_df, language_df
-    return language_df
+    print(post_df)
+
+    return post_df, language_df
+    # return language_df
 
 def getLocation():
     try:
@@ -110,10 +113,10 @@ def langDetector(caption: str):
     return langCap
 
 
-def AnalyticData(original_df):
+def AnalyticData(date):
     logging.info('call getting data from db')
-    # original_df, language_df = getDataFromDB()
-    language_df = getDataFromDB()
+    original_df, language_df = getDataFromDB(date)
+    # language_df = getDataFromDB()
     logging.info('end getting data from db')
     nan_value = float("NaN")
     original_df.replace("", nan_value, inplace=True)
@@ -141,16 +144,19 @@ def AnalyticData(original_df):
 
     merged_data = merged_data.dropna(subset=['cleaned_caption'])
     merged_data['created_at'] = pd.Timestamp.now()
-    merged_data['created_by'] = 'System'
+    merged_data['created_by'] = 'Mock_Batch_System'
     merged_data['updated_at'] = pd.Timestamp.now()
-    merged_data['updated_by'] = 'System'
+    merged_data['updated_by'] = 'Mock_Batch_System'
 
     try:
         merged_data.to_sql('post_language_detected', con=engine, if_exists='append', index=False)
-        print(merged_data)
+        # print(merged_data)
         logging.info('write into db success')
+        return "Success Analytic"
     except Exception as e:
         logging.error("Write data into db error:", e)
+        return "Fail Analytic"
+
 
 test_data = [
   {
@@ -300,11 +306,11 @@ test_data = [
   ]
 
 
-test_df = pd.DataFrame(test_data)
-AnalyticData(test_df)
+# test_df = pd.DataFrame(test_data)
+# AnalyticData(test_df)
 # AnalyticData()
 
-def testTranslate():
+def TestTranslate():
     print(langDetector("2024"))
     print(langDetector("MAYA"))
     print(langDetector("เมญ่า"))
@@ -324,5 +330,5 @@ def testTranslate():
     print(cleansingContext("the sea 2024"))
 
 
-testTranslate()
+# testTranslate()
 
