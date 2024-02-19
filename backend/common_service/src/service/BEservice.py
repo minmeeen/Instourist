@@ -3,11 +3,6 @@ from datetime import datetime, timedelta
 from src.model import LanguageDetectedResponse, LangugesResponse
 
 connection_params = {
-    "host": "172-104-62-253.ip.linodeusercontent.com",
-    "database": "instourist_db",
-    "user": "instourist",
-    "password": "e5q6&!E*D0G8v5mAy1",
-    "port": "5432"
 }
 
 db = Database(connection_params)
