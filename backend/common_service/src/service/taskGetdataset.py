@@ -50,6 +50,7 @@ def getDatasetFromApify():
 
                     if db.findExistPost(user_id, post_taken_at) is None :
                         db.insertPostToInitialData(user_id, username, full_name, caption, post_created_at, post_taken_at, location_id, created_at, created_by)
-    #sent request to analytic service by created_at (date only)
+    
     response = requests.post("http://0.0.0.0:8001/analytics", json={"date" : datetime.now().date()})
     print(f"Run with schedule is Successfully {datetime.now()}")
+    return response
