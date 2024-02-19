@@ -1,12 +1,11 @@
 from .db_connect import Database
 from datetime import datetime, timedelta
-# from . import analytic_service as analytic_service
 
 connection_params = {
-    "host": "localhost",
-    "database": "postgres",
-    "user": "postgres",
-    "password": "postgres",
+    "host": "172-104-62-253.ip.linodeusercontent.com",
+    "database": "instourist_db",
+    "user": "instourist",
+    "password": "e5q6&!E*D0G8v5mAy1",
     "port": "5432"
 }
 
@@ -36,14 +35,15 @@ def getLanguageDetected(locationId, timestamp, duration):
     currentTime = datetime.utcfromtimestamp(timestamp).date() #'yyyy-mm'dd'
     newTime = currentTime - timedelta(days=int(days[0]))
     languageDetected = db.findPostDetectedByDate(locationId, newTime, currentTime) #list of languages
-    numOfPosts = len(languageDetected)
+    if languageDetected is None :
+        return {"Message" : "No data"}
+    else :
+        languages = {}
+        for language in languageDetected :
+            if language[0] in languages :
+                languages[language[0]] += 1
+            else :
+                languages[language[0]] = 1
 
-    languages = {}
-    for language in languageDetected :
-        if language[0] in languages :
-            languages[language[0]] += 1
-        else :
-            languages[language[0]] = 1
-
-    response = {"Number of posts" : numOfPosts, "Languages" : languages}
-    return response
+        response = {"Number of posts" : len(languageDetected), "Languages" : languages}
+        return response
