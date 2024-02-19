@@ -19,13 +19,6 @@ def findLocationId(igLocation):
 def closeDB():
     db.close()
 
-# def getAnalyticData():
-#     try:
-#         analytic_service.AnalyticData()
-#     except Exception as e :
-#         print(f"error : {e}")
-
-#create response model
 def getLanguageDetected(locationId, timestamp, duration):
     days = duration.split('D')
     currentTime = datetime.utcfromtimestamp(timestamp).date() #'yyyy-mm'dd'
