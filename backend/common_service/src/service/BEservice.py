@@ -1,12 +1,8 @@
 from .db_connect import Database
 from datetime import datetime, timedelta
+from src.model import LanguageDetectedResponse, LangugesResponse
 
 connection_params = {
-    "host": "172-104-62-253.ip.linodeusercontent.com",
-    "database": "instourist_db",
-    "user": "instourist",
-    "password": "e5q6&!E*D0G8v5mAy1",
-    "port": "5432"
 }
 
 db = Database(connection_params)
@@ -45,5 +41,12 @@ def getLanguageDetected(locationId, timestamp, duration):
             else :
                 languages[language[0]] = 1
 
-        response = {"Number of posts" : len(languageDetected), "Languages" : languages}
+        listOfLanguages = []
+        for language in languages:
+            print(language)
+            print(languages[language])
+            listOfLanguages.append(LangugesResponse(languageName=language, total=languages[language]))
+
+            
+        response = LanguageDetectedResponse(NumberOfPosts=len(languageDetected), Languges=listOfLanguages)
         return response
