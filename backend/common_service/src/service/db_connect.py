@@ -1,4 +1,5 @@
 import psycopg2
+import logging
 
 class Database:
     def __init__(self, connection_params):
@@ -33,7 +34,11 @@ class Database:
             INSERT INTO initial_data (user_id, username, full_name, caption, post_created_at, post_taken_at, location_id, created_at, created_by)
             VALUES (%s, %s, %s, %s, To_TIMESTAMP(%s), TO_TIMESTAMP(%s), %s, %s, %s)"""
         params = (user_id, username, full_name, caption, post_created_at, post_taken_at, location_id, created_at, created_by)
-        self.execute_query(query, params)
+        
+        try :
+            self.execute_query(query, params)
+        except Exception as e :
+            logging.error(f'Error : {e}')
 
     def findLocationId(self, igLocation):
         query = """
@@ -48,7 +53,7 @@ class Database:
             result = self.cursor.fetchone()
             return result[0] if result else None
         except Exception as e:
-            print(f"Error : {e}")
+            logging.error(f'Error : {e}')
             return None
         
     def getIGLocation(self):
@@ -61,7 +66,7 @@ class Database:
             result = self.cursor.fetchall()
             return result if result else None
         except Exception as e :
-            print(f"Error : {e}")
+            logging.error(f'Error : {e}')
     
     def findLanguageId(self, igLocation):
         query = """
@@ -76,7 +81,7 @@ class Database:
             result = self.cursor.fetchone()
             return result[0] if result else None
         except Exception as e:
-            print(f"Error : {e}")
+            logging.error(f'Error : {e}')
             return None
 
     def findExistPost(self, user_id, taken_at):
@@ -91,7 +96,7 @@ class Database:
             result = self.cursor.fetchone()
             return result if result else None
         except Exception as e :
-            print(f"Error : {e}")
+            logging.error(f'Error : {e}')
             return None
         
     def findPostDetectedByDate(self, locationId, newTime, currentTime):
@@ -106,6 +111,6 @@ class Database:
             result = self.cursor.fetchall()
             return result if result else None
         except Exception as e :
-            print(f'Error : {e}')
+            logging.error(f'Error : {e}')
             return None
         
