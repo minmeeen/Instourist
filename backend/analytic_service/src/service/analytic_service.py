@@ -2,7 +2,7 @@ import pandas as pd
 from googletrans import Translator
 import re
 from fastapi import HTTPException
-from src.logger import logger
+from src.middleware.logger import logger
 from datetime import datetime
 
 
