@@ -14,7 +14,6 @@ import {
 import findLocationTypeIcon from '../functions/findLocationTypeIcon'
 import LocationNotFound from './LocationNotFound'
 import LocationLanguageChart from './LocationLanguageChart'
-import LocationLanguageDetail from './LocationLanguageDetail'
 
 interface LocationSideBarProps {
   location: InstouristLocation | ''

@@ -9,124 +9,18 @@ import {
   useTheme,
 } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import {
+  languageDetectedData,
+  pieChartLanguageDetectedData,
+  transformLanguageDetectedData,
+} from '../constant/getDataType'
+import axios from 'axios'
 
 interface LocationLanguageChartProps {
   locationID: string
   timeline: string
 }
-
-export const LanguagesDataWithThai = [
-  {
-    id: 0,
-    value: 10,
-    label: `English ${((10 * 100) / 85).toFixed(2)} %`,
-  },
-  {
-    id: 1,
-    value: 15,
-    label: `Thai ${((15 * 100) / 85).toFixed(2)} %`,
-  },
-  {
-    id: 2,
-    value: 20,
-    label: `France ${((20 * 100) / 85).toFixed(2)} %`,
-  },
-  {
-    id: 3,
-    value: 20,
-    label: `Korean ${((20 * 100) / 85).toFixed(2)} %`,
-  },
-  {
-    id: 4,
-    value: 20,
-    label: `Spanish ${((20 * 100) / 85).toFixed(2)} %`,
-  },
-]
-
-export const LanguagesDataWithoutThai = [
-  {
-    id: 0,
-    value: 10,
-    label: `English ${((10 * 100) / 70).toFixed(2)} %`,
-  },
-
-  {
-    id: 2,
-    value: 20,
-    label: `France ${((20 * 100) / 70).toFixed(2)} %`,
-  },
-  {
-    id: 3,
-    value: 20,
-    label: `Korean ${((20 * 100) / 70).toFixed(2)} %`,
-  },
-  {
-    id: 4,
-    value: 20,
-    label: `Spanish ${((20 * 100) / 70).toFixed(2)} %`,
-  },
-]
-
-export const LanguagesDetailWithThai = [
-  {
-    id: 0,
-    language: 'English',
-    percent: `${((10 * 100) / 85).toFixed(2)} %`,
-    total: 10,
-  },
-  {
-    id: 1,
-    language: 'Thai',
-    percent: `${((15 * 100) / 85).toFixed(2)} %`,
-    total: 15,
-  },
-  {
-    id: 2,
-    language: 'France',
-    percent: `${((20 * 100) / 85).toFixed(2)} %`,
-    total: 20,
-  },
-  {
-    id: 3,
-    language: 'Korean',
-    percent: `${((20 * 100) / 85).toFixed(2)} %`,
-    total: 20,
-  },
-  {
-    id: 4,
-    language: 'Spanish',
-    percent: `${((20 * 100) / 85).toFixed(2)} %`,
-    total: 20,
-  },
-]
-
-export const LanguagesDetailWithoutThai = [
-  {
-    id: 0,
-    language: 'English',
-    percent: `${((10 * 100) / 70).toFixed(2)} %`,
-    total: 10,
-  },
-  {
-    id: 1,
-    language: 'France',
-    percent: `${((20 * 100) / 70).toFixed(2)} %`,
-    total: 20,
-  },
-  {
-    id: 2,
-    language: 'Korean',
-    percent: `${((20 * 100) / 70).toFixed(2)} %`,
-    total: 20,
-  },
-  {
-    id: 3,
-    language: 'Spanish',
-    percent: `${((20 * 100) / 70).toFixed(2)} %`,
-    total: 20,
-  },
-]
 
 export default function LocationLanguageChart(
   props: LocationLanguageChartProps
@@ -134,6 +28,135 @@ export default function LocationLanguageChart(
   const { locationID, timeline } = props
   const [selectedThai, setSelectedThai] = useState<boolean>(true)
   const theme = useTheme()
+  const initial = {
+    'Number of posts': 0,
+    Languages: {},
+  }
+
+  const [reponseData, setResponseData] = useState<languageDetectedData>(initial)
+
+  const [afterTransformData, setAfterTransformData] = useState<
+    transformLanguageDetectedData[]
+  >([])
+
+  const [afterTransformDataNoThai, setAfterTransformDataNoThai] = useState<
+    transformLanguageDetectedData[]
+  >([])
+
+  const [pieChartData, setPieChartData] = useState<
+    pieChartLanguageDetectedData[]
+  >([])
+
+  const [pieChartDataNoThai, setPieChartDataNoThai] = useState<
+    pieChartLanguageDetectedData[]
+  >([])
+
+  function transformData() {
+    let total0 = Number(Object.values(reponseData?.Languages)[0])
+    let total1 = Number(Object.values(reponseData?.Languages)[1])
+    let total2 = Number(Object.values(reponseData?.Languages)[2])
+    let language0 = Object.keys(reponseData?.Languages)[0]
+    let language1 = Object.keys(reponseData?.Languages)[1]
+    let language2 = Object.keys(reponseData?.Languages)[2]
+
+    setAfterTransformData([
+      {
+        id: 0,
+        language: language0,
+        percent: `${((total0 * 100) / reponseData['Number of posts']).toFixed(
+          2
+        )} %`,
+        total: total0,
+      },
+      {
+        id: 1,
+        language: language1,
+        percent: `${((total1 * 100) / reponseData['Number of posts']).toFixed(
+          2
+        )} %`,
+        total: total1,
+      },
+      {
+        id: 2,
+        language: language2,
+        percent: `${((total2 * 100) / reponseData['Number of posts']).toFixed(
+          2
+        )} %`,
+        total: total2,
+      },
+    ])
+
+    setPieChartData([
+      {
+        id: 0,
+        value: total0,
+        label: `${language0} ${(
+          (total0 * 100) /
+          reponseData['Number of posts']
+        ).toFixed(2)} %`,
+      },
+      {
+        id: 1,
+        value: total1,
+        label: `${language1} ${(
+          (total1 * 100) /
+          reponseData['Number of posts']
+        ).toFixed(2)} %`,
+      },
+      {
+        id: 2,
+        value: total2,
+        label: `${language2} ${(
+          (total2 * 100) /
+          reponseData['Number of posts']
+        ).toFixed(2)} %`,
+      },
+    ])
+  }
+
+  useEffect(() => {
+    if (reponseData === initial) {
+      getData()
+    }
+  }, [])
+
+  useEffect(() => {
+    transformData()
+  }, [reponseData])
+
+  const getData = async () => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/languageDetected/locationId=1&time=1705708800&duration=1D`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      console.log('first', response.data)
+      setResponseData(response.data)
+    } catch (error) {
+      // Handle errors (e.g., display an error message)
+      console.error('Error fetching item:', error)
+    }
+  }
+
+  const handleClickSelectThai = () => {
+    setSelectedThai(!selectedThai)
+    const mockData = afterTransformData.filter((x) => x.language !== 'Thai')
+    const mockPie = pieChartData.filter(
+      (x) =>
+        x.label !==
+        `Thai ${((x.value * 100) / reponseData['Number of posts']).toFixed(
+          2
+        )} %`
+    )
+
+    setAfterTransformDataNoThai(mockData)
+    setPieChartDataNoThai(mockPie)
+  }
+
   return (
     <>
       <Box
@@ -145,9 +168,7 @@ export default function LocationLanguageChart(
         <PieChart
           series={[
             {
-              data: selectedThai
-                ? LanguagesDataWithThai
-                : LanguagesDataWithoutThai,
+              data: selectedThai ? pieChartData : pieChartDataNoThai,
               innerRadius: '60px',
             },
           ]}
@@ -163,7 +184,7 @@ export default function LocationLanguageChart(
           }
           control={
             <Checkbox
-              onClick={() => setSelectedThai(!selectedThai)}
+              onClick={handleClickSelectThai}
               checked={selectedThai}
               sx={{
                 '&.Mui-checked': {
@@ -174,8 +195,9 @@ export default function LocationLanguageChart(
           }
         />
         {selectedThai
-          ? LanguagesDetailWithThai.map((x) => (
+          ? afterTransformData.map((x) => (
               <Box
+                id={x.id + 'lan'}
                 display={'flex'}
                 width={'90%'}
                 justifyContent={'space-between'}
@@ -197,8 +219,9 @@ export default function LocationLanguageChart(
                 </Typography>
               </Box>
             ))
-          : LanguagesDetailWithoutThai.map((x) => (
+          : afterTransformDataNoThai.map((x) => (
               <Box
+                id={x.id + 'lan'}
                 display={'flex'}
                 width={'90%'}
                 justifyContent={'space-between'}
