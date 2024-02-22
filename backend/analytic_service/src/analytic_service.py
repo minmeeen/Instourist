@@ -1,36 +1,30 @@
 import pandas as pd
 from googletrans import Translator
 import re
-from datetime import date
-import logging
+from fastapi import HTTPException
+from src.logger import logger
+from datetime import datetime
 
 
 connection_params = {
 
 }
 
-logger = logging.getLogger('mylogger')
-logger.setLevel(logging.INFO)
-logging.basicConfig(level=logging.INFO)
-
 engine = f"postgresql://{connection_params['user']}:{connection_params['password']}@{connection_params['host']}:{connection_params['port']}/{connection_params['database']}"
+current_dateTime = datetime.now()
 
 def getDataFromDB(date):
     tmr = (pd.Timestamp(date) + pd.DateOffset(days=1)).strftime('%Y-%m-%d')
-    print(type(tmr))
     try:
         table_name = "initial_data"
-        query = f"SELECT * FROM {table_name} WHERE created_at between '{date}' and '{tmr}'"
+        query = f"SELECT * FROM {table_name} WHERE post_created_at between '{date}' and '{tmr}'"
         post_df = pd.read_sql(query, engine)
-    except Exception as e:
-        print("Connection error:", e)
 
-    try:
         table_name = "language"
         query = f"SELECT * FROM {table_name}"
         language_df = pd.read_sql(query, engine)
     except Exception as e:
-        logging.error("Connection error:", e)
+        logger.error("Connection error:", e)
 
     return post_df, language_df
 
@@ -40,7 +34,7 @@ def getLocation():
         query = f"SELECT * FROM {table_name}"
         location_df = pd.read_sql(query, engine)
     except Exception as e:
-        logging.error("Connection error:", e)
+        logger.error("Connection error:", e)
 
     return location_df
 
@@ -74,7 +68,6 @@ def cleansingContext(caption: str):
     words = ['' if word in escaped_words else word for word in words]
     return ' '.join(words)
 
-
 def langDetector(caption: str):
     translator = Translator()
     try:
@@ -82,30 +75,31 @@ def langDetector(caption: str):
 
     except Exception as e:
         langCap = None
-        logging.ERROR(f"Error translating 'caption': {e}, {caption}")
+        logger.error(f"Error detected 'caption': {e}, {caption}")
 
     return langCap
 
 
 def AnalyticData(date):
-    logging.info('call getting data from db')
+    logger.info('call getting data from db')
     original_df, language_df = getDataFromDB(date)
-    logging.info('end getting data from db')
+    if original_df.empty:
+        raise HTTPException(status_code=404, detail="Data not found")
+    logger.info('end getting data from db')
     nan_value = float("NaN")
     original_df.replace("", nan_value, inplace=True)
     original_df.dropna(subset = ["caption"], inplace=True)
 
-    logging.info('call cleaning data')
+    logger.info('call cleaning data')
     original_df['cleaned_caption'] = original_df['caption'].apply(cleansingContext)
-    logging.info('end cleaning data')
+    logger.info('end cleaning data')
 
     cleaned_data = original_df[['location_id', 'cleaned_caption', 'post_created_at', 'post_taken_at']]
     cleaned_data = cleaned_data.fillna('')
-    logging.info('preprocessing data start')
 
-    logging.info('language analyze start')
+    logger.info('language analyze start')
     cleaned_data['used_language'] = cleaned_data['cleaned_caption'].apply(langDetector)
-    logging.info('language analyze end')
+    logger.info('language analyze end')
 
     modified_df = cleaned_data[['location_id', 'used_language', 'cleaned_caption', 'post_created_at', 'post_taken_at']]
     modified_df = modified_df.fillna('')
@@ -117,14 +111,16 @@ def AnalyticData(date):
 
     merged_data = merged_data.dropna(subset=['cleaned_caption'])
     merged_data['created_at'] = pd.Timestamp.now()
-    merged_data['created_by'] = 'Mock_Batch_System'
+    merged_data['created_by'] = 'System'
     merged_data['updated_at'] = pd.Timestamp.now()
-    merged_data['updated_by'] = 'Mock_Batch_System'
+    merged_data['updated_by'] = 'System'
 
     try:
         merged_data.to_sql('post_language_detected', con=engine, if_exists='append', index=False)
-        logging.info('write into db success')
-        return "Success Analytic"
+        logger.info('write into db success')
+        logger.info(f"End calling analytic service at {current_dateTime}")
+
+        return "Analyzed data success!"
     except Exception as e:
-        logging.error("Write data into db error:", e)
-        return "Failed Analytic"
+        logger.error("Write data into db error:", e)
+        raise HTTPException(status_code=400, detail="Cannot analyze data. Please try again.")
