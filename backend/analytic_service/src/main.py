@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from src.analytic_service import AnalyticData
+from src.service.analytic_service import AnalyticData
 from starlette.exceptions import HTTPException
 from fastapi.exceptions import RequestValidationError
-from src.exception_handler import request_validation_exception_handler, http_exception_handler, unhandled_exception_handler
-from src.middleware import log_request_middleware
-from src.logger import logger
+from src.middleware.exception_handler import request_validation_exception_handler, http_exception_handler, unhandled_exception_handler
+from src.middleware.middleware import log_request_middleware
+from src.middleware.logger import logger
 from datetime import datetime
 
 current_dateTime = datetime.now()
