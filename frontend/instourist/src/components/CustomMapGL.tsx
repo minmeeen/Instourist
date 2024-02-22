@@ -32,7 +32,7 @@ export default function CustomMapGL(props: customMapGLProps) {
   const [viewport, setViewport] = useState({
     latitude: defaultlat ?? 18.78,
     longitude: defaultlng ?? 99,
-    zoom: 13,
+    zoom: 10,
   })
 
   const onClickMarker = (lg: number, lat: number, id: string) => {
@@ -59,7 +59,7 @@ export default function CustomMapGL(props: customMapGLProps) {
       <MapGL
         accessToken={MAPBOX_ACCESS_TOKEN}
         mapStyle={mapStyle}
-        style={{ width: '100%', height: '95vh' }}
+        style={{ width: '100vw', height: '95vh' }}
         longitude={viewport.longitude}
         latitude={viewport.latitude}
         zoom={16}

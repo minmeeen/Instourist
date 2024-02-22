@@ -27,7 +27,11 @@ export default function LocationLanguageChart(
 ) {
   const { locationID, timeline } = props
   const [selectedThai, setSelectedThai] = useState<boolean>(true)
-  const theme = useTheme()
+  const [url, setUrl] = useState<string>('http://127.0.0.1:8000')
+  const mocklocationID = 1
+  const timestamp = 1705708800
+
+  const mockDuration = '1D'
   const initial = {
     'Number of posts': 0,
     Languages: {},
@@ -121,13 +125,17 @@ export default function LocationLanguageChart(
   }, [])
 
   useEffect(() => {
+    getData()
+  }, [timeline])
+
+  useEffect(() => {
     transformData()
   }, [reponseData])
 
   const getData = async () => {
     try {
       const response = await axios.get(
-        `http://127.0.0.1:8000/languageDetected/locationId=1&time=1705708800&duration=1D`,
+        `${url}/languageDetected/locationId=${mocklocationID}&time=${timestamp}&duration=${timeline}`,
         {
           headers: {
             'Content-Type': 'application/json',

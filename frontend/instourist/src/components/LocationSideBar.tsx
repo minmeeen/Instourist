@@ -21,7 +21,7 @@ interface LocationSideBarProps {
 
 export default function LocationSideBar(props: LocationSideBarProps) {
   const { location } = props
-  const [timeline, setTimeline] = React.useState('')
+  const [timeline, setTimeline] = React.useState('1D')
   const theme = useTheme()
   const hanldeClickSelectTimeline = (event: SelectChangeEvent) => {
     setTimeline(event.target.value as string)
@@ -114,10 +114,10 @@ export default function LocationSideBar(props: LocationSideBarProps) {
                   onChange={hanldeClickSelectTimeline}
                   defaultValue='24 Hours'
                 >
-                  <MenuItem value={24}>24 Hours</MenuItem>
-                  <MenuItem value={48}>48 Hours</MenuItem>
-                  <MenuItem value={7}>7 Days</MenuItem>
-                  <MenuItem value={14}>14 Days</MenuItem>
+                  <MenuItem value={'1D'}>24 Hours</MenuItem>
+                  <MenuItem value={'2D'}>48 Hours</MenuItem>
+                  <MenuItem value={'7D'}>7 Days</MenuItem>
+                  <MenuItem value={'14D'}>14 Days</MenuItem>
                 </Select>
               </FormControl>
             </Box>
