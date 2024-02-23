@@ -4,17 +4,16 @@ import re
 from fastapi import HTTPException
 from src.middleware.logger import logger
 from datetime import datetime
+from dotenv import load_dotenv
+from src.config import DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME
 
+engine = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
-connection_params = {
-
-}
-
-engine = f"postgresql://{connection_params['user']}:{connection_params['password']}@{connection_params['host']}:{connection_params['port']}/{connection_params['database']}"
 current_dateTime = datetime.now()
-
 def getDataFromDB(date):
     tmr = (pd.Timestamp(date) + pd.DateOffset(days=1)).strftime('%Y-%m-%d')
+    logger.info(engine)
+
     try:
         table_name = "initial_data"
         query = f"SELECT * FROM {table_name} WHERE post_created_at between '{date}' and '{tmr}'"
@@ -22,6 +21,7 @@ def getDataFromDB(date):
 
         table_name = "language"
         query = f"SELECT * FROM {table_name}"
+
         language_df = pd.read_sql(query, engine)
     except Exception as e:
         logger.error("Connection error:", e)
