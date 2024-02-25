@@ -11,5 +11,3 @@ DB_NAME=os.getenv('DB_NAME')
 
 HOSTNAME=os.getenv('HOSTNAME')
 APP_PORT=os.getenv('APP_PORT')
-
-ANALYTIC_SERVICE==os.getenv('ANALYTIC_SERVICE')

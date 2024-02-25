@@ -9,11 +9,8 @@ from src.config import DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME
 
 engine = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
-current_dateTime = datetime.now()
 def getDataFromDB(date):
     tmr = (pd.Timestamp(date) + pd.DateOffset(days=1)).strftime('%Y-%m-%d')
-    logger.info(engine)
-
     try:
         table_name = "initial_data"
         query = f"SELECT * FROM {table_name} WHERE post_created_at between '{date}' and '{tmr}'"
@@ -118,7 +115,7 @@ def AnalyticData(date):
     try:
         merged_data.to_sql('post_language_detected', con=engine, if_exists='append', index=False)
         logger.info('write into db success')
-        logger.info(f"End calling analytic service at {current_dateTime}")
+        logger.info(f"End calling analytic service")
 
         return "Analyzed data success!"
     except Exception as e:

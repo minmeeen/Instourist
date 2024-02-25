@@ -10,8 +10,6 @@ from datetime import datetime
 import src.config as config
 import uvicorn
 
-current_dateTime = datetime.now()
-
 app = FastAPI()
 
 app.middleware("http")(log_request_middleware)
@@ -32,5 +30,4 @@ async def root():
 
 @app.post("/analytics")
 async def getAnalytics(req: DateReq):
-    logger.info(f"Start calling analytic service at {current_dateTime}")
     return AnalyticData(req.date)
