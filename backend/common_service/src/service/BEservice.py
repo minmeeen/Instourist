@@ -2,16 +2,13 @@ from .db_connect import Database
 from datetime import datetime, timedelta
 from src.model import LanguageDetectedResponse, LangugesResponse
 
-import logging
+from src.middleware.logger import logger
 
 connection_params = {
 
 }
 
 db = Database(connection_params)
-logger = logging.getLogger('mylogger')
-logger.setLevel(logging.INFO)
-logging.basicConfig(level=logging.INFO)
 
 def isExistPost(user_id, taken_at):
     return db.findExistPost(user_id, taken_at)
@@ -26,12 +23,12 @@ def closeDB():
     db.close()
 
 def getLanguageDetected(locationId, timestamp, duration):
-    logging.info(f'get language detected with parameter {locationId}, {timestamp}, {duration}')
+    logger.info(f'get language detected with parameter {locationId}, {timestamp}, {duration}')
     days = duration.split('D')
     currentTime = datetime.utcfromtimestamp(timestamp).date() #'yyyy-mm'dd'
     newTime = currentTime - timedelta(days=int(days[0]))
 
-    logging.info('call find post detected by date')
+    logger.info('call find post detected by date')
     languageDetected = db.findPostDetectedByDate(locationId, newTime, currentTime) #list of languages
     if languageDetected is None :
         return {"Message" : "No data"}
