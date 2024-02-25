@@ -30,7 +30,7 @@ def getDatasetFromApify():
                 "searchLimit": 1,
             }
 
-            logging.info(f'call apify with url {run_input.get[0]}')
+            logging.info(f'call apify with url {run_input["directUrls"]}')
             run = client.actor(actor_id).call(run_input=run_input)
             # Fetch and print Actor results from the run's dataset (if there are any)
             for data in client.dataset(run["defaultDatasetId"]).iterate_items():
