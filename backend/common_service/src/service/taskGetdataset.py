@@ -1,14 +1,13 @@
 import requests
-import logging
-
 from datetime import datetime
 from apify_client import ApifyClient
 from .BEservice import getLocationIdFromIG, isExistPost, insertPostToInitialData, findLocationId
 from src.middleware.logger import logger
+from src.config import ANALYTIC_SERVICE, APIFY_API_TOKEN, APIFY_ACTOR_ID
 
 # Replace with your Apify API token and actor ID
-api_token = "apify_api_r06uhUkKIWHwCc0PS0dYIupG4dqBIv2s9D1P" #new token
-actor_id = "RB9HEZitC8hIUXAha"
+api_token = APIFY_API_TOKEN #new token
+actor_id = APIFY_ACTOR_ID
 
 client = ApifyClient(api_token)
 
@@ -53,7 +52,7 @@ def getDatasetFromApify():
     
     logger.info(f'sent date to analytic service date : {datetime.now().date()}')
     try :
-        response = requests.post("http://0.0.0.0:8001/analytics", json={"date" : datetime.now().date()})
+        response = requests.post(f"{ANALYTIC_SERVICE}/analytics", json={"date" : datetime.now().date()})
         if response.status_code == 200 :
             logger.info('sent date to analytic is success')
         else :

@@ -3,9 +3,14 @@ from datetime import datetime, timedelta
 from src.model import LanguageDetectedResponse, LangugesResponse
 
 from src.middleware.logger import logger
+from src.config import DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME
 
 connection_params = {
-
+    "host": DB_HOST,
+    "database": DB_NAME,
+    "user": DB_USER,
+    "password": DB_PASSWORD,
+    "port": DB_PORT
 }
 
 db = Database(connection_params)
