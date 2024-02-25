@@ -1,5 +1,5 @@
 import psycopg2
-import logging
+from src.middleware.logger import logger
 
 class Database:
     def __init__(self, connection_params):
@@ -38,7 +38,7 @@ class Database:
         try :
             self.execute_query(query, params)
         except Exception as e :
-            logging.error(f'Error : {e}')
+            logger.error(f'Error : {e}')
 
     def findLocationId(self, igLocation):
         query = """
@@ -53,7 +53,7 @@ class Database:
             result = self.cursor.fetchone()
             return result[0] if result else None
         except Exception as e:
-            logging.error(f'Error : {e}')
+            logger.error(f'Error : {e}')
             return None
         
     def getIGLocation(self):
@@ -66,7 +66,7 @@ class Database:
             result = self.cursor.fetchall()
             return result if result else None
         except Exception as e :
-            logging.error(f'Error : {e}')
+            logger.error(f'Error : {e}')
     
     def findLanguageId(self, igLocation):
         query = """
@@ -81,7 +81,7 @@ class Database:
             result = self.cursor.fetchone()
             return result[0] if result else None
         except Exception as e:
-            logging.error(f'Error : {e}')
+            logger.error(f'Error : {e}')
             return None
 
     def findExistPost(self, user_id, taken_at):
@@ -96,7 +96,7 @@ class Database:
             result = self.cursor.fetchone()
             return result if result else None
         except Exception as e :
-            logging.error(f'Error : {e}')
+            logger.error(f'Error : {e}')
             return None
         
     def findPostDetectedByDate(self, locationId, newTime, currentTime):
@@ -111,6 +111,6 @@ class Database:
             result = self.cursor.fetchall()
             return result if result else None
         except Exception as e :
-            logging.error(f'Error : {e}')
+            logger.error(f'Error : {e}')
             return None
         
