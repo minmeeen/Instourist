@@ -1,7 +1,11 @@
 import logging
 
-uvicorn_access = logging.getLogger("uvicorn.access")
-uvicorn_access.disabled = True
+logger = logging.getLogger("analytic_service")
+logger.setLevel(logging.DEBUG)
 
-logger = logging.getLogger("uvicorn")
-logger.setLevel(logging.getLevelName(logging.DEBUG))
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+handler = logging.StreamHandler()
+handler.setFormatter(formatter)
+
+logger.addHandler(handler)

@@ -15,7 +15,6 @@ from fastapi.responses import Response
 from src.middleware.logger import logger
 
 async def request_validation_exception_handler(request: Request, exc: RequestValidationError) -> JSONResponse:
-    logger.debug("Custom request_validation_exception_handler was called")
     body = await request.body()
     query_params = request.query_params._dict  # pylint: disable=protected-access
     detail = {"errors": exc.errors(), "body": body.decode(), "query_params": query_params}
@@ -24,13 +23,11 @@ async def request_validation_exception_handler(request: Request, exc: RequestVal
 
 
 async def http_exception_handler(request: Request, exc: HTTPException) -> Union[JSONResponse, Response]:
-    logger.debug("Custom http_exception_handler was called")
     error_message = {"detail": exc.detail}
     return JSONResponse(status_code=exc.status_code, content=error_message)
 
 
 async def unhandled_exception_handler(request: Request, exc: Exception) -> PlainTextResponse:
-    logger.debug("Custom unhandled_exception_handler was called")
     host = getattr(getattr(request, "client", None), "host", None)
     port = getattr(getattr(request, "client", None), "port", None)
     url = f"{request.url.path}?{request.query_params}" if request.query_params else request.url.path
