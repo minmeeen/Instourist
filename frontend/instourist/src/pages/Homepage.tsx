@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Container,
   Typography,
   useMediaQuery,
@@ -10,11 +9,7 @@ import background from '../img/background.png'
 import background_dark from '../img/background_dark.png'
 import logoLg from '../img/logo-lg.svg'
 import logoLgDark from '../img/logo-lg-dark.svg'
-import { useContext, useState } from 'react'
-import { common } from '@mui/material/colors'
-import { useNavigate } from 'react-router-dom'
 import SelectTouristAttraction from '../components/SelectTouristAttraction'
-import { ToggleModeComponent } from '../App'
 import Navbar from '../components/Navbar'
 
 export default function Homepage() {

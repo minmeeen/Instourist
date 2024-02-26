@@ -1,25 +1,5 @@
-import { PaletteColorOptions, createTheme } from '@mui/material'
+import { createTheme } from '@mui/material'
 const { palette } = createTheme()
-const { augmentColor } = palette
-
-const createColor = (mainColor: string) =>
-  augmentColor({ color: { main: mainColor } })
-
-// declare module '@mui/material/styles' {
-//   interface CustomPalette {
-//     accent: PaletteColorOptions
-//     black: PaletteColorOptions
-//   }
-//   interface Palette extends CustomPalette {}
-//   interface PaletteOptions extends CustomPalette {}
-// }
-
-// declare module '@mui/material/Button' {
-//   interface ButtonPropsColorOverrides {
-//     accent: true
-//     black: true
-//   }
-// }
 
 export const theme = createTheme({
   typography: {
@@ -106,7 +86,5 @@ export const theme = createTheme({
     text: {
       primary: '#212121',
     },
-    // accent: createColor('#51A3A3'),
-    // black: createColor('#000000'),
   },
 })

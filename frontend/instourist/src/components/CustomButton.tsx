@@ -1,7 +1,5 @@
 import { Box, Button, Typography } from '@mui/material'
-import React, { useContext } from 'react'
-import { common } from '@mui/material/colors'
-import { theme } from '../constant/theme'
+import React from 'react'
 
 interface customButtonProps {
   defaultIcon?: React.ReactNode
@@ -20,7 +18,6 @@ export default function CustomButton(props: customButtonProps) {
       variant={isClicked ? 'contained' : 'outlined'}
       sx={{
         borderColor: 'text.primary',
-        // minWidth: '150px',
       }}
       onClick={onClick}
     >
