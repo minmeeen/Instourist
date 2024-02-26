@@ -180,7 +180,6 @@ function App() {
     },
   })
   const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode])
-
   return (
     <>
       <ColorModeContext.Provider value={colorMode}>

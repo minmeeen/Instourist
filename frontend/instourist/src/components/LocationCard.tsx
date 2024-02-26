@@ -21,8 +21,6 @@ export default function LocationCard(props: LocationCardProps) {
       width={'100%'}
       minHeight={'200px'}
       alignItems={'center'}
-      // gap={'10px'}
-      // flexShrink={0}
       sx={{
         borderRadius: '16px',
         boxShadow: isDark

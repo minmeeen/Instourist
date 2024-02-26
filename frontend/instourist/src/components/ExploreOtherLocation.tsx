@@ -2,12 +2,11 @@ import {
   Box,
   Button,
   Divider,
-  Icon,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import React, { SetStateAction, useContext, useEffect, useState } from 'react'
+import React, { SetStateAction, useState } from 'react'
 import CustomButton from './CustomButton'
 import { touristDestinationType } from '../type/touristDestinationType'
 import {
@@ -20,7 +19,6 @@ import {
 } from '../constant/locations'
 import LocationCard from './LocationCard'
 import { useNavigate } from 'react-router-dom'
-import nature from '../img/nature.svg'
 import BACK_LIGHT from '../img/customback-light.svg'
 import BACK_DARK from '../img/customback-dark.svg'
 import {
@@ -86,6 +84,7 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
                 src={theme.palette.mode === 'dark' ? BACK_DARK : BACK_LIGHT}
                 width={'20px'}
                 height={'20px'}
+                alt='mode'
               ></img>
             </Button>
           </Box>

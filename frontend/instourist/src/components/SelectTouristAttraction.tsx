@@ -1,14 +1,5 @@
-import {
-  Box,
-  Button,
-  Icon,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material'
-import { common } from '@mui/material/colors'
-import nature from '../img/nature.svg'
-import React, { useContext, useState } from 'react'
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { useState } from 'react'
 import CustomButton from './CustomButton'
 import { touristDestinationType } from '../type/touristDestinationType'
 import LocationCard from './LocationCard'
@@ -30,11 +21,6 @@ import {
 
 export default function SelectTouristAttraction() {
   const matches = useMediaQuery('(min-width:960px)')
-  const natureIcon = (
-    <Icon>
-      <img alt='edit' src={nature} style={{ width: '20px', height: '20px' }} />
-    </Icon>
-  )
 
   const navigate = useNavigate()
 

@@ -1,11 +1,9 @@
 import { Box, Typography, useTheme } from '@mui/material'
-import { MAPBOX_ACCESS_TOKEN } from '../constant/accessToken'
 import { touristLocations } from '../constant/touristLocations'
 import { useEffect, useState } from 'react'
 import MapGL, { Marker, NavigationControl } from '@urbica/react-map-gl'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { common } from '@mui/material/colors'
-import locations from '../constant/locations.json'
 
 interface customMapGLProps {
   locationID?: string
@@ -54,10 +52,15 @@ export default function CustomMapGL(props: customMapGLProps) {
     else mapStyle = 'mapbox://styles/mapbox/streets-v11'
   }, [theme.palette.mode])
 
+  console.log(
+    'REACT_APP_MAPBOX_API_KEY',
+    process.env.REACT_APP_BASE_API,
+    process.env.REACT_APP_MAPBOX_API
+  )
   return (
     <>
       <MapGL
-        accessToken={MAPBOX_ACCESS_TOKEN}
+        accessToken={process.env.REACT_APP_MAPBOX_API}
         mapStyle={mapStyle}
         style={{ width: '100%', height: '95vh' }}
         longitude={viewport.longitude}
