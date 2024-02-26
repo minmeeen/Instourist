@@ -55,8 +55,9 @@ def getDatasetFromApify():
     try :
         timezone = pytz.timezone('Asia/Bangkok')
         current_datetime = datetime.now(timezone)
+        date_str = current_datetime.strftime('%Y-%m-%d')
         data = {
-            "date" : current_datetime.date()
+            "date" : date_str
         }
         json_data = json.dumps(data)
 
