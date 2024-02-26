@@ -56,6 +56,6 @@ def getDatasetFromApify():
         if response.status_code == 200 :
             logger.info('sent date to analytic is success')
         else :
-            logger.error(f'Error : {response}')
+            logger.error(f'Error from Analytic service: {response}')
     except Exception as e :
-        logger.error(f'Error : {e}')
+        logger.error(f'Error from common service: {e}')
