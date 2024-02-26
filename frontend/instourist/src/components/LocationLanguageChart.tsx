@@ -1,160 +1,142 @@
 import { PieChart } from '@mui/x-charts/PieChart'
 import {
   Box,
-  FormControl,
+  CircularProgress,
   FormControlLabel,
-  InputLabel,
-  PaletteColor,
   Typography,
   useTheme,
 } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
-  languageDetectedData,
+  languageDetectedInitData,
   pieChartLanguageDetectedData,
   transformLanguageDetectedData,
 } from '../constant/getDataType'
-import axios from 'axios'
+import { getData } from '../functions/getData'
 
 interface LocationLanguageChartProps {
   locationID: string
-  timeline: string
+  duration: string
 }
 
 export default function LocationLanguageChart(
   props: LocationLanguageChartProps
 ) {
-  const { locationID, timeline } = props
+  const { locationID, duration } = props
   const [selectedThai, setSelectedThai] = useState<boolean>(true)
   const theme = useTheme()
   const initial = {
-    'Number of posts': 0,
-    Languages: {},
+    NumberOfPosts: 0,
+    Languges: [],
   }
 
-  const [reponseData, setResponseData] = useState<languageDetectedData>(initial)
-
+  const [responseData, setResponseData] =
+    useState<languageDetectedInitData>(initial)
+  const [responseStatus, setResponseStatus] = useState<number>(-1)
+  const [loadingResponsese, setLoadingResponsese] = useState<boolean>(false)
   const [afterTransformData, setAfterTransformData] = useState<
     transformLanguageDetectedData[]
   >([])
-
   const [afterTransformDataNoThai, setAfterTransformDataNoThai] = useState<
     transformLanguageDetectedData[]
   >([])
-
-  const [pieChartData, setPieChartData] = useState<
+  const [pieChartData, setpieChartData] = useState<
+    pieChartLanguageDetectedData[]
+  >([])
+  const [pieChartDataNoThai, setpieChartDataNoThai] = useState<
     pieChartLanguageDetectedData[]
   >([])
 
-  const [pieChartDataNoThai, setPieChartDataNoThai] = useState<
-    pieChartLanguageDetectedData[]
-  >([])
+  const mainUrl = 'http://172.104.62.253:8000/languageDetected'
+  var time = Math.round(new Date().getTime() / 1000)
+  const toGetUrl = `${mainUrl}/locationId=${locationID}&time=${time}&duration=${duration}`
+
+  const forTestUrl = `http://172.104.62.253:8000/languageDetected/locationId=1&time=1705708800&duration=${duration}`
 
   function transformData() {
-    let total0 = Number(Object.values(reponseData?.Languages)[0])
-    let total1 = Number(Object.values(reponseData?.Languages)[1])
-    let total2 = Number(Object.values(reponseData?.Languages)[2])
-    let language0 = Object.keys(reponseData?.Languages)[0]
-    let language1 = Object.keys(reponseData?.Languages)[1]
-    let language2 = Object.keys(reponseData?.Languages)[2]
+    const allPost = responseData?.NumberOfPosts ?? 0
 
-    setAfterTransformData([
-      {
-        id: 0,
-        language: language0,
-        percent: `${((total0 * 100) / reponseData['Number of posts']).toFixed(
-          2
-        )} %`,
-        total: total0,
-      },
-      {
-        id: 1,
-        language: language1,
-        percent: `${((total1 * 100) / reponseData['Number of posts']).toFixed(
-          2
-        )} %`,
-        total: total1,
-      },
-      {
-        id: 2,
-        language: language2,
-        percent: `${((total2 * 100) / reponseData['Number of posts']).toFixed(
-          2
-        )} %`,
-        total: total2,
-      },
-    ])
+    const thaiPost =
+      responseData.Languges.filter(
+        (x) => x.languageName.toUpperCase() === 'THAI'
+      )
+        .map((x) => x.total)
+        .at(0) ?? 0
+    const allPostNoThai = allPost - +thaiPost
+    var id: number = -1
 
-    setPieChartData([
-      {
-        id: 0,
-        value: total0,
-        label: `${language0} ${(
-          (total0 * 100) /
-          reponseData['Number of posts']
-        ).toFixed(2)} %`,
-      },
-      {
-        id: 1,
-        value: total1,
-        label: `${language1} ${(
-          (total1 * 100) /
-          reponseData['Number of posts']
-        ).toFixed(2)} %`,
-      },
-      {
-        id: 2,
-        value: total2,
-        label: `${language2} ${(
-          (total2 * 100) /
-          reponseData['Number of posts']
-        ).toFixed(2)} %`,
-      },
-    ])
+    let mockAfterTransformData: transformLanguageDetectedData[] = []
+    let mockAfterTransformDataNoThai: transformLanguageDetectedData[] = []
+    let mockPieChartData: pieChartLanguageDetectedData[] = []
+    let mockPieChartDataNoThai: pieChartLanguageDetectedData[] = []
+    setAfterTransformData(mockAfterTransformData) // clear the list when re-render
+    setAfterTransformDataNoThai(mockAfterTransformDataNoThai)
+    setpieChartData(mockPieChartData)
+    setpieChartDataNoThai(mockPieChartDataNoThai)
+    setLoadingResponsese(true)
+    responseData.Languges.forEach((x) => {
+      id += 1
+      mockAfterTransformData.push({
+        id: id,
+        language: x.languageName,
+        percent: ((x.total * 100) / allPost).toFixed(2),
+        total: x.total,
+      })
+
+      mockPieChartData.push({
+        id: id,
+        value: +x.total,
+        label: x.languageName,
+      })
+
+      if (x.languageName.toUpperCase() !== 'THAI') {
+        mockAfterTransformDataNoThai.push({
+          id: id,
+          language: x.languageName,
+          percent: ((x.total * 100) / allPostNoThai).toFixed(2),
+          total: x.total,
+        })
+
+        mockPieChartDataNoThai.push({
+          id: id,
+          value: +x.total,
+          label: x.languageName,
+        })
+      }
+    })
+    setAfterTransformData(mockAfterTransformData)
+    setLoadingResponsese(false)
+    console.log('afterTransformData', afterTransformData)
+    console.log('afterTransformDataNoThai', afterTransformDataNoThai)
   }
 
-  useEffect(() => {
-    if (reponseData === initial) {
-      getData()
+  useMemo(() => {
+    if (responseData === initial) {
+      getData(
+        forTestUrl,
+        setResponseData,
+        setResponseStatus,
+        setLoadingResponsese
+      )
     }
   }, [])
 
+  useMemo(() => {
+    getData(
+      forTestUrl,
+      setResponseData,
+      setResponseStatus,
+      setLoadingResponsese
+    )
+  }, [duration])
+
   useEffect(() => {
     transformData()
-  }, [reponseData])
-
-  const getData = async () => {
-    try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/languageDetected/locationId=1&time=1705708800&duration=1D`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      console.log('first', response.data)
-      setResponseData(response.data)
-    } catch (error) {
-      // Handle errors (e.g., display an error message)
-      console.error('Error fetching item:', error)
-    }
-  }
+  }, [responseData])
 
   const handleClickSelectThai = () => {
     setSelectedThai(!selectedThai)
-    const mockData = afterTransformData.filter((x) => x.language !== 'Thai')
-    const mockPie = pieChartData.filter(
-      (x) =>
-        x.label !==
-        `Thai ${((x.value * 100) / reponseData['Number of posts']).toFixed(
-          2
-        )} %`
-    )
-
-    setAfterTransformDataNoThai(mockData)
-    setPieChartDataNoThai(mockPie)
   }
 
   return (
@@ -164,85 +146,143 @@ export default function LocationLanguageChart(
         width={'100%'}
         alignItems={'center'}
         flexDirection={'column'}
+        minHeight={'55vh'}
       >
-        <PieChart
-          series={[
-            {
-              data: selectedThai ? pieChartData : pieChartDataNoThai,
-              innerRadius: '60px',
-            },
-          ]}
-          width={500}
-          height={200}
-        />
-
-        <FormControlLabel
-          label={
+        {/* 2 Types of nodata 1.responsedData = {Message: 'No data'}, 2. responseStatus !== 200 */}
+        {loadingResponsese ? (
+          <Box
+            height={'45vh'}
+            display={'flex'}
+            textAlign={'center'}
+            flexDirection={'column'}
+            alignItems={'center'}
+            justifyContent={'center'}
+            gap={'16px'}
+          >
+            <CircularProgress />
             <Typography variant='h6' color={'text.primary'}>
-              Include Thai language
+              Loading datas..
             </Typography>
-          }
-          control={
-            <Checkbox
-              onClick={handleClickSelectThai}
-              checked={selectedThai}
-              sx={{
-                '&.Mui-checked': {
-                  color: 'primary',
-                },
-              }}
-            />
-          }
-        />
-        {selectedThai
-          ? afterTransformData.map((x) => (
+          </Box>
+        ) : (
+          <Box>
+            {responseData?.Message === 'No data' || responseStatus === 400 ? (
               <Box
-                id={x.id + 'lan'}
+                height={'45vh'}
                 display={'flex'}
-                width={'90%'}
-                justifyContent={'space-between'}
+                alignItems={'center'}
+                textAlign={'center'}
               >
-                <Box width={'40%'}>
-                  <Typography variant='h6' color={'text.primary'}>
-                    {' '}
-                    {x.language}
-                  </Typography>
-                </Box>
-
                 <Typography variant='h6' color={'text.primary'}>
-                  {' '}
-                  {x.percent}
-                </Typography>
-                <Typography variant='h6' color={'gray'}>
-                  {' '}
-                  {x.total} posts
+                  Please select different timeline or another location.
                 </Typography>
               </Box>
-            ))
-          : afterTransformDataNoThai.map((x) => (
+            ) : (
               <Box
-                id={x.id + 'lan'}
+                id='lan-pie-and-detail'
                 display={'flex'}
-                width={'90%'}
-                justifyContent={'space-between'}
+                width={'40vw'}
+                flexDirection={'column'}
+                gap={'16px'}
               >
-                <Box width={'40%'}>
-                  <Typography variant='h6' color={'text.primary'}>
-                    {' '}
-                    {x.language}
-                  </Typography>
+                <Box id='pie-chart' display={'flex'} justifyContent={'center'}>
+                  <PieChart
+                    series={[
+                      {
+                        data: selectedThai ? pieChartData : pieChartDataNoThai,
+                        innerRadius: '60px',
+                      },
+                    ]}
+                    width={500}
+                    height={200}
+                  />
                 </Box>
 
-                <Typography variant='h6' color={'text.primary'}>
-                  {' '}
-                  {x.percent}
-                </Typography>
-                <Typography variant='h6' color={'gray'}>
-                  {' '}
-                  {x.total} posts
-                </Typography>
+                <Box
+                  id='select-thai-form'
+                  width={'100%'}
+                  display={'flex'}
+                  justifyContent={'center'}
+                >
+                  <FormControlLabel
+                    label={
+                      <Typography variant='h6' color={'text.primary'}>
+                        Include Thai language
+                      </Typography>
+                    }
+                    control={
+                      <Checkbox
+                        onClick={handleClickSelectThai}
+                        checked={selectedThai}
+                        sx={{
+                          '&.Mui-checked': {
+                            color: 'primary',
+                          },
+                        }}
+                      />
+                    }
+                  />
+                </Box>
+
+                <Box
+                  id='lan-detail'
+                  display={'flex'}
+                  justifyContent={'center'}
+                  flexDirection={'column'}
+                  paddingX={'16px'}
+                >
+                  {selectedThai
+                    ? afterTransformData.map((x) => (
+                        <Box
+                          id={x.id + 'lan'}
+                          display={'flex'}
+                          justifyContent={'space-between'}
+                        >
+                          <Box width={'40%'}>
+                            <Typography variant='h6' color={'text.primary'}>
+                              {' '}
+                              {x.language}
+                            </Typography>
+                          </Box>
+
+                          <Typography variant='h6' color={'text.primary'}>
+                            {' '}
+                            {x.percent} %
+                          </Typography>
+                          <Typography variant='h6' color={'gray'}>
+                            {' '}
+                            {x.total} posts
+                          </Typography>
+                        </Box>
+                      ))
+                    : afterTransformDataNoThai.map((x) => (
+                        <Box
+                          id={x.id + 'lan'}
+                          display={'flex'}
+                          justifyContent={'space-between'}
+                        >
+                          <Box width={'40%'}>
+                            <Typography variant='h6' color={'text.primary'}>
+                              {' '}
+                              {x.language}
+                            </Typography>
+                          </Box>
+
+                          <Typography variant='h6' color={'text.primary'}>
+                            {' '}
+                            {x.percent}
+                          </Typography>
+                          <Typography variant='h6' color={'gray'}>
+                            {' '}
+                            {x.total} posts
+                          </Typography>
+                        </Box>
+                      ))}
+                </Box>
               </Box>
-            ))}
+            )}
+          </Box>
+        )}
       </Box>
     </>
   )

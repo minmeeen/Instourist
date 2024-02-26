@@ -67,6 +67,9 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
       paddingBottom={'20px'}
       key={`location-card-${location}`}
     >
+      <Box width={'100%'}>
+        <Divider variant='fullWidth' orientation='horizontal' />
+      </Box>
       {fullSize && (
         <Box paddingBottom={'24px'}>
           <Box
