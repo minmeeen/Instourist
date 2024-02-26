@@ -44,6 +44,7 @@ export default function LocationCard(props: LocationCardProps) {
         height={'90%'}
         alignSelf={'stretch'}
         padding={'4px 10px'}
+        textAlign={'left'}
       >
         <Box
           display={'flex'}

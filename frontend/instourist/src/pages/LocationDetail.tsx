@@ -27,7 +27,7 @@ export default function LocationDetail() {
   const matches = useMediaQuery('(min-width:960px)')
 
   return (
-    <Box sx={{ overflowY: 'hidden' }}>
+    <Box>
       <Navbar variant='other' />
 
       <Box display={'flex'} flexDirection={matches ? 'row' : 'column'}>

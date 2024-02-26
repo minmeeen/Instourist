@@ -1,6 +1,12 @@
-export interface languageDetectedData {
-  'Number of posts': number
-  Languages: {}
+export interface languageDetectedInitData {
+  Message?: string
+  NumberOfPosts: number
+  Languges: inLanguageData[]
+}
+
+export interface inLanguageData {
+  languageName: string
+  total: number
 }
 
 export interface transformLanguageDetectedData {
