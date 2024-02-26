@@ -4,6 +4,7 @@ import {
   CircularProgress,
   FormControlLabel,
   Typography,
+  useMediaQuery,
 } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
 import { useEffect, useState } from 'react'
@@ -24,6 +25,7 @@ export default function LocationLanguageChart(
 ) {
   const { locationID, duration } = props
   const [selectedThai, setSelectedThai] = useState<boolean>(true)
+  const matches = useMediaQuery('(min-width:960px)')
 
   const initial = {
     NumberOfPosts: 0,
@@ -123,7 +125,7 @@ export default function LocationLanguageChart(
 
   useEffect(() => {
     getData(toGetUrl, setResponseData, setResponseStatus, setLoadingResponsese)
-  }, [duration])
+  }, [duration, locationID])
 
   useEffect(() => {
     transformData()
@@ -175,7 +177,7 @@ export default function LocationLanguageChart(
               <Box
                 id='lan-pie-and-detail'
                 display={'flex'}
-                width={'40vw'}
+                width={'100%'}
                 flexDirection={'column'}
                 gap={'16px'}
               >
@@ -187,7 +189,7 @@ export default function LocationLanguageChart(
                         innerRadius: '60px',
                       },
                     ]}
-                    width={500}
+                    width={matches ? 500 : 320}
                     height={200}
                   />
                 </Box>
