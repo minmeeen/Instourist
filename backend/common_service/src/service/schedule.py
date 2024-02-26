@@ -3,4 +3,4 @@ from .taskGetdataset import getDatasetFromApify
 
 scheduler = BackgroundScheduler({'apscheduler.timezone': 'Asia/Bangkok'})
 
-scheduler.add_job(getDatasetFromApify, 'cron', day_of_week='mon-sun', minute='1')
+scheduler.add_job(getDatasetFromApify, 'cron', day_of_week='*', hour='0', minute='1')
