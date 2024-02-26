@@ -1,9 +1,8 @@
 import { Box, Button, useTheme } from '@mui/material'
-import React, { useContext } from 'react'
 import logoLg from '../img/logo-lg.svg'
 import logoLgDark from '../img/logo-lg-dark.svg'
 import { useNavigate } from 'react-router-dom'
-import { ColorModeContext, ToggleModeComponent } from '../App'
+import { ToggleModeComponent } from '../App'
 
 interface NavbarProps {
   variant: 'homepage' | 'other'
@@ -12,7 +11,6 @@ interface NavbarProps {
 export default function Navbar(props: NavbarProps) {
   const { variant } = props
   const theme = useTheme()
-  const colorMode = useContext(ColorModeContext)
   const navigate = useNavigate()
   return (
     <>

@@ -4,10 +4,10 @@ import {
   CircularProgress,
   FormControlLabel,
   Typography,
-  useTheme,
+  useMediaQuery,
 } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
-import React, { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   languageDetectedInitData,
   pieChartLanguageDetectedData,
@@ -25,7 +25,8 @@ export default function LocationLanguageChart(
 ) {
   const { locationID, duration } = props
   const [selectedThai, setSelectedThai] = useState<boolean>(true)
-  const theme = useTheme()
+  const matches = useMediaQuery('(min-width:960px)')
+
   const initial = {
     NumberOfPosts: 0,
     Languges: [],
@@ -48,11 +49,11 @@ export default function LocationLanguageChart(
     pieChartLanguageDetectedData[]
   >([])
 
-  const mainUrl = 'http://172.104.62.253:8000/languageDetected'
+  const mainUrl = process.env.REACT_APP_BASE_API
   var time = Math.round(new Date().getTime() / 1000)
   const toGetUrl = `${mainUrl}/locationId=${locationID}&time=${time}&duration=${duration}`
 
-  const forTestUrl = `http://172.104.62.253:8000/languageDetected/locationId=1&time=1705708800&duration=${duration}`
+  // const forTestUrl = `http://172.104.62.253:8000/languageDetected/locationId=1&time=1705708800&duration=${duration}`
 
   function transformData() {
     if (responseStatus === 200 && !responseData.Message) {
@@ -111,7 +112,7 @@ export default function LocationLanguageChart(
     }
   }
 
-  useMemo(() => {
+  useEffect(() => {
     if (responseData === initial) {
       getData(
         toGetUrl,
@@ -122,9 +123,9 @@ export default function LocationLanguageChart(
     }
   }, [])
 
-  useMemo(() => {
+  useEffect(() => {
     getData(toGetUrl, setResponseData, setResponseStatus, setLoadingResponsese)
-  }, [duration])
+  }, [duration, locationID])
 
   useEffect(() => {
     transformData()
@@ -176,7 +177,7 @@ export default function LocationLanguageChart(
               <Box
                 id='lan-pie-and-detail'
                 display={'flex'}
-                width={'40vw'}
+                width={'100%'}
                 flexDirection={'column'}
                 gap={'16px'}
               >
@@ -188,7 +189,7 @@ export default function LocationLanguageChart(
                         innerRadius: '60px',
                       },
                     ]}
-                    width={500}
+                    width={matches ? 500 : 320}
                     height={200}
                   />
                 </Box>
@@ -265,7 +266,7 @@ export default function LocationLanguageChart(
 
                           <Typography variant='h6' color={'text.primary'}>
                             {' '}
-                            {x.percent}
+                            {x.percent} %
                           </Typography>
                           <Typography variant='h6' color={'gray'}>
                             {' '}
