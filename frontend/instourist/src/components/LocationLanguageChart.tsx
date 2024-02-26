@@ -55,66 +55,66 @@ export default function LocationLanguageChart(
   const forTestUrl = `http://172.104.62.253:8000/languageDetected/locationId=1&time=1705708800&duration=${duration}`
 
   function transformData() {
-    const allPost = responseData?.NumberOfPosts ?? 0
+    if (responseStatus === 200 && !responseData.Message) {
+      const allPost = responseData?.NumberOfPosts ?? 0
 
-    const thaiPost =
-      responseData.Languges.filter(
-        (x) => x.languageName.toUpperCase() === 'THAI'
-      )
-        .map((x) => x.total)
-        .at(0) ?? 0
-    const allPostNoThai = allPost - +thaiPost
-    var id: number = -1
+      const thaiPost =
+        responseData.Languges.filter(
+          (x) => x.languageName.toUpperCase() === 'THAI'
+        )
+          .map((x) => x.total)
+          .at(0) ?? 0
+      const allPostNoThai = allPost - +thaiPost
+      var id: number = -1
 
-    let mockAfterTransformData: transformLanguageDetectedData[] = []
-    let mockAfterTransformDataNoThai: transformLanguageDetectedData[] = []
-    let mockPieChartData: pieChartLanguageDetectedData[] = []
-    let mockPieChartDataNoThai: pieChartLanguageDetectedData[] = []
-    setAfterTransformData(mockAfterTransformData) // clear the list when re-render
-    setAfterTransformDataNoThai(mockAfterTransformDataNoThai)
-    setpieChartData(mockPieChartData)
-    setpieChartDataNoThai(mockPieChartDataNoThai)
-    setLoadingResponsese(true)
-    responseData.Languges.forEach((x) => {
-      id += 1
-      mockAfterTransformData.push({
-        id: id,
-        language: x.languageName,
-        percent: ((x.total * 100) / allPost).toFixed(2),
-        total: x.total,
-      })
-
-      mockPieChartData.push({
-        id: id,
-        value: +x.total,
-        label: x.languageName,
-      })
-
-      if (x.languageName.toUpperCase() !== 'THAI') {
-        mockAfterTransformDataNoThai.push({
+      let mockAfterTransformData: transformLanguageDetectedData[] = []
+      let mockAfterTransformDataNoThai: transformLanguageDetectedData[] = []
+      let mockPieChartData: pieChartLanguageDetectedData[] = []
+      let mockPieChartDataNoThai: pieChartLanguageDetectedData[] = []
+      setAfterTransformData(mockAfterTransformData) // clear the list when re-render
+      setAfterTransformDataNoThai(mockAfterTransformDataNoThai)
+      setpieChartData(mockPieChartData)
+      setpieChartDataNoThai(mockPieChartDataNoThai)
+      setLoadingResponsese(true)
+      responseData.Languges.forEach((x) => {
+        id += 1
+        mockAfterTransformData.push({
           id: id,
           language: x.languageName,
-          percent: ((x.total * 100) / allPostNoThai).toFixed(2),
+          percent: ((x.total * 100) / allPost).toFixed(2),
           total: x.total,
         })
 
-        mockPieChartDataNoThai.push({
+        mockPieChartData.push({
           id: id,
           value: +x.total,
           label: x.languageName,
         })
-      }
-    })
-    setAfterTransformData(mockAfterTransformData)
-    setLoadingResponsese(false)
-    console.log('afterTransformData', afterTransformData)
-    console.log('afterTransformDataNoThai', afterTransformDataNoThai)
+
+        if (x.languageName.toUpperCase() !== 'THAI') {
+          mockAfterTransformDataNoThai.push({
+            id: id,
+            language: x.languageName,
+            percent: ((x.total * 100) / allPostNoThai).toFixed(2),
+            total: x.total,
+          })
+
+          mockPieChartDataNoThai.push({
+            id: id,
+            value: +x.total,
+            label: x.languageName,
+          })
+        }
+      })
+      setAfterTransformData(mockAfterTransformData)
+      setLoadingResponsese(false)
+    }
   }
 
   useMemo(() => {
     if (responseData === initial) {
       getData(
-        forTestUrl,
+        toGetUrl,
         setResponseData,
         setResponseStatus,
         setLoadingResponsese
@@ -123,12 +123,7 @@ export default function LocationLanguageChart(
   }, [])
 
   useMemo(() => {
-    getData(
-      forTestUrl,
-      setResponseData,
-      setResponseStatus,
-      setLoadingResponsese
-    )
+    getData(toGetUrl, setResponseData, setResponseStatus, setLoadingResponsese)
   }, [duration])
 
   useEffect(() => {
