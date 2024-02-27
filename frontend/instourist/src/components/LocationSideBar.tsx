@@ -17,11 +17,12 @@ import LocationLanguageChart from './LocationLanguageChart'
 
 interface LocationSideBarProps {
   location: InstouristLocation | ''
+  timeline: string
+  setTimeline: React.Dispatch<React.SetStateAction<string>>
 }
 
 export default function LocationSideBar(props: LocationSideBarProps) {
-  const { location } = props
-  const [timeline, setTimeline] = React.useState<string>('1D')
+  const { location, timeline, setTimeline } = props
   const theme = useTheme()
   const hanldeClickSelectTimeline = (event: SelectChangeEvent) => {
     setTimeline(event.target.value as string)
@@ -115,10 +116,6 @@ export default function LocationSideBar(props: LocationSideBarProps) {
                 </Select>
               </FormControl>
             </Box>
-            <LocationLanguageChart
-              locationID={location.locationID}
-              duration={timeline}
-            />
           </Box>
         </Box>
       </Box>

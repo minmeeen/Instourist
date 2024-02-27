@@ -65,6 +65,7 @@ export default function CustomMapGL(props: customMapGLProps) {
         <NavigationControl showCompass showZoom position='top-right' />
         {touristLocations.features.map((f) => (
           <Marker
+            key={'marker' + f.properties.title}
             longitude={f.geometry.longitude}
             latitude={f.geometry.latitude}
             onClick={() =>
