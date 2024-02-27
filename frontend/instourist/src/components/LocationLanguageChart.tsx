@@ -13,123 +13,33 @@ import {
   pieChartLanguageDetectedData,
   transformLanguageDetectedData,
 } from '../constant/getDataType'
-import { getData } from '../functions/getData'
 
 interface LocationLanguageChartProps {
-  locationID: string
-  duration: string
+  responseData: languageDetectedInitData | null
+  responseStatus: number
+  loadingResponsese: boolean
+  transformingData: boolean
+  afterTransformData: transformLanguageDetectedData[]
+  afterTransformDataNoThai: transformLanguageDetectedData[]
+  pieChartData: pieChartLanguageDetectedData[]
+  pieChartDataNoThai: pieChartLanguageDetectedData[]
 }
 
 export default function LocationLanguageChart(
   props: LocationLanguageChartProps
 ) {
-  const { locationID, duration } = props
+  const {
+    responseData,
+    responseStatus,
+    afterTransformData,
+    afterTransformDataNoThai,
+    pieChartData,
+    pieChartDataNoThai,
+    loadingResponsese,
+    transformingData,
+  } = props
   const [selectedThai, setSelectedThai] = useState<boolean>(true)
   const matches = useMediaQuery('(min-width:960px)')
-
-  const initial = {
-    NumberOfPosts: 0,
-    Languges: [],
-  }
-
-  const [responseData, setResponseData] =
-    useState<languageDetectedInitData>(initial)
-  const [responseStatus, setResponseStatus] = useState<number>(-1)
-  const [loadingResponsese, setLoadingResponsese] = useState<boolean>(false)
-  const [afterTransformData, setAfterTransformData] = useState<
-    transformLanguageDetectedData[]
-  >([])
-  const [afterTransformDataNoThai, setAfterTransformDataNoThai] = useState<
-    transformLanguageDetectedData[]
-  >([])
-  const [pieChartData, setpieChartData] = useState<
-    pieChartLanguageDetectedData[]
-  >([])
-  const [pieChartDataNoThai, setpieChartDataNoThai] = useState<
-    pieChartLanguageDetectedData[]
-  >([])
-
-  const mainUrl = process.env.REACT_APP_BASE_API
-  var time = Math.round(new Date().getTime() / 1000)
-  const toGetUrl = `${mainUrl}/locationId=${locationID}&time=${time}&duration=${duration}`
-
-  // const forTestUrl = `http://172.104.62.253:8000/languageDetected/locationId=1&time=1705708800&duration=${duration}`
-
-  function transformData() {
-    if (responseStatus === 200 && !responseData.Message) {
-      const allPost = responseData?.NumberOfPosts ?? 0
-
-      const thaiPost =
-        responseData.Languges.filter(
-          (x) => x.languageName.toUpperCase() === 'THAI'
-        )
-          .map((x) => x.total)
-          .at(0) ?? 0
-      const allPostNoThai = allPost - +thaiPost
-      var id: number = -1
-
-      let mockAfterTransformData: transformLanguageDetectedData[] = []
-      let mockAfterTransformDataNoThai: transformLanguageDetectedData[] = []
-      let mockPieChartData: pieChartLanguageDetectedData[] = []
-      let mockPieChartDataNoThai: pieChartLanguageDetectedData[] = []
-      setAfterTransformData(mockAfterTransformData) // clear the list when re-render
-      setAfterTransformDataNoThai(mockAfterTransformDataNoThai)
-      setpieChartData(mockPieChartData)
-      setpieChartDataNoThai(mockPieChartDataNoThai)
-      setLoadingResponsese(true)
-      responseData.Languges.forEach((x) => {
-        id += 1
-        mockAfterTransformData.push({
-          id: id,
-          language: x.languageName,
-          percent: ((x.total * 100) / allPost).toFixed(2),
-          total: x.total,
-        })
-
-        mockPieChartData.push({
-          id: id,
-          value: +x.total,
-          label: x.languageName,
-        })
-
-        if (x.languageName.toUpperCase() !== 'THAI') {
-          mockAfterTransformDataNoThai.push({
-            id: id,
-            language: x.languageName,
-            percent: ((x.total * 100) / allPostNoThai).toFixed(2),
-            total: x.total,
-          })
-
-          mockPieChartDataNoThai.push({
-            id: id,
-            value: +x.total,
-            label: x.languageName,
-          })
-        }
-      })
-      setAfterTransformData(mockAfterTransformData)
-      setLoadingResponsese(false)
-    }
-  }
-
-  useEffect(() => {
-    if (responseData === initial) {
-      getData(
-        toGetUrl,
-        setResponseData,
-        setResponseStatus,
-        setLoadingResponsese
-      )
-    }
-  }, [])
-
-  useEffect(() => {
-    getData(toGetUrl, setResponseData, setResponseStatus, setLoadingResponsese)
-  }, [duration, locationID])
-
-  useEffect(() => {
-    transformData()
-  }, [responseData])
 
   const handleClickSelectThai = () => {
     setSelectedThai(!selectedThai)
@@ -145,9 +55,9 @@ export default function LocationLanguageChart(
         minHeight={'55vh'}
       >
         {/* 2 Types of nodata 1.responsedData = {Message: 'No data'}, 2. responseStatus !== 200 */}
-        {loadingResponsese ? (
+        {loadingResponsese || transformingData ? (
           <Box
-            height={'45vh'}
+            height={'60vh'}
             display={'flex'}
             textAlign={'center'}
             flexDirection={'column'}
@@ -230,6 +140,7 @@ export default function LocationLanguageChart(
                   {selectedThai
                     ? afterTransformData.map((x) => (
                         <Box
+                          key={x.id + 'lan'}
                           id={x.id + 'lan'}
                           display={'flex'}
                           justifyContent={'space-between'}
@@ -253,6 +164,7 @@ export default function LocationLanguageChart(
                       ))
                     : afterTransformDataNoThai.map((x) => (
                         <Box
+                          key={x.id + 'lan'}
                           id={x.id + 'lan'}
                           display={'flex'}
                           justifyContent={'space-between'}

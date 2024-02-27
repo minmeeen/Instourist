@@ -13,112 +13,104 @@ import {
 } from '@mui/material'
 import findLocationTypeIcon from '../functions/findLocationTypeIcon'
 import LocationNotFound from './LocationNotFound'
-import LocationLanguageChart from './LocationLanguageChart'
 
 interface LocationSideBarProps {
   location: InstouristLocation | ''
+  timeline: string
+  setTimeline: React.Dispatch<React.SetStateAction<string>>
 }
 
 export default function LocationSideBar(props: LocationSideBarProps) {
-  const { location } = props
-  const [timeline, setTimeline] = React.useState<string>('1D')
+  const { location, timeline, setTimeline } = props
   const theme = useTheme()
   const hanldeClickSelectTimeline = (event: SelectChangeEvent) => {
     setTimeline(event.target.value as string)
   }
   if (location) {
     return (
-      <Box display={'flex'} width={'100%'} flexDirection={'column'} gap={'4px'}>
+      <Box
+        display={'flex'}
+        width={'100%'}
+        flexDirection={'column'}
+        gap={'4px'}
+        padding={'32px'}
+      >
         <Box
-          id='location-headline'
+          id='location-type'
+          display={'flex'}
+          padding={'4px 8px'}
+          alignItems={'center'}
+          gap={'8px'}
+        >
+          {findLocationTypeIcon(location.locationType, theme.palette.mode)}
+          <Typography color={'text.primary'}>
+            {location.locationType === 'ART_CULTURE'
+              ? 'ART & CULTURE'
+              : location.locationType}
+          </Typography>
+        </Box>
+        <Box
+          id='location-name'
           display={'flex'}
           flexDirection={'column'}
           justifyContent={'flex-end'}
           alignItems={'flex-start'}
-          gap={'4px'}
-          alignSelf={'stretch'}
         >
-          <Box
-            id='location-type'
-            display={'flex'}
-            padding={'4px 8px'}
-            alignItems={'center'}
-            gap={'8px'}
+          <Typography
+            variant='h3'
+            sx={{ lineHeight: '110%' }}
+            color={'text.primary'}
           >
-            {findLocationTypeIcon(location.locationType, theme.palette.mode)}
-            <Typography color={'text.primary'}>
-              {location.locationType === 'ART_CULTURE'
-                ? 'ART & CULTURE'
-                : location.locationType}
-            </Typography>
-          </Box>
-          <Box
-            id='location-name'
-            display={'flex'}
-            flexDirection={'column'}
-            justifyContent={'flex-end'}
-            alignItems={'flex-start'}
+            {location.locationEN}
+          </Typography>
+          <Typography
+            color={'text.primary'}
+            variant='h6'
+            sx={{ lineHeight: '120%' }}
           >
-            <Typography
-              variant='h3'
-              sx={{ lineHeight: '110%' }}
-              color={'text.primary'}
-            >
-              {location.locationEN}
-            </Typography>
-            <Typography
-              color={'text.primary'}
-              variant='h6'
-              sx={{ lineHeight: '120%' }}
-            >
-              {location.locationTH}
-            </Typography>
-          </Box>
-          <Box width={'100%'}>
-            <Divider variant='fullWidth' orientation='horizontal' />
-          </Box>
+            {location.locationTH}
+          </Typography>
+        </Box>
+        <Box width={'100%'}>
+          <Divider variant='fullWidth' orientation='horizontal' />
+        </Box>
+        <Box
+          display={'flex'}
+          flexDirection={'column'}
+          width={'100%'}
+          alignItems={'center'}
+          gap={'4px'}
+        >
+          <Typography color={'text.primary'} variant='h5'>
+            Languages used by tourists at this place
+          </Typography>
           <Box
             display={'flex'}
-            flexDirection={'column'}
+            flexDirection={'row'}
             width={'100%'}
+            gap={'16px'}
             alignItems={'center'}
-            gap={'4px'}
+            justifyContent={'center'}
           >
             <Typography color={'text.primary'} variant='h5'>
-              Languages used by tourists at this place
+              in the past
             </Typography>
-            <Box
-              display={'flex'}
-              flexDirection={'row'}
-              width={'100%'}
-              gap={'16px'}
-              alignItems={'center'}
-              justifyContent={'center'}
-            >
-              <Typography color={'text.primary'} variant='h5'>
-                in the past
-              </Typography>
-              <FormControl sx={{ width: '200px' }} size='small'>
-                <InputLabel id='demo-simple-select-label'>Timeline</InputLabel>
-                <Select
-                  labelId='demo-simple-select-label'
-                  id='demo-simple-select'
-                  value={timeline}
-                  label='Timeline'
-                  onChange={hanldeClickSelectTimeline}
-                  defaultValue='24 Hours'
-                >
-                  <MenuItem value={'1D'}>24 Hours</MenuItem>
-                  <MenuItem value={'2D'}>48 Hours</MenuItem>
-                  <MenuItem value={'7D'}>7 Days</MenuItem>
-                  <MenuItem value={'14D'}>14 Days</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-            <LocationLanguageChart
-              locationID={location.locationID}
-              duration={timeline}
-            />
+            <FormControl sx={{ width: '200px' }} size='small'>
+              <InputLabel id='demo-simple-select-label'>Timeline</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                value={timeline}
+                label='Timeline'
+                onChange={hanldeClickSelectTimeline}
+                defaultValue='24 Hours'
+              >
+                <MenuItem value={'1D'}>24 Hours</MenuItem>
+                <MenuItem value={'2D'}>48 Hours</MenuItem>
+                <MenuItem value={'7D'}>7 Days</MenuItem>
+                <MenuItem value={'14D'}>14 Days</MenuItem>
+              </Select>
+            </FormControl>
           </Box>
         </Box>
       </Box>
