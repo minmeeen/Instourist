@@ -57,7 +57,7 @@ export default function LocationLanguageChart(
         {/* 2 Types of nodata 1.responsedData = {Message: 'No data'}, 2. responseStatus !== 200 */}
         {loadingResponsese || transformingData ? (
           <Box
-            height={'45vh'}
+            height={'60vh'}
             display={'flex'}
             textAlign={'center'}
             flexDirection={'column'}

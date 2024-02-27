@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig } from 'axios'
-import { languageDetectedInitData } from '../constant/getDataType'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { ROUTE } from '../constant/ROUTE'
 import { useNavigate } from 'react-router-dom'

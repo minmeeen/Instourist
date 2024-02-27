@@ -1,4 +1,4 @@
-import { createContext, useEffect, useMemo, useRef, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import { Box, useMediaQuery, useTheme } from '@mui/material'
@@ -13,7 +13,6 @@ import {
 } from '../constant/getDataType'
 import LocationLanguageChart from '../components/LocationLanguageChart'
 import { useGet } from '../functions/getData'
-import axios from 'axios'
 
 export const ExploreOtherLocationContext = createContext({
   toggleExploreMode: () => {},
@@ -116,7 +115,7 @@ export default function LocationDetail() {
   }, [responseData])
 
   return (
-    <Box>
+    <Box sx={{ overflowY: 'hidden' }} maxHeight={matches ? '100vh' : 'auto'}>
       <Navbar variant='other' />
 
       <Box display={'flex'} flexDirection={matches ? 'row' : 'column'}>
@@ -126,11 +125,11 @@ export default function LocationDetail() {
           bgcolor={theme.palette.mode === 'dark' ? '#2C2C2C' : '#f5f5f5'}
           justifyContent={'space-between'}
           width={matches ? '70%' : '95%'}
-          // maxHeight={'90vh'}
+          maxHeight={'100vh'}
           sx={{ overflowY: 'scroll' }}
         >
           {!fullSize && (
-            <>
+            <Box sx={{ overflowX: 'hidden' }}>
               <LocationSideBar
                 location={findLocationID(locationID!)}
                 timeline={timeline}
@@ -147,13 +146,15 @@ export default function LocationDetail() {
                 pieChartData={pieChartData}
                 pieChartDataNoThai={pieChartDataNoThai}
               />
-            </>
+            </Box>
           )}
-          <ExploreOtherLocation
-            fullSize={fullSize}
-            setFullSize={setFullSize}
-            location={findLocationID(locationID!)}
-          />
+          {!loadingResponsese && (
+            <ExploreOtherLocation
+              fullSize={fullSize}
+              setFullSize={setFullSize}
+              location={findLocationID(locationID!)}
+            />
+          )}
         </Box>
 
         {/* <MapBox locationID={findLocationID(locationID!)} />
