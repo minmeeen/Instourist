@@ -28,13 +28,7 @@ export default function LocationSideBar(props: LocationSideBarProps) {
   }
   if (location) {
     return (
-      <Box
-        display={'flex'}
-        width={'100%'}
-        flexDirection={'column'}
-        gap={'4px'}
-        padding={'32px'}
-      >
+      <Box display={'flex'} width={'100%'} flexDirection={'column'} gap={'4px'}>
         <Box
           id='location-type'
           display={'flex'}
