@@ -49,4 +49,9 @@ async def root():
 @app.get("/languageDetected/locationId={locationId}&time={timestamp}&duration={duration}")
 async def getLanguageDetected(locationId: str, timestamp: int, duration: str):
     data = service.getLanguageDetected(locationId, timestamp, duration)
-    return data
+    if data is None:
+        raise HTTPException(status_code=404, detail="No data")
+    else:
+        return data
+
+    
