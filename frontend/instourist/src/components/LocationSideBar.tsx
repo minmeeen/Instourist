@@ -15,7 +15,7 @@ import findLocationTypeIcon from '../functions/findLocationTypeIcon'
 import LocationNotFound from './LocationNotFound'
 
 interface LocationSideBarProps {
-  location: InstouristLocation | ''
+  location: InstouristLocation | null
   timeline: string
   setTimeline: React.Dispatch<React.SetStateAction<string>>
 }
