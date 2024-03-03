@@ -4,8 +4,8 @@ import re
 from fastapi import HTTPException
 from src.middleware.logger import logger
 from datetime import datetime
-from dotenv import load_dotenv
 from src.config import DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME
+from fastapi.responses import JSONResponse
 
 engine = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
@@ -78,7 +78,8 @@ def langDetector(caption: str):
 
 
 def AnalyticData(date):
-    logger.info('call getting data from db')
+    date = str(date)
+    logger.info('call getting data from db at date ', date)
     original_df, language_df = getDataFromDB(date)
     if original_df.empty:
         raise HTTPException(status_code=404, detail="Data not found")
@@ -116,8 +117,10 @@ def AnalyticData(date):
         merged_data.to_sql('post_language_detected', con=engine, if_exists='append', index=False)
         logger.info('write into db success')
         logger.info(f"End calling analytic service")
+        message = {"detail": str("Analytic Success!!")}
 
-        return "Analyzed data success!"
+        return JSONResponse(status_code=200, content=message)
     except Exception as e:
         logger.error("Write data into db error:", e)
-        raise HTTPException(status_code=400, detail="Cannot analyze data. Please try again.")
+        error_message = {"detail": str("Cannot analyze data. Please try again.")}
+        raise JSONResponse(status_code=400, content=error_message)

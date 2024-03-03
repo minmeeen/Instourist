@@ -29,5 +29,5 @@ async def root():
 
 
 @app.post("/analytics")
-async def getAnalytics(req: DateReq):
-    return AnalyticData(req.date)
+async def getAnalytics(dateReq: DateReq):
+    return AnalyticData(dateReq.date)

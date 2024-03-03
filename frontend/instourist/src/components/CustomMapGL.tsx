@@ -51,12 +51,6 @@ export default function CustomMapGL(props: customMapGLProps) {
       mapStyle = 'mapbox://styles/mapbox/navigation-night-v1'
     else mapStyle = 'mapbox://styles/mapbox/streets-v11'
   }, [theme.palette.mode])
-
-  console.log(
-    'REACT_APP_MAPBOX_API_KEY',
-    process.env.REACT_APP_BASE_API,
-    process.env.REACT_APP_MAPBOX_API
-  )
   return (
     <>
       <MapGL
@@ -71,6 +65,7 @@ export default function CustomMapGL(props: customMapGLProps) {
         <NavigationControl showCompass showZoom position='top-right' />
         {touristLocations.features.map((f) => (
           <Marker
+            key={'marker' + f.properties.title}
             longitude={f.geometry.longitude}
             latitude={f.geometry.latitude}
             onClick={() =>
