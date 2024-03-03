@@ -46,6 +46,7 @@ export default function LocationDetail() {
     useGet<languageDetectedInitData>({
       url: `/locationId=${locationID}&time=${time}&duration=${timeline}`,
       autoFetch: false,
+      autoNavigate: false,
     })
 
   function transformData() {
