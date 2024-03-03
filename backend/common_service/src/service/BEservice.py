@@ -1,6 +1,7 @@
 from .db_connect import Database
 from datetime import datetime, timedelta
 from src.model import LanguageDetectedResponse, LangugesResponse
+from operator import attrgetter
 
 from src.middleware.logger import logger
 from src.config import DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME
@@ -36,7 +37,7 @@ def getLanguageDetected(locationId, timestamp, duration):
     logger.info('call find post detected by date')
     languageDetected = db.findPostDetectedByDate(locationId, newTime, currentTime) #list of languages
     if languageDetected is None :
-        return {"Message" : "No data"}
+        return None
     else :
         languages = {}
         for language in languageDetected :
@@ -44,13 +45,13 @@ def getLanguageDetected(locationId, timestamp, duration):
                 languages[language[0]] += 1
             else :
                 languages[language[0]] = 1
-
+        
         listOfLanguages = []
         for language in languages:
             listOfLanguages.append(LangugesResponse(languageName=language, total=languages[language]))
-
-            
-        response = LanguageDetectedResponse(NumberOfPosts=len(languageDetected), Languges=listOfLanguages)
+        
+        sortedListOfLanguages = sorted(listOfLanguages, key=attrgetter('languageName'))
+        response = LanguageDetectedResponse(NumberOfPosts=len(languageDetected), Languges=sortedListOfLanguages)
         return response
     
 def getLocationIdFromIG():
