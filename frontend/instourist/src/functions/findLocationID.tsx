@@ -24,5 +24,5 @@ export function findLocationID(locationID: string) {
       (location) => location.locationID === locationID
     ).at(0)
   }
-  return currLocation ? currLocation : ''
+  return currLocation ? currLocation : null
 }

@@ -31,7 +31,7 @@ import {
 interface ExploreOtherLocationProps {
   fullSize: boolean
   setFullSize: React.Dispatch<SetStateAction<boolean>>
-  location?: InstouristLocation | ''
+  location?: InstouristLocation | null
 }
 
 export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {

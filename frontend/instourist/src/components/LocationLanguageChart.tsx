@@ -72,7 +72,7 @@ export default function LocationLanguageChart(
           </Box>
         ) : (
           <Box>
-            {responseData?.Message === 'No data' || responseStatus === 400 ? (
+            {responseStatus !== 200 ? (
               <Box
                 height={'45vh'}
                 display={'flex'}
