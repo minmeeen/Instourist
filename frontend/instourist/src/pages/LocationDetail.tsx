@@ -106,12 +106,11 @@ export default function LocationDetail() {
   }
 
   useEffect(() => {
-    getData()
-    console.log('getData')
+    getData() // eslint-disable-next-line
   }, [timeline, locationID])
 
   useEffect(() => {
-    transformData()
+    transformData() // eslint-disable-next-line
   }, [responseData])
 
   return (

@@ -1,29 +1,17 @@
 import {
   Box,
-  Container,
   IconButton,
-  Link,
   PaletteMode,
   ThemeProvider,
-  Typography,
   createTheme,
   useTheme,
 } from '@mui/material'
 import './App.css'
-import background from './img/background.png'
-import logoLg from './img/logo-lg.svg'
 import Homepage from './pages/Homepage'
 import { createContext, useContext, useMemo, useState } from 'react'
-import { theme } from './constant/theme'
 import { DarkMode, LightMode } from '@mui/icons-material'
 import LocationDetail from './pages/LocationDetail'
-import Navbar from './components/Navbar'
-import {
-  Route,
-  RouterProvider,
-  Routes,
-  createBrowserRouter,
-} from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { ROUTE } from './constant/ROUTE'
 import { grey } from '@mui/material/colors'
 

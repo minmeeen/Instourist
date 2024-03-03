@@ -7,7 +7,7 @@ import {
   useMediaQuery,
 } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   languageDetectedInitData,
   pieChartLanguageDetectedData,
@@ -29,7 +29,6 @@ export default function LocationLanguageChart(
   props: LocationLanguageChartProps
 ) {
   const {
-    responseData,
     responseStatus,
     afterTransformData,
     afterTransformDataNoThai,

@@ -41,6 +41,7 @@ export default function Homepage() {
           <img
             src={isDark ? logoLgDark : logoLg}
             style={{ height: matches ? '80px' : '50px', width: '433px' }}
+            alt='logo'
           />
           <Typography variant='h4' color={'text.primary'}>
             Analyze languages used by visitors at tourist destinations.

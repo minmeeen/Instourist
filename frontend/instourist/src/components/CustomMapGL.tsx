@@ -13,6 +13,11 @@ export default function CustomMapGL(props: customMapGLProps) {
   const { locationID } = props
   const navigate = useNavigate()
   const theme = useTheme()
+  const [mapStyle, setMapStyle] = useState<string>(
+    theme.palette.mode === 'dark'
+      ? 'mapbox://styles/mapbox/navigation-night-v1'
+      : 'mapbox://styles/mapbox/streets-v11'
+  )
 
   let defaultlng = touristLocations.features.find(
     (x) => x.properties.id === locationID
@@ -21,11 +26,6 @@ export default function CustomMapGL(props: customMapGLProps) {
   let defaultlat = touristLocations.features.find(
     (x) => x.properties.id === locationID
   )?.geometry.latitude
-
-  let mapStyle =
-    theme.palette.mode === 'dark'
-      ? 'mapbox://styles/mapbox/navigation-night-v1'
-      : 'mapbox://styles/mapbox/streets-v11'
 
   const [viewport, setViewport] = useState({
     latitude: defaultlat ?? 18.78,
@@ -43,13 +43,13 @@ export default function CustomMapGL(props: customMapGLProps) {
       latitude: defaultlat ?? 18.78,
       longitude: defaultlng ?? 99,
       zoom: 13,
-    })
+    }) // eslint-disable-next-line
   }, [locationID])
 
   useEffect(() => {
     if (theme.palette.mode === 'dark')
-      mapStyle = 'mapbox://styles/mapbox/navigation-night-v1'
-    else mapStyle = 'mapbox://styles/mapbox/streets-v11'
+      setMapStyle('mapbox://styles/mapbox/navigation-night-v1')
+    else setMapStyle('mapbox://styles/mapbox/streets-v11')
   }, [theme.palette.mode])
   return (
     <>

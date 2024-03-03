@@ -17,6 +17,7 @@ type GetProps = {
   data?: never
 }
 
+// eslint-disable-next-line
 type Props<T> = BaseProps & GetProps
 
 type FetchReturn<T> = [
