@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { InstouristLocation } from '../constant/locations'
 import {
   Box,
@@ -13,6 +13,15 @@ import {
 } from '@mui/material'
 import findLocationTypeIcon from '../functions/findLocationTypeIcon'
 import LocationNotFound from './LocationNotFound'
+import dayjs, { Dayjs } from 'dayjs'
+// import { DateRange } from 'react-date-range'
+import 'react-date-range/dist/styles.css' // main css file
+import 'react-date-range/dist/theme/default.css' // theme css file
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
+import { LocalizationProvider } from '@mui/x-date-pickers-pro'
+import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs'
+import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker'
+import { DateRange } from '@mui/x-date-pickers-pro'
 
 interface LocationSideBarProps {
   location: InstouristLocation | null
@@ -26,6 +35,20 @@ export default function LocationSideBar(props: LocationSideBarProps) {
   const hanldeClickSelectTimeline = (event: SelectChangeEvent) => {
     setTimeline(event.target.value as string)
   }
+
+  const [state, setState] = useState<any>([
+    {
+      startDate: new Date(),
+      endDate: null,
+      key: 'selection',
+    },
+  ])
+
+  const [value, setValue] = React.useState<DateRange<Dayjs>>([
+    dayjs('2024-03-05'),
+    dayjs('2024-01-30'),
+  ])
+
   if (location) {
     return (
       <Box display={'flex'} width={'100%'} flexDirection={'column'} gap={'4px'}>
@@ -76,35 +99,33 @@ export default function LocationSideBar(props: LocationSideBarProps) {
           gap={'4px'}
         >
           <Typography color={'text.primary'} variant='h5'>
-            Languages used by tourists at this place
+            Languages used by tourists at this place between
           </Typography>
           <Box
             display={'flex'}
             flexDirection={'row'}
             width={'100%'}
             gap={'16px'}
-            alignItems={'center'}
+            alignItems={'flex-start'}
             justifyContent={'center'}
           >
-            <Typography color={'text.primary'} variant='h5'>
-              in the past
-            </Typography>
-            <FormControl sx={{ width: '200px' }} size='small'>
-              <InputLabel id='demo-simple-select-label'>Timeline</InputLabel>
-              <Select
-                labelId='demo-simple-select-label'
-                id='demo-simple-select'
-                value={timeline}
-                label='Timeline'
-                onChange={hanldeClickSelectTimeline}
-                defaultValue='24 Hours'
-              >
-                <MenuItem value={'1D'}>24 Hours</MenuItem>
-                <MenuItem value={'2D'}>48 Hours</MenuItem>
-                <MenuItem value={'7D'}>7 Days</MenuItem>
-                <MenuItem value={'14D'}>14 Days</MenuItem>
-              </Select>
-            </FormControl>
+            {/* <div>
+              <DateRange
+                editableDateInputs={true}
+                onChange={(item) => setState([item.selection])}
+                moveRangeOnFirstSelection={true}
+                ranges={state}
+                retainEndDateOnFirstSelection={true}
+                displayMode='dateRange'
+              />
+            </div> */}
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={['DateRangePicker']}>
+                <DateRangePicker
+                  localeText={{ start: 'Start date', end: 'End date' }}
+                />
+              </DemoContainer>
+            </LocalizationProvider>
           </Box>
         </Box>
       </Box>
