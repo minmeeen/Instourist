@@ -1,18 +1,13 @@
 import React from 'react'
 import { InstouristLocation } from '../constant/locations'
-import {
-  Box,
-  Divider,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Typography,
-  useTheme,
-} from '@mui/material'
+import { Box, Divider, Typography, useTheme } from '@mui/material'
 import findLocationTypeIcon from '../functions/findLocationTypeIcon'
 import LocationNotFound from './LocationNotFound'
+// import dayjs, { Dayjs } from 'dayjs'
+// import { DateRange } from 'react-date-range'
+import 'react-date-range/dist/styles.css' // main css file
+import 'react-date-range/dist/theme/default.css' // theme css file
+import { DateRange } from 'react-date-range'
 
 interface LocationSideBarProps {
   location: InstouristLocation | null
@@ -21,8 +16,25 @@ interface LocationSideBarProps {
 }
 
 export default function LocationSideBar(props: LocationSideBarProps) {
-  const { location, timeline, setTimeline } = props
+  const { location } = props
   const theme = useTheme()
+  // const hanldeClickSelectTimeline = (event: SelectChangeEvent) => {
+  //   setTimeline(event.target.value as string)
+  // }
+
+  const [state, setState] = useState<any>([
+    {
+      startDate: new Date(),
+      endDate: null,
+      key: 'selection',
+    },
+  ])
+
+  // const [value, setValue] = React.useState<DateRange<Dayjs>>([
+  //   dayjs('2024-03-05'),
+  //   dayjs('2024-01-30'),
+  // ])
+
   const hanldeClickSelectTimeline = (event: SelectChangeEvent) => {
     setTimeline(event.target.value as string)
   }
@@ -86,6 +98,23 @@ export default function LocationSideBar(props: LocationSideBarProps) {
             alignItems={'center'}
             justifyContent={'center'}
           >
+            <div>
+              <DateRange
+                editableDateInputs={true}
+                onChange={(item) => setState([item.selection])}
+                moveRangeOnFirstSelection={true}
+                ranges={state}
+                retainEndDateOnFirstSelection={true}
+                displayMode='dateRange'
+              />
+            </div>
+            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={['DateRangePicker']}>
+                <DateRangePicker
+                  localeText={{ start: 'Start date', end: 'End date' }}
+                />
+              </DemoContainer>
+            </LocalizationProvider> */}
             <Typography color={'text.primary'} variant='h5'>
               in the past
             </Typography>

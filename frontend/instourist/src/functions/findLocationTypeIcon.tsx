@@ -7,7 +7,7 @@ import MODERN_WHITE from '../img/modern-white.svg'
 import HISTORIC from '../img/historic.svg'
 import HISTORIC_WHITE from '../img/historic-white.svg'
 import { touristDestinationType } from '../type/touristDestinationType'
-import { PaletteMode, useTheme } from '@mui/material'
+import { PaletteMode } from '@mui/material'
 
 export default function findLocationTypeIcon(
   locationType: touristDestinationType,
@@ -20,6 +20,7 @@ export default function findLocationTypeIcon(
           src={mode === 'dark' ? NATURE_WHITE : NATURE}
           width={'14px'}
           height={'14px'}
+          alt='nature'
         ></img>
       )
 
@@ -29,6 +30,7 @@ export default function findLocationTypeIcon(
           src={mode === 'dark' ? ART_CULTURE_WHITE : ART_CULTURE}
           width={'14px'}
           height={'14px'}
+          alt='art'
         ></img>
       )
     case 'HISTORIC':
@@ -37,6 +39,7 @@ export default function findLocationTypeIcon(
           src={mode === 'dark' ? HISTORIC_WHITE : HISTORIC}
           width={'14px'}
           height={'14px'}
+          alt='historic'
         ></img>
       )
     case 'MODERN':
@@ -45,6 +48,7 @@ export default function findLocationTypeIcon(
           src={mode === 'dark' ? MODERN_WHITE : MODERN}
           width={'14px'}
           height={'14px'}
+          alt='modern'
         ></img>
       )
   }
