@@ -13,6 +13,7 @@ import {
   pieChartLanguageDetectedData,
   transformLanguageDetectedData,
 } from '../constant/getDataType'
+import { CalendarMonthOutlined } from '@mui/icons-material'
 
 interface LocationLanguageChartProps {
   responseData: languageDetectedInitData | null
@@ -44,6 +45,10 @@ export default function LocationLanguageChart(
     setSelectedThai(!selectedThai)
   }
 
+  // var now = dayjs()
+  // var day = new Date().getDate()
+  var month = new Date().toLocaleDateString()
+  // var year = new Date().getFullYear()
   return (
     <>
       <Box
@@ -84,11 +89,10 @@ export default function LocationLanguageChart(
               </Box>
             ) : (
               <Box
-                id='lan-pie-and-detail'
-                display={'flex'}
                 width={'100%'}
+                display={'flex'}
                 flexDirection={'column'}
-                gap={'16px'}
+                alignItems={'center'}
               >
                 <Box id='pie-chart' display={'flex'} justifyContent={'center'}>
                   <PieChart
@@ -102,90 +106,102 @@ export default function LocationLanguageChart(
                     height={200}
                   />
                 </Box>
-
                 <Box
-                  id='select-thai-form'
-                  width={'100%'}
+                  id='lan-pie-and-detail'
                   display={'flex'}
-                  justifyContent={'center'}
-                >
-                  <FormControlLabel
-                    label={
-                      <Typography variant='h6' color={'text.primary'}>
-                        Include Thai language
-                      </Typography>
-                    }
-                    control={
-                      <Checkbox
-                        onClick={handleClickSelectThai}
-                        checked={selectedThai}
-                        sx={{
-                          '&.Mui-checked': {
-                            color: 'primary',
-                          },
-                        }}
-                      />
-                    }
-                  />
-                </Box>
-
-                <Box
-                  id='lan-detail'
-                  display={'flex'}
-                  justifyContent={'center'}
+                  width={matches ? '80vw' : '80%'}
                   flexDirection={'column'}
-                  paddingX={'16px'}
+                  alignItems={'center'}
+                  gap={'16px'}
                 >
-                  {selectedThai
-                    ? afterTransformData.map((x) => (
-                        <Box
-                          key={x.id + 'lan'}
-                          id={x.id + 'lan'}
-                          display={'flex'}
-                          justifyContent={'space-between'}
-                        >
-                          <Box width={'40%'}>
+                  <Box
+                    id='select-thai-form'
+                    display={'flex'}
+                    justifyContent={'center'}
+                  >
+                    <FormControlLabel
+                      label={
+                        <Typography variant='h6' color={'text.primary'}>
+                          Include Thai language
+                        </Typography>
+                      }
+                      control={
+                        <Checkbox
+                          onClick={handleClickSelectThai}
+                          checked={selectedThai}
+                          sx={{
+                            '&.Mui-checked': {
+                              color: 'primary',
+                            },
+                          }}
+                        />
+                      }
+                    />
+                  </Box>
+
+                  <Box
+                    id='lan-detail'
+                    width={matches ? '36vw' : '80vw'}
+                    display={'flex'}
+                    justifyContent={'center'}
+                    flexDirection={'column'}
+                    paddingX={'16px'}
+                  >
+                    {selectedThai
+                      ? afterTransformData.map((x) => (
+                          <Box
+                            key={x.id + 'lan'}
+                            id={x.id + 'lan'}
+                            display={'flex'}
+                            justifyContent={'space-between'}
+                          >
+                            <Box width={'40%'}>
+                              <Typography variant='h6' color={'text.primary'}>
+                                {' '}
+                                {x.language}
+                              </Typography>
+                            </Box>
+
                             <Typography variant='h6' color={'text.primary'}>
                               {' '}
-                              {x.language}
+                              {x.percent} %
+                            </Typography>
+                            <Typography variant='h6' color={'gray'}>
+                              {' '}
+                              {x.total} posts
                             </Typography>
                           </Box>
+                        ))
+                      : afterTransformDataNoThai.map((x) => (
+                          <Box
+                            key={x.id + 'lan'}
+                            id={x.id + 'lan'}
+                            display={'flex'}
+                            justifyContent={'space-between'}
+                          >
+                            <Box width={'40%'}>
+                              <Typography variant='h6' color={'text.primary'}>
+                                {' '}
+                                {x.language}
+                              </Typography>
+                            </Box>
 
-                          <Typography variant='h6' color={'text.primary'}>
-                            {' '}
-                            {x.percent} %
-                          </Typography>
-                          <Typography variant='h6' color={'gray'}>
-                            {' '}
-                            {x.total} posts
-                          </Typography>
-                        </Box>
-                      ))
-                    : afterTransformDataNoThai.map((x) => (
-                        <Box
-                          key={x.id + 'lan'}
-                          id={x.id + 'lan'}
-                          display={'flex'}
-                          justifyContent={'space-between'}
-                        >
-                          <Box width={'40%'}>
                             <Typography variant='h6' color={'text.primary'}>
                               {' '}
-                              {x.language}
+                              {x.percent} %
+                            </Typography>
+                            <Typography variant='h6' color={'gray'}>
+                              {' '}
+                              {x.total} posts
                             </Typography>
                           </Box>
-
-                          <Typography variant='h6' color={'text.primary'}>
-                            {' '}
-                            {x.percent} %
-                          </Typography>
-                          <Typography variant='h6' color={'gray'}>
-                            {' '}
-                            {x.total} posts
-                          </Typography>
-                        </Box>
-                      ))}
+                        ))}
+                  </Box>
                 </Box>
+
+                <Typography variant='h6' color={'GrayText'}>
+                  Data from {month}
+                </Typography>
               </Box>
             )}
           </Box>

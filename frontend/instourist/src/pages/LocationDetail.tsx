@@ -125,8 +125,8 @@ export default function LocationDetail() {
           bgcolor={theme.palette.mode === 'dark' ? '#2C2C2C' : '#f5f5f5'}
           justifyContent={'space-between'}
           width={matches ? '70%' : '95%'}
-          maxHeight={'100vh'}
-          sx={{ overflowY: 'scroll' }}
+          maxHeight={matches ? '100vh' : 'none'}
+          sx={{ overflowY: matches ? 'scroll' : 'hidden' }}
         >
           {!fullSize && (
             <Box sx={{ overflowX: 'hidden' }}>

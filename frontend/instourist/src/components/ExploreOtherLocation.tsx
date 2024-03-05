@@ -36,7 +36,7 @@ interface ExploreOtherLocationProps {
 
 export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
   const { fullSize, setFullSize, location } = props
-  const matches = useMediaQuery('(min-width:960px)')
+  const matches = useMediaQuery('(min-width:1150px)')
   const theme = useTheme()
   const [selectDestination, setSelectDestination] =
     useState<touristDestinationType>()
@@ -62,7 +62,8 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
   return (
     <Box
       maxHeight={'95vh'}
-      paddingBottom={'200px'}
+      paddingTop={'24px'}
+      paddingBottom={'100px'}
       key={`location-card-${location}`}
     >
       <Box width={'100%'}>
