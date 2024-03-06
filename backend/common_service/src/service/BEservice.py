@@ -50,7 +50,7 @@ def getLanguageDetected(locationId, timestamp, duration):
         for language in languages:
             listOfLanguages.append(LangugesResponse(languageName=language, total=languages[language]))
         
-        sortedListOfLanguages = sorted(listOfLanguages, key=attrgetter('languageName'))
+        sortedListOfLanguages = sorted(listOfLanguages, key=attrgetter('total'), reverse=True)
         response = LanguageDetectedResponse(NumberOfPosts=len(languageDetected), Languges=sortedListOfLanguages)
         return response
     
