@@ -18,6 +18,7 @@ import {
   PaletteOutlined,
   ParkOutlined,
 } from '@mui/icons-material'
+import { webSiteLabel } from '../constant/websiteLabel'
 
 export default function SelectTouristAttraction() {
   const matches = useMediaQuery('(min-width:960px)')
@@ -66,7 +67,7 @@ export default function SelectTouristAttraction() {
       textAlign={'center'}
     >
       <Typography color={'text.primary'} variant='h4'>
-        Select a tourist destination
+        {webSiteLabel.selectDestinationTH}
       </Typography>
       <Box
         display={'flex'}
@@ -84,7 +85,7 @@ export default function SelectTouristAttraction() {
           onClickIcon={<ParkOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.nature)}
           isClicked={checkSelectedDestination(locationENUM.nature)}
-          text={locationENUM.nature}
+          text={webSiteLabel.natureTH}
           matches={matches}
         />
         <CustomButton
@@ -96,7 +97,7 @@ export default function SelectTouristAttraction() {
           onClickIcon={<PaletteOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.art)}
           isClicked={checkSelectedDestination(locationENUM.art)}
-          text={locationENUM.artModified}
+          text={webSiteLabel.artTH}
           matches={matches}
         />
         <CustomButton
@@ -108,7 +109,7 @@ export default function SelectTouristAttraction() {
           onClickIcon={<BookOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.historic)}
           isClicked={checkSelectedDestination(locationENUM.historic)}
-          text={locationENUM.historic}
+          text={webSiteLabel.historicTH}
           matches={matches}
         />
         <CustomButton
@@ -120,7 +121,7 @@ export default function SelectTouristAttraction() {
           onClickIcon={<LocationCityOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.modern)}
           isClicked={checkSelectedDestination(locationENUM.modern)}
-          text={locationENUM.modern}
+          text={webSiteLabel.modernTH}
           matches={matches}
         />
       </Box>
