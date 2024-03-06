@@ -21,3 +21,5 @@ export interface pieChartLanguageDetectedData {
   value: number
   label: string
 }
+
+export type googlepieChartLanguageDetectedData = [string, number]

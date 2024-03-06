@@ -22,9 +22,9 @@ export default function CustomButton(props: customButtonProps) {
       onClick={onClick}
     >
       {matches ? (
-        <Box display={'flex'} gap={'2px'} alignItems={'row'}>
+        <Box display={'flex'} gap={'2px'} alignItems={'center'}>
           {isClicked ? onClickIcon : defaultIcon}
-          <Typography color={isClicked ? 'white' : 'text.primary'}>
+          <Typography color={isClicked ? 'white' : 'text.primary'} variant='h6'>
             {text}
           </Typography>
         </Box>

@@ -9,11 +9,15 @@ import {
 import Checkbox from '@mui/material/Checkbox'
 import { useState } from 'react'
 import {
+  googlepieChartLanguageDetectedData,
   languageDetectedInitData,
   pieChartLanguageDetectedData,
   transformLanguageDetectedData,
 } from '../constant/getDataType'
 import { CalendarMonthOutlined } from '@mui/icons-material'
+import { webSiteLabel } from '../constant/websiteLabel'
+import { Chart } from 'react-google-charts'
+import CustomPieChart from './PieChart'
 
 interface LocationLanguageChartProps {
   responseData: languageDetectedInitData | null
@@ -23,7 +27,9 @@ interface LocationLanguageChartProps {
   afterTransformData: transformLanguageDetectedData[]
   afterTransformDataNoThai: transformLanguageDetectedData[]
   pieChartData: pieChartLanguageDetectedData[]
+  googlepieChartData: [string, number][] | [string, string][]
   pieChartDataNoThai: pieChartLanguageDetectedData[]
+  googlepieChartDataNoThai: [string, number][] | [string, string][]
 }
 
 export default function LocationLanguageChart(
@@ -34,7 +40,9 @@ export default function LocationLanguageChart(
     afterTransformData,
     afterTransformDataNoThai,
     pieChartData,
+    googlepieChartData,
     pieChartDataNoThai,
+    googlepieChartDataNoThai,
     loadingResponsese,
     transformingData,
   } = props
@@ -52,6 +60,28 @@ export default function LocationLanguageChart(
   var year = new Date().toUTCString().split(' ').at(2)
   var year2 = new Date().toUTCString().split(' ').at(3)
   // var year = new Date().getFullYear()
+
+  const hasWindow = typeof window !== 'undefined'
+
+  function getWindowDimensions() {
+    const width = hasWindow ? window.innerWidth : null
+    const height = hasWindow ? window.innerHeight : null
+    return {
+      width,
+      height,
+    }
+  }
+
+  function getChartWidth() {
+    if (getWindowDimensions().width && matches) {
+      return '100%'
+    } else if (getWindowDimensions().width && !matches) {
+      return '100%'
+    } else {
+      return 500
+    }
+  }
+
   return (
     <>
       <Box
@@ -74,7 +104,7 @@ export default function LocationLanguageChart(
           >
             <CircularProgress />
             <Typography variant='h6' color={'text.primary'}>
-              Loading datas..
+              {webSiteLabel.loadingDataTH}
             </Typography>
           </Box>
         ) : (
@@ -87,7 +117,7 @@ export default function LocationLanguageChart(
                 textAlign={'center'}
               >
                 <Typography variant='h6' color={'text.primary'}>
-                  Please select different timeline or another location.
+                  {webSiteLabel.dataNotFoundTH}
                 </Typography>
               </Box>
             ) : (
@@ -97,18 +127,13 @@ export default function LocationLanguageChart(
                 flexDirection={'column'}
                 alignItems={'center'}
               >
-                <Box id='pie-chart' display={'flex'} justifyContent={'center'}>
-                  <PieChart
-                    series={[
-                      {
-                        data: selectedThai ? pieChartData : pieChartDataNoThai,
-                        innerRadius: '60px',
-                      },
-                    ]}
-                    width={matches ? 500 : 320}
-                    height={200}
-                  />
-                </Box>
+                <CustomPieChart
+                  selectedThai={selectedThai}
+                  googlepieChartData={googlepieChartData}
+                  googlepieChartDataNoThai={googlepieChartDataNoThai}
+                  pieChartWidth={'100%'}
+                />
+
                 <Box
                   id='lan-pie-and-detail'
                   display={'flex'}
@@ -125,7 +150,7 @@ export default function LocationLanguageChart(
                     <FormControlLabel
                       label={
                         <Typography variant='h6' color={'text.primary'}>
-                          Include Thai language
+                          {webSiteLabel.includeThaiTH}
                         </Typography>
                       }
                       control={
@@ -171,7 +196,7 @@ export default function LocationLanguageChart(
                             </Typography>
                             <Typography variant='h6' color={'gray'}>
                               {' '}
-                              {x.total} posts
+                              {x.total + ' ' + webSiteLabel.postsTH}
                             </Typography>
                           </Box>
                         ))
@@ -195,7 +220,7 @@ export default function LocationLanguageChart(
                             </Typography>
                             <Typography variant='h6' color={'gray'}>
                               {' '}
-                              {x.total} posts
+                              {x.total + ' ' + webSiteLabel.postsTH}
                             </Typography>
                           </Box>
                         ))}
@@ -203,7 +228,15 @@ export default function LocationLanguageChart(
                 </Box>
 
                 <Typography variant='h6' color={'GrayText'}>
-                  Last update on {day + ' ' + month + ' ' + year + ' ' + year2}
+                  {webSiteLabel.lastUpdateOnTH +
+                    ' ' +
+                    day +
+                    ' ' +
+                    month +
+                    ' ' +
+                    year +
+                    ' ' +
+                    year2}
                 </Typography>
               </Box>
             )}
