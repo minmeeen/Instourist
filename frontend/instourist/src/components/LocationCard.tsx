@@ -2,6 +2,7 @@ import { Box, Button, Typography, useTheme } from '@mui/material'
 import { InstouristLocation } from '../constant/locations'
 import findLocationImgSrc from '../functions/findLocationImgSrc'
 import { SetStateAction } from 'react'
+import { webSiteLabel } from '../constant/websiteLabel'
 
 interface LocationCardProps {
   location: InstouristLocation
@@ -70,7 +71,7 @@ export default function LocationCard(props: LocationCardProps) {
             }
           }}
         >
-          <Typography color='white'>See details</Typography>
+          <Typography color='white'>{webSiteLabel.seeDetailTH}</Typography>
         </Button>
       </Box>
     </Box>

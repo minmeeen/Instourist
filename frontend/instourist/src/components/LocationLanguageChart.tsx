@@ -7,12 +7,17 @@ import {
   useMediaQuery,
 } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
+  googlepieChartLanguageDetectedData,
   languageDetectedInitData,
   pieChartLanguageDetectedData,
   transformLanguageDetectedData,
 } from '../constant/getDataType'
+import { CalendarMonthOutlined } from '@mui/icons-material'
+import { webSiteLabel } from '../constant/websiteLabel'
+import { Chart } from 'react-google-charts'
+import CustomPieChart from './PieChart'
 
 interface LocationLanguageChartProps {
   responseData: languageDetectedInitData | null
@@ -22,19 +27,22 @@ interface LocationLanguageChartProps {
   afterTransformData: transformLanguageDetectedData[]
   afterTransformDataNoThai: transformLanguageDetectedData[]
   pieChartData: pieChartLanguageDetectedData[]
+  googlepieChartData: [string, number][] | [string, string][]
   pieChartDataNoThai: pieChartLanguageDetectedData[]
+  googlepieChartDataNoThai: [string, number][] | [string, string][]
 }
 
 export default function LocationLanguageChart(
   props: LocationLanguageChartProps
 ) {
   const {
-    responseData,
     responseStatus,
     afterTransformData,
     afterTransformDataNoThai,
     pieChartData,
+    googlepieChartData,
     pieChartDataNoThai,
+    googlepieChartDataNoThai,
     loadingResponsese,
     transformingData,
   } = props
@@ -43,6 +51,35 @@ export default function LocationLanguageChart(
 
   const handleClickSelectThai = () => {
     setSelectedThai(!selectedThai)
+  }
+
+  // var now = dayjs()
+  // var day = new Date().getDate()
+  var day = new Date().toUTCString().split(' ').at(0)
+  var month = new Date().toUTCString().split(' ').at(1)
+  var year = new Date().toUTCString().split(' ').at(2)
+  var year2 = new Date().toUTCString().split(' ').at(3)
+  // var year = new Date().getFullYear()
+
+  const hasWindow = typeof window !== 'undefined'
+
+  function getWindowDimensions() {
+    const width = hasWindow ? window.innerWidth : null
+    const height = hasWindow ? window.innerHeight : null
+    return {
+      width,
+      height,
+    }
+  }
+
+  function getChartWidth() {
+    if (getWindowDimensions().width && matches) {
+      return '100%'
+    } else if (getWindowDimensions().width && !matches) {
+      return '100%'
+    } else {
+      return 500
+    }
   }
 
   return (
@@ -67,12 +104,12 @@ export default function LocationLanguageChart(
           >
             <CircularProgress />
             <Typography variant='h6' color={'text.primary'}>
-              Loading datas..
+              {webSiteLabel.loadingDataTH}
             </Typography>
           </Box>
         ) : (
           <Box>
-            {responseData?.Message === 'No data' || responseStatus === 400 ? (
+            {responseStatus !== 200 ? (
               <Box
                 height={'45vh'}
                 display={'flex'}
@@ -80,113 +117,127 @@ export default function LocationLanguageChart(
                 textAlign={'center'}
               >
                 <Typography variant='h6' color={'text.primary'}>
-                  Please select different timeline or another location.
+                  {webSiteLabel.dataNotFoundTH}
                 </Typography>
               </Box>
             ) : (
               <Box
-                id='lan-pie-and-detail'
-                display={'flex'}
                 width={'100%'}
+                display={'flex'}
                 flexDirection={'column'}
-                gap={'16px'}
+                alignItems={'center'}
               >
-                <Box id='pie-chart' display={'flex'} justifyContent={'center'}>
-                  <PieChart
-                    series={[
-                      {
-                        data: selectedThai ? pieChartData : pieChartDataNoThai,
-                        innerRadius: '60px',
-                      },
-                    ]}
-                    width={matches ? 500 : 320}
-                    height={200}
-                  />
-                </Box>
+                <CustomPieChart
+                  selectedThai={selectedThai}
+                  googlepieChartData={googlepieChartData}
+                  googlepieChartDataNoThai={googlepieChartDataNoThai}
+                  pieChartWidth={'100%'}
+                />
 
                 <Box
-                  id='select-thai-form'
-                  width={'100%'}
+                  id='lan-pie-and-detail'
                   display={'flex'}
-                  justifyContent={'center'}
-                >
-                  <FormControlLabel
-                    label={
-                      <Typography variant='h6' color={'text.primary'}>
-                        Include Thai language
-                      </Typography>
-                    }
-                    control={
-                      <Checkbox
-                        onClick={handleClickSelectThai}
-                        checked={selectedThai}
-                        sx={{
-                          '&.Mui-checked': {
-                            color: 'primary',
-                          },
-                        }}
-                      />
-                    }
-                  />
-                </Box>
-
-                <Box
-                  id='lan-detail'
-                  display={'flex'}
-                  justifyContent={'center'}
+                  width={matches ? '80vw' : '80%'}
                   flexDirection={'column'}
-                  paddingX={'16px'}
+                  alignItems={'center'}
+                  gap={'16px'}
                 >
-                  {selectedThai
-                    ? afterTransformData.map((x) => (
-                        <Box
-                          key={x.id + 'lan'}
-                          id={x.id + 'lan'}
-                          display={'flex'}
-                          justifyContent={'space-between'}
-                        >
-                          <Box width={'40%'}>
+                  <Box
+                    id='select-thai-form'
+                    display={'flex'}
+                    justifyContent={'center'}
+                  >
+                    <FormControlLabel
+                      label={
+                        <Typography variant='h6' color={'text.primary'}>
+                          {webSiteLabel.includeThaiTH}
+                        </Typography>
+                      }
+                      control={
+                        <Checkbox
+                          onClick={handleClickSelectThai}
+                          checked={selectedThai}
+                          sx={{
+                            '&.Mui-checked': {
+                              color: 'primary',
+                            },
+                          }}
+                        />
+                      }
+                    />
+                  </Box>
+
+                  <Box
+                    id='lan-detail'
+                    width={matches ? '36vw' : '80vw'}
+                    display={'flex'}
+                    justifyContent={'center'}
+                    flexDirection={'column'}
+                    paddingX={'16px'}
+                  >
+                    {selectedThai
+                      ? afterTransformData.map((x) => (
+                          <Box
+                            key={x.id + 'lan'}
+                            id={x.id + 'lan'}
+                            display={'flex'}
+                            justifyContent={'space-between'}
+                          >
+                            <Box width={'40%'}>
+                              <Typography variant='h6' color={'text.primary'}>
+                                {' '}
+                                {x.language}
+                              </Typography>
+                            </Box>
+
                             <Typography variant='h6' color={'text.primary'}>
                               {' '}
-                              {x.language}
+                              {x.percent} %
+                            </Typography>
+                            <Typography variant='h6' color={'gray'}>
+                              {' '}
+                              {x.total + ' ' + webSiteLabel.postsTH}
                             </Typography>
                           </Box>
+                        ))
+                      : afterTransformDataNoThai.map((x) => (
+                          <Box
+                            key={x.id + 'lan'}
+                            id={x.id + 'lan'}
+                            display={'flex'}
+                            justifyContent={'space-between'}
+                          >
+                            <Box width={'40%'}>
+                              <Typography variant='h6' color={'text.primary'}>
+                                {' '}
+                                {x.language}
+                              </Typography>
+                            </Box>
 
-                          <Typography variant='h6' color={'text.primary'}>
-                            {' '}
-                            {x.percent} %
-                          </Typography>
-                          <Typography variant='h6' color={'gray'}>
-                            {' '}
-                            {x.total} posts
-                          </Typography>
-                        </Box>
-                      ))
-                    : afterTransformDataNoThai.map((x) => (
-                        <Box
-                          key={x.id + 'lan'}
-                          id={x.id + 'lan'}
-                          display={'flex'}
-                          justifyContent={'space-between'}
-                        >
-                          <Box width={'40%'}>
                             <Typography variant='h6' color={'text.primary'}>
                               {' '}
-                              {x.language}
+                              {x.percent} %
+                            </Typography>
+                            <Typography variant='h6' color={'gray'}>
+                              {' '}
+                              {x.total + ' ' + webSiteLabel.postsTH}
                             </Typography>
                           </Box>
-
-                          <Typography variant='h6' color={'text.primary'}>
-                            {' '}
-                            {x.percent} %
-                          </Typography>
-                          <Typography variant='h6' color={'gray'}>
-                            {' '}
-                            {x.total} posts
-                          </Typography>
-                        </Box>
-                      ))}
+                        ))}
+                  </Box>
                 </Box>
+
+                <Typography variant='h6' color={'GrayText'}>
+                  {webSiteLabel.lastUpdateOnTH +
+                    ' ' +
+                    day +
+                    ' ' +
+                    month +
+                    ' ' +
+                    year +
+                    ' ' +
+                    year2}
+                </Typography>
               </Box>
             )}
           </Box>

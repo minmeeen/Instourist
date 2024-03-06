@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { InstouristLocation } from '../constant/locations'
 import {
   Box,
@@ -13,9 +13,15 @@ import {
 } from '@mui/material'
 import findLocationTypeIcon from '../functions/findLocationTypeIcon'
 import LocationNotFound from './LocationNotFound'
+// import dayjs, { Dayjs } from 'dayjs'
+// import { DateRange } from 'react-date-range'
+// import 'react-date-range/dist/styles.css' // main css file
+// import 'react-date-range/dist/theme/default.css' // theme css file
+
+import { webSiteLabel } from '../constant/websiteLabel'
 
 interface LocationSideBarProps {
-  location: InstouristLocation | ''
+  location: InstouristLocation | null
   timeline: string
   setTimeline: React.Dispatch<React.SetStateAction<string>>
 }
@@ -23,6 +29,7 @@ interface LocationSideBarProps {
 export default function LocationSideBar(props: LocationSideBarProps) {
   const { location, timeline, setTimeline } = props
   const theme = useTheme()
+
   const hanldeClickSelectTimeline = (event: SelectChangeEvent) => {
     setTimeline(event.target.value as string)
   }
@@ -38,9 +45,13 @@ export default function LocationSideBar(props: LocationSideBarProps) {
         >
           {findLocationTypeIcon(location.locationType, theme.palette.mode)}
           <Typography color={'text.primary'}>
-            {location.locationType === 'ART_CULTURE'
+            {/* {location.locationType === 'ART_CULTURE'
               ? 'ART & CULTURE'
-              : location.locationType}
+              : location.locationType} */}
+            {location.locationType === 'NATURE' && webSiteLabel.natureTH}
+            {location.locationType === 'ART_CULTURE' && webSiteLabel.artTH}
+            {location.locationType === 'HISTORIC' && webSiteLabel.historicTH}
+            {location.locationType === 'MODERN' && webSiteLabel.modernTH}
           </Typography>
         </Box>
         <Box
@@ -76,7 +87,7 @@ export default function LocationSideBar(props: LocationSideBarProps) {
           gap={'4px'}
         >
           <Typography color={'text.primary'} variant='h5'>
-            Languages used by tourists at this place
+            {webSiteLabel.languageUsedTH}
           </Typography>
           <Box
             display={'flex'}
@@ -86,23 +97,42 @@ export default function LocationSideBar(props: LocationSideBarProps) {
             alignItems={'center'}
             justifyContent={'center'}
           >
+            {/* <div>
+              <DateRange
+                editableDateInputs={true}
+                onChange={(item) => setState([item.selection])}
+                moveRangeOnFirstSelection={true}
+                ranges={state}
+                retainEndDateOnFirstSelection={true}
+                displayMode='dateRange'
+              />
+            </div> */}
+            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={['DateRangePicker']}>
+                <DateRangePicker
+                  localeText={{ start: 'Start date', end: 'End date' }}
+                />
+              </DemoContainer>
+            </LocalizationProvider> */}
             <Typography color={'text.primary'} variant='h5'>
-              in the past
+              {webSiteLabel.inThePastTH}
             </Typography>
             <FormControl sx={{ width: '200px' }} size='small'>
-              <InputLabel id='demo-simple-select-label'>Timeline</InputLabel>
+              <InputLabel id='demo-simple-select-label'>
+                {webSiteLabel.timelineTH}
+              </InputLabel>
               <Select
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
                 value={timeline}
                 label='Timeline'
                 onChange={hanldeClickSelectTimeline}
-                defaultValue='24 Hours'
+                defaultValue={webSiteLabel.timeline24TH}
               >
-                <MenuItem value={'1D'}>24 Hours</MenuItem>
-                <MenuItem value={'2D'}>48 Hours</MenuItem>
-                <MenuItem value={'7D'}>7 Days</MenuItem>
-                <MenuItem value={'14D'}>14 Days</MenuItem>
+                <MenuItem value={'1D'}>{webSiteLabel.timeline24TH}</MenuItem>
+                <MenuItem value={'2D'}>{webSiteLabel.timeline48TH}</MenuItem>
+                <MenuItem value={'7D'}>{webSiteLabel.timeline7TH}</MenuItem>
+                <MenuItem value={'14D'}>{webSiteLabel.timeline14TH}</MenuItem>
               </Select>
             </FormControl>
           </Box>

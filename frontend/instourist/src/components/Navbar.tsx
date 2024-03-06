@@ -26,6 +26,7 @@ export default function Navbar(props: NavbarProps) {
             <img
               src={theme.palette.mode === 'dark' ? logoLgDark : logoLg}
               style={{ height: '30px', width: '140px' }}
+              alt='logo'
             />
           </Button>
           <ToggleModeComponent />
