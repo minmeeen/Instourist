@@ -27,6 +27,7 @@ import {
   PaletteOutlined,
   ParkOutlined,
 } from '@mui/icons-material'
+import { webSiteLabel } from '../constant/websiteLabel'
 
 interface ExploreOtherLocationProps {
   fullSize: boolean
@@ -36,7 +37,7 @@ interface ExploreOtherLocationProps {
 
 export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
   const { fullSize, setFullSize, location } = props
-  const matches = useMediaQuery('(min-width:960px)')
+  const matches = useMediaQuery('(min-width:1150px)')
   const theme = useTheme()
   const [selectDestination, setSelectDestination] =
     useState<touristDestinationType>()
@@ -62,6 +63,7 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
   return (
     <Box
       maxHeight={'95vh'}
+      paddingTop={'24px'}
       paddingBottom={'200px'}
       key={`location-card-${location}`}
     >
@@ -77,7 +79,7 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
             alignItems={'center'}
           >
             <Typography color={'text.primary'}>
-              Back to {location ? location.locationEN : ''}
+              {webSiteLabel.backToTH} {location ? location.locationTH : ''}
             </Typography>
             <Button onClick={() => setFullSize && setFullSize(false)}>
               <img
@@ -95,7 +97,7 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
         </Box>
       )}
       <Typography color={'text.primary'} variant='h5'>
-        Explore other locations
+        {webSiteLabel.exploreOtherLocationsTH}
       </Typography>
       <Box
         display={'flex'}
@@ -112,7 +114,7 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
           onClickIcon={<ParkOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.nature)}
           isClicked={checkSelectedDestination(locationENUM.nature)}
-          text={locationENUM.nature}
+          text={webSiteLabel.natureTH}
           matches={matches}
         />
         <CustomButton
@@ -124,7 +126,7 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
           onClickIcon={<PaletteOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.art)}
           isClicked={checkSelectedDestination(locationENUM.art)}
-          text={locationENUM.artModified}
+          text={webSiteLabel.artTH}
           matches={matches}
         />
         <CustomButton
@@ -136,7 +138,7 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
           onClickIcon={<BookOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.historic)}
           isClicked={checkSelectedDestination(locationENUM.historic)}
-          text={locationENUM.historic}
+          text={webSiteLabel.historicTH}
           matches={matches}
         />
         <CustomButton
@@ -148,7 +150,7 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
           onClickIcon={<LocationCityOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.modern)}
           isClicked={checkSelectedDestination(locationENUM.modern)}
-          text={locationENUM.modern}
+          text={webSiteLabel.modernTH}
           matches={matches}
         />
       </Box>

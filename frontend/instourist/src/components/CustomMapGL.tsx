@@ -106,7 +106,7 @@ export default function CustomMapGL(props: customMapGLProps) {
                   paddingLeft: '32px',
                 }}
               >
-                {f.properties.title}
+                {f.properties.titleTH}
               </Typography>
             </Box>
           </Marker>

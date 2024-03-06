@@ -11,6 +11,7 @@ import logoLg from '../img/logo-lg.svg'
 import logoLgDark from '../img/logo-lg-dark.svg'
 import SelectTouristAttraction from '../components/SelectTouristAttraction'
 import Navbar from '../components/Navbar'
+import { webSiteLabel } from '../constant/websiteLabel'
 
 export default function Homepage() {
   const theme = useTheme()
@@ -44,7 +45,7 @@ export default function Homepage() {
             alt='logo'
           />
           <Typography variant='h4' color={'text.primary'}>
-            Analyze languages used by visitors at tourist destinations.
+            {webSiteLabel.webDespTH}
           </Typography>
         </Box>
         <Box height={'40px'} />

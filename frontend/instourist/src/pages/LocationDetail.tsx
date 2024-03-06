@@ -37,8 +37,20 @@ export default function LocationDetail() {
   const [pieChartData, setpieChartData] = useState<
     pieChartLanguageDetectedData[]
   >([])
+  const [googlepieChartData, setgooglepieChartData] = useState<
+    [string, number][] | [string, string][]
+  >([
+    ['Work', 11],
+    ['Eat', 2],
+    ['Commute', 2],
+    ['Watch TV', 2],
+    ['Sleep', 7], // CSS-style declaration
+  ])
   const [pieChartDataNoThai, setpieChartDataNoThai] = useState<
     pieChartLanguageDetectedData[]
+  >([])
+  const [googlepieChartDataNoThai, setgooglepieChartDataNoThai] = useState<
+    [string, number][] | [string, string][]
   >([])
 
   var time = Math.round(new Date().getTime() / 1000)
@@ -66,11 +78,18 @@ export default function LocationDetail() {
       let mockAfterTransformDataNoThai: transformLanguageDetectedData[] = []
       let mockPieChartData: pieChartLanguageDetectedData[] = []
       let mockPieChartDataNoThai: pieChartLanguageDetectedData[] = []
+      let mockGooglePieChartData: any[] = []
+      let mockGooglePieChartDataNoThai: any[] = []
       setAfterTransformData(mockAfterTransformData) // clear the list when re-render
       setAfterTransformDataNoThai(mockAfterTransformDataNoThai)
       setpieChartData(mockPieChartData)
       setpieChartDataNoThai(mockPieChartDataNoThai)
+      setgooglepieChartData(mockGooglePieChartData)
+      setgooglepieChartDataNoThai(mockGooglePieChartDataNoThai)
       setTransformingData(true)
+
+      mockGooglePieChartData.push(['Languages', 'Posts'])
+      mockGooglePieChartDataNoThai.push(['Languages', 'Posts'])
       responseData.Languges.forEach((x) => {
         id += 1
         mockAfterTransformData.push({
@@ -86,6 +105,8 @@ export default function LocationDetail() {
           label: x.languageName,
         })
 
+        mockGooglePieChartData.push([x.languageName, +x.total])
+
         if (x.languageName.toUpperCase() !== 'THAI') {
           mockAfterTransformDataNoThai.push({
             id: id,
@@ -99,6 +120,8 @@ export default function LocationDetail() {
             value: +x.total,
             label: x.languageName,
           })
+
+          mockGooglePieChartDataNoThai.push([x.languageName, +x.total])
         }
       })
       setAfterTransformData(mockAfterTransformData)
@@ -124,9 +147,9 @@ export default function LocationDetail() {
           borderRight={'1px solid rgba(0,0,0,0.12)'}
           bgcolor={theme.palette.mode === 'dark' ? '#2C2C2C' : '#f5f5f5'}
           justifyContent={'space-between'}
-          width={matches ? '70%' : '95%'}
-          maxHeight={'100vh'}
-          sx={{ overflowY: 'scroll' }}
+          width={matches ? '80%' : '95%'}
+          maxHeight={matches ? '100vh' : 'none'}
+          sx={{ overflowY: matches ? 'scroll' : 'hidden' }}
         >
           {!fullSize && (
             <Box sx={{ overflowX: 'hidden' }}>
@@ -145,6 +168,8 @@ export default function LocationDetail() {
                 afterTransformDataNoThai={afterTransformDataNoThai}
                 pieChartData={pieChartData}
                 pieChartDataNoThai={pieChartDataNoThai}
+                googlepieChartData={googlepieChartData}
+                googlepieChartDataNoThai={googlepieChartDataNoThai}
               />
             </Box>
           )}

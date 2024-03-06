@@ -5,6 +5,7 @@ export const touristLocations = {
       properties: {
         id: '1',
         title: 'Chiang Mai Grand Canyon',
+        titleTH: 'แกรนด์แคนยอน',
       },
       geometry: {
         latitude: 18.6966,
@@ -18,6 +19,7 @@ export const touristLocations = {
       properties: {
         id: '2',
         title: 'Doi Inthanon',
+        titleTH: 'ดอยอินทนนท์',
       },
       geometry: {
         latitude: 18.5224,
@@ -30,6 +32,7 @@ export const touristLocations = {
       properties: {
         id: '3',
         title: 'Mae Taeng Elephant Park',
+        titleTH: 'ปางช้างแม่แตง',
       },
       geometry: {
         latitude: 19.2397,
@@ -43,6 +46,7 @@ export const touristLocations = {
       properties: {
         id: '4',
         title: 'Wat Phra Singh',
+        titleTH: 'วัดพระสิงห์',
       },
       geometry: {
         latitude: 18.7884,
@@ -56,6 +60,7 @@ export const touristLocations = {
       properties: {
         id: '5',
         title: 'Wat Gate Garam',
+        titleTH: 'วัดเกตการาม',
       },
       geometry: {
         latitude: 18.7925,
@@ -69,6 +74,7 @@ export const touristLocations = {
       properties: {
         id: '6',
         title: 'Wat Umong',
+        titleTH: 'วัดอุโมงค์ (สวนพุทธธรรม)',
       },
       geometry: {
         latitude: 18.7833,
@@ -81,6 +87,7 @@ export const touristLocations = {
       properties: {
         id: '7',
         title: 'Three Kings Monument',
+        titleTH: 'พระบรมราชานุสาวรีย์สามกษัตริย์',
       },
       geometry: {
         latitude: 18.7902,
@@ -93,6 +100,7 @@ export const touristLocations = {
       properties: {
         id: '8',
         title: 'Wat Chiang Man',
+        titleTH: 'วัดเชียงมั่น',
       },
       geometry: {
         latitude: 18.7937,
@@ -105,6 +113,7 @@ export const touristLocations = {
       properties: {
         id: '9',
         title: 'Tha Phae Gate',
+        titleTH: 'ประตูท่าแพ',
       },
       geometry: {
         latitude: 18.7876,
@@ -117,6 +126,7 @@ export const touristLocations = {
       properties: {
         id: '10',
         title: 'MAYA Lifestyle Shopping Center',
+        titleTH: 'ห้างสรรพสินค้าเมญ่า',
       },
       geometry: {
         latitude: 18.8025,
@@ -129,6 +139,7 @@ export const touristLocations = {
       properties: {
         id: '11',
         title: 'Chiang Mai Night Bazaar',
+        titleTH: 'ไนท์บาซาร์เชียงใหม่',
       },
       geometry: {
         latitude: 18.7866,
@@ -141,6 +152,7 @@ export const touristLocations = {
       properties: {
         id: '12',
         title: 'Chiang Mai Night Safari',
+        titleTH: 'เชียงใหม่ไนท์ซาฟารี',
       },
       geometry: {
         latitude: 18.7384,
