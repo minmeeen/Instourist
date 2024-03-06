@@ -47,7 +47,10 @@ export default function LocationLanguageChart(
 
   // var now = dayjs()
   // var day = new Date().getDate()
-  var month = new Date().toLocaleDateString()
+  var day = new Date().toUTCString().split(' ').at(0)
+  var month = new Date().toUTCString().split(' ').at(1)
+  var year = new Date().toUTCString().split(' ').at(2)
+  var year2 = new Date().toUTCString().split(' ').at(3)
   // var year = new Date().getFullYear()
   return (
     <>
@@ -200,7 +203,7 @@ export default function LocationLanguageChart(
                 </Box>
 
                 <Typography variant='h6' color={'GrayText'}>
-                  Data from {month}
+                  Last update on {day + ' ' + month + ' ' + year + ' ' + year2}
                 </Typography>
               </Box>
             )}

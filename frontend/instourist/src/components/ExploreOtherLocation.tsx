@@ -63,7 +63,7 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
     <Box
       maxHeight={'95vh'}
       paddingTop={'24px'}
-      paddingBottom={'100px'}
+      paddingBottom={'200px'}
       key={`location-card-${location}`}
     >
       <Box width={'100%'}>

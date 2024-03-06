@@ -1,6 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { InstouristLocation } from '../constant/locations'
-import { Box, Divider, Typography, useTheme } from '@mui/material'
+import {
+  Box,
+  Divider,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import findLocationTypeIcon from '../functions/findLocationTypeIcon'
 import LocationNotFound from './LocationNotFound'
 // import dayjs, { Dayjs } from 'dayjs'
@@ -16,7 +26,7 @@ interface LocationSideBarProps {
 }
 
 export default function LocationSideBar(props: LocationSideBarProps) {
-  const { location } = props
+  const { location, timeline, setTimeline } = props
   const theme = useTheme()
   // const hanldeClickSelectTimeline = (event: SelectChangeEvent) => {
   //   setTimeline(event.target.value as string)
@@ -98,7 +108,7 @@ export default function LocationSideBar(props: LocationSideBarProps) {
             alignItems={'center'}
             justifyContent={'center'}
           >
-            <div>
+            {/* <div>
               <DateRange
                 editableDateInputs={true}
                 onChange={(item) => setState([item.selection])}
@@ -107,7 +117,7 @@ export default function LocationSideBar(props: LocationSideBarProps) {
                 retainEndDateOnFirstSelection={true}
                 displayMode='dateRange'
               />
-            </div>
+            </div> */}
             {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={['DateRangePicker']}>
                 <DateRangePicker
