@@ -67,7 +67,7 @@ export default function SelectTouristAttraction() {
       textAlign={'center'}
     >
       <Typography color={'text.primary'} variant='h4'>
-        {webSiteLabel.selectDestinationTH}
+        {webSiteLabel.selectDestinationEN}
       </Typography>
       <Box
         display={'flex'}
@@ -85,7 +85,7 @@ export default function SelectTouristAttraction() {
           onClickIcon={<ParkOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.nature)}
           isClicked={checkSelectedDestination(locationENUM.nature)}
-          text={webSiteLabel.natureTH}
+          text={webSiteLabel.natureEN}
           matches={matches}
         />
         <CustomButton
@@ -97,7 +97,7 @@ export default function SelectTouristAttraction() {
           onClickIcon={<PaletteOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.art)}
           isClicked={checkSelectedDestination(locationENUM.art)}
-          text={webSiteLabel.artTH}
+          text={webSiteLabel.artEN}
           matches={matches}
         />
         <CustomButton
@@ -109,7 +109,7 @@ export default function SelectTouristAttraction() {
           onClickIcon={<BookOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.historic)}
           isClicked={checkSelectedDestination(locationENUM.historic)}
-          text={webSiteLabel.historicTH}
+          text={webSiteLabel.historicEN}
           matches={matches}
         />
         <CustomButton
@@ -121,7 +121,7 @@ export default function SelectTouristAttraction() {
           onClickIcon={<LocationCityOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.modern)}
           isClicked={checkSelectedDestination(locationENUM.modern)}
-          text={webSiteLabel.modernTH}
+          text={webSiteLabel.modernEN}
           matches={matches}
         />
       </Box>

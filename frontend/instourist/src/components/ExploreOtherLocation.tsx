@@ -79,7 +79,7 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
             alignItems={'center'}
           >
             <Typography color={'text.primary'}>
-              {webSiteLabel.backToTH} {location ? location.locationTH : ''}
+              {webSiteLabel.backToEN} {location ? location.locationTH : ''}
             </Typography>
             <Button onClick={() => setFullSize && setFullSize(false)}>
               <img
@@ -97,7 +97,7 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
         </Box>
       )}
       <Typography color={'text.primary'} variant='h5'>
-        {webSiteLabel.exploreOtherLocationsTH}
+        {webSiteLabel.exploreOtherLocationsEN}
       </Typography>
       <Box
         display={'flex'}
@@ -114,7 +114,7 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
           onClickIcon={<ParkOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.nature)}
           isClicked={checkSelectedDestination(locationENUM.nature)}
-          text={webSiteLabel.natureTH}
+          text={webSiteLabel.natureEN}
           matches={matches}
         />
         <CustomButton
@@ -126,7 +126,7 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
           onClickIcon={<PaletteOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.art)}
           isClicked={checkSelectedDestination(locationENUM.art)}
-          text={webSiteLabel.artTH}
+          text={webSiteLabel.artEN}
           matches={matches}
         />
         <CustomButton
@@ -138,7 +138,7 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
           onClickIcon={<BookOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.historic)}
           isClicked={checkSelectedDestination(locationENUM.historic)}
-          text={webSiteLabel.historicTH}
+          text={webSiteLabel.historicEN}
           matches={matches}
         />
         <CustomButton
@@ -150,7 +150,7 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
           onClickIcon={<LocationCityOutlined color='inherit' />}
           onClick={() => handleClickSelect(locationENUM.modern)}
           isClicked={checkSelectedDestination(locationENUM.modern)}
-          text={webSiteLabel.modernTH}
+          text={webSiteLabel.modernEN}
           matches={matches}
         />
       </Box>

@@ -45,7 +45,7 @@ export default function Homepage() {
             alt='logo'
           />
           <Typography variant='h4' color={'text.primary'}>
-            {webSiteLabel.webDespTH}
+            {webSiteLabel.webDespEN}
           </Typography>
         </Box>
         <Box height={'40px'} />
