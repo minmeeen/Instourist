@@ -71,7 +71,7 @@ export default function LocationCard(props: LocationCardProps) {
             }
           }}
         >
-          <Typography color='white'>{webSiteLabel.seeDetailTH}</Typography>
+          <Typography color='white'>{webSiteLabel.seeDetailEN}</Typography>
         </Button>
       </Box>
     </Box>

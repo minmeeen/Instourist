@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { InstouristLocation } from '../constant/locations'
 import {
   Box,
@@ -48,10 +48,10 @@ export default function LocationSideBar(props: LocationSideBarProps) {
             {/* {location.locationType === 'ART_CULTURE'
               ? 'ART & CULTURE'
               : location.locationType} */}
-            {location.locationType === 'NATURE' && webSiteLabel.natureTH}
-            {location.locationType === 'ART_CULTURE' && webSiteLabel.artTH}
-            {location.locationType === 'HISTORIC' && webSiteLabel.historicTH}
-            {location.locationType === 'MODERN' && webSiteLabel.modernTH}
+            {location.locationType === 'NATURE' && webSiteLabel.natureEN}
+            {location.locationType === 'ART_CULTURE' && webSiteLabel.artEN}
+            {location.locationType === 'HISTORIC' && webSiteLabel.historicEN}
+            {location.locationType === 'MODERN' && webSiteLabel.modernEN}
           </Typography>
         </Box>
         <Box
@@ -87,7 +87,7 @@ export default function LocationSideBar(props: LocationSideBarProps) {
           gap={'4px'}
         >
           <Typography color={'text.primary'} variant='h5'>
-            {webSiteLabel.languageUsedTH}
+            {webSiteLabel.languageUsedEN}
           </Typography>
           <Box
             display={'flex'}
@@ -115,11 +115,11 @@ export default function LocationSideBar(props: LocationSideBarProps) {
               </DemoContainer>
             </LocalizationProvider> */}
             <Typography color={'text.primary'} variant='h5'>
-              {webSiteLabel.inThePastTH}
+              {webSiteLabel.inThePastEN}
             </Typography>
             <FormControl sx={{ width: '200px' }} size='small'>
               <InputLabel id='demo-simple-select-label'>
-                {webSiteLabel.timelineTH}
+                {webSiteLabel.timelineEN}
               </InputLabel>
               <Select
                 labelId='demo-simple-select-label'
@@ -127,12 +127,12 @@ export default function LocationSideBar(props: LocationSideBarProps) {
                 value={timeline}
                 label='Timeline'
                 onChange={hanldeClickSelectTimeline}
-                defaultValue={webSiteLabel.timeline24TH}
+                defaultValue={webSiteLabel.timeline24EN}
               >
-                <MenuItem value={'1D'}>{webSiteLabel.timeline24TH}</MenuItem>
-                <MenuItem value={'2D'}>{webSiteLabel.timeline48TH}</MenuItem>
-                <MenuItem value={'7D'}>{webSiteLabel.timeline7TH}</MenuItem>
-                <MenuItem value={'14D'}>{webSiteLabel.timeline14TH}</MenuItem>
+                <MenuItem value={'1D'}>{webSiteLabel.timeline24EN}</MenuItem>
+                <MenuItem value={'2D'}>{webSiteLabel.timeline48EN}</MenuItem>
+                <MenuItem value={'7D'}>{webSiteLabel.timeline7EN}</MenuItem>
+                <MenuItem value={'14D'}>{webSiteLabel.timeline14EN}</MenuItem>
               </Select>
             </FormControl>
           </Box>
