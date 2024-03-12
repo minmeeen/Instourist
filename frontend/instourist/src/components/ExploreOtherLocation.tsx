@@ -79,7 +79,7 @@ export default function ExploreOtherLocation(props: ExploreOtherLocationProps) {
             alignItems={'center'}
           >
             <Typography color={'text.primary'}>
-              {webSiteLabel.backToEN} {location ? location.locationTH : ''}
+              {webSiteLabel.backToEN} {location ? location.locationEN : ''}
             </Typography>
             <Button onClick={() => setFullSize && setFullSize(false)}>
               <img
