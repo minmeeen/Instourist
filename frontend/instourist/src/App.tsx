@@ -3,6 +3,7 @@ import {
   IconButton,
   PaletteMode,
   ThemeProvider,
+  Typography,
   createTheme,
   useTheme,
 } from '@mui/material'
@@ -19,9 +20,14 @@ export const ColorModeContext = createContext({
   toggleColorMode: () => {},
 })
 
+export const LanguageModeContext = createContext({
+  toggleLanguageMode: () => {},
+})
+
 export function ToggleModeComponent() {
   const theme = useTheme()
   const colorMode = useContext(ColorModeContext)
+  const languageMode = useContext(LanguageModeContext)
   return (
     <Box
       sx={{
@@ -41,18 +47,47 @@ export function ToggleModeComponent() {
       >
         {theme.palette.mode === 'dark' ? <LightMode /> : <DarkMode />}
       </IconButton>
+      <IconButton
+        sx={{ ml: 1 }}
+        onClick={languageMode.toggleLanguageMode}
+        color='inherit'
+      >
+        {/**{languageMode.mode === 'TH' ? (
+          <Typography variant='h6' color={'text.primary'}>
+            EN
+          </Typography>
+        ) : (
+          <Typography variant='h6' color={'text.primary'}>
+            TH
+          </Typography>
+        )}**/}
+      </IconButton>
     </Box>
   )
 }
 
+type websiteLangauge = 'TH' | 'EN'
+
 function App() {
   const [mode, setMode] = useState<PaletteMode>('light')
+  const [lanMode, setLanMode] = useState<websiteLangauge>('TH')
   const colorMode = useMemo(
     () => ({
       // The dark mode switch would invoke this method
       toggleColorMode: () => {
         setMode((prevMode: PaletteMode) =>
           prevMode === 'light' ? 'dark' : 'light'
+        )
+      },
+    }),
+    []
+  )
+
+  const languageMode = useMemo(
+    () => ({
+      toggleLanguageMode: () => {
+        setLanMode((prevMode: websiteLangauge) =>
+          prevMode === 'TH' ? 'EN' : 'TH'
         )
       },
     }),
@@ -171,12 +206,17 @@ function App() {
   return (
     <>
       <ColorModeContext.Provider value={colorMode}>
-        <ThemeProvider theme={theme}>
-          <Routes>
-            <Route path={ROUTE.HOME} element={<Homepage />} />
-            <Route path={ROUTE.LOCATION_DETAIL} element={<LocationDetail />} />
-          </Routes>
-        </ThemeProvider>
+        <LanguageModeContext.Provider value={languageMode}>
+          <ThemeProvider theme={theme}>
+            <Routes>
+              <Route path={ROUTE.HOME} element={<Homepage />} />
+              <Route
+                path={ROUTE.LOCATION_DETAIL}
+                element={<LocationDetail />}
+              />
+            </Routes>
+          </ThemeProvider>
+        </LanguageModeContext.Provider>
       </ColorModeContext.Provider>
     </>
   )

@@ -1,7 +1,5 @@
 import { useTheme } from '@mui/material'
-import React from 'react'
 import Chart from 'react-google-charts'
-import { webSiteLabel } from '../constant/websiteLabel'
 
 interface CustomPieChartProps {
   selectedThai: boolean

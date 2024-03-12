@@ -1,4 +1,3 @@
-import { PieChart } from '@mui/x-charts/PieChart'
 import {
   Box,
   CircularProgress,
@@ -9,14 +8,11 @@ import {
 import Checkbox from '@mui/material/Checkbox'
 import { useState } from 'react'
 import {
-  googlepieChartLanguageDetectedData,
   languageDetectedInitData,
   pieChartLanguageDetectedData,
   transformLanguageDetectedData,
 } from '../constant/getDataType'
-import { CalendarMonthOutlined } from '@mui/icons-material'
 import { webSiteLabel } from '../constant/websiteLabel'
-import { Chart } from 'react-google-charts'
 import CustomPieChart from './PieChart'
 
 interface LocationLanguageChartProps {
@@ -39,9 +35,7 @@ export default function LocationLanguageChart(
     responseStatus,
     afterTransformData,
     afterTransformDataNoThai,
-    pieChartData,
     googlepieChartData,
-    pieChartDataNoThai,
     googlepieChartDataNoThai,
     loadingResponsese,
     transformingData,
@@ -60,27 +54,6 @@ export default function LocationLanguageChart(
   var year = new Date().toUTCString().split(' ').at(2)
   var year2 = new Date().toUTCString().split(' ').at(3)
   // var year = new Date().getFullYear()
-
-  const hasWindow = typeof window !== 'undefined'
-
-  function getWindowDimensions() {
-    const width = hasWindow ? window.innerWidth : null
-    const height = hasWindow ? window.innerHeight : null
-    return {
-      width,
-      height,
-    }
-  }
-
-  function getChartWidth() {
-    if (getWindowDimensions().width && matches) {
-      return '100%'
-    } else if (getWindowDimensions().width && !matches) {
-      return '100%'
-    } else {
-      return 500
-    }
-  }
 
   return (
     <>
