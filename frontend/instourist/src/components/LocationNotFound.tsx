@@ -14,10 +14,10 @@ export default function LocationNotFound() {
     >
       <Stack flexDirection={'row'} alignItems={'center'} gap={'8px'}>
         <Error color='primary' />
-        <Typography variant='h4'>{webSiteLabel.locationNotFoundTH}</Typography>
+        <Typography variant='h4'>{webSiteLabel.locationNotFoundEN}</Typography>
       </Stack>
 
-      <Typography variant='h6'>{webSiteLabel.locationNotFoundTH2}</Typography>
+      <Typography variant='h6'>{webSiteLabel.locationNotFoundEN2}</Typography>
     </Box>
   )
 }
