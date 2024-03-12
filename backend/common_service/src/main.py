@@ -10,7 +10,7 @@ from src.middleware.middleware import log_request_middleware
 from src.middleware.logger import logger
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
-from src.config import ANALYTIC_SERVICE, FRONTEND_SERVICE, INSTOURIST_URL
+from src.config import ANALYTIC_SERVICE, FRONTEND_SERVICE, INSTOURIST_URL, FRONTEND_DOMAIN
 
 class PlaceReq(BaseModel):
     placeName: str
@@ -32,6 +32,7 @@ origins = [
     INSTOURIST_URL,
     FRONTEND_SERVICE,
     ANALYTIC_SERVICE,
+    FRONTEND_DOMAIN,
 ]
 
 app.add_middleware(
