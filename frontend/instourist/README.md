@@ -1,4 +1,4 @@
-#How to start frontend local
+# How to start frontend local
 1. $npm install
 2. $npm install --force mapbox-gl @urbica/react-map-gl
 3. $npm run build
@@ -7,5 +7,5 @@
 
 Dashboard will get CORS issues due to the security settings configured on the backend server.
 
-##Conf file
+## Conf file
 .env and nginx.conf must be in frontend/instourist folder
