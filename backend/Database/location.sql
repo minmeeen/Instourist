@@ -5,7 +5,10 @@ CREATE TABLE location (
     created_at timestamp not null ,
     created_by varchar not null ,
     updated_at timestamp,
-    updated_by varchar
+    updated_by varchar,
+    latitude varchar,
+    longitude varchar,
+    category varchar
 );
 
 Insert into location(location_name, ig_location, created_at, created_by)
