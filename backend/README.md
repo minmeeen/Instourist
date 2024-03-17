@@ -3,5 +3,5 @@
 2. run docker image
 
 # Postgres container local
-1. cd docker/postgres
+1. $cd docker/postgres
 2. $docker-compose up -d
