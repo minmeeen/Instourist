@@ -2,8 +2,6 @@
 docker-compose up -d
 \
 \
-#To start FastAPI Local\ 
-install fastAPI\
-python -m pip install fastapi uvicorn[standard] 
-\
-python -m uvicorn src.main:app --reload
+#To start Local\ 
+1. cd into each service and build docker image
+2. run docker image
