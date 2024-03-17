@@ -1,6 +1,8 @@
-#How to create image\
+# How to create image
 docker build -t instourist_analytic_service .
-\
-\
-#start docker image\
+
+# start docker image
 docker run -p 8001:8001 --name instourist_analytic_service instourist_analytic_service
+
+## Conf file
+.env must be in backend/analytic_service folder
