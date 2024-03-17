@@ -1,7 +1,7 @@
-# How to create image\
+# How to create image
 $docker build -t instourist_common_service .
-\
-# start docker image\
+
+# start docker image
 $docker run -p 8000:8000 --name instourist_common_service instourist_common_service
 
 ## Conf file
